@@ -1,4 +1,4 @@
-[iskandarzhilmi.github.io](ytlcementcustomerappstg://ytlcementcustomerappstg/app/deliveryOrder/{doId})
+[iskandarzhilmi.github.io](ytlcementcustomerappstg://ytlcementcustomerappstg/app/deliveryOrder)
 
 This project was bootstrapped with
 [Create React App](https://github.com/facebook/create-react-app).
