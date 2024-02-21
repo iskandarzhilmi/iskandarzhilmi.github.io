@@ -1,4 +1,4 @@
-[iskandarzhilmi.github.io](https://sara.dghealthpass.com/common/installSaraX?referrer=SARA7038X)
+[iskandarzhilmi.github.io](ytlcementcustomerappstg://ytlcementcustomerappstg/app/deliveryOrder/{doId})
 
 This project was bootstrapped with
 [Create React App](https://github.com/facebook/create-react-app).
