@@ -7,8 +7,8 @@ const repositoryName = "iskandarzhilmi.github.io";
 
 const nextConfig = {
   output: "export",
-  basePath: isProduction ? `/${repositoryName}` : "",
-  assetPrefix: isProduction ? `/${repositoryName}/` : "",
+  // basePath: isProduction ? `/${repositoryName}` : "",
+  // assetPrefix: isProduction ? `/${repositoryName}/` : "",
   images: {
     unoptimized: true,
   },
