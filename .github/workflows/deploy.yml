@@ -31,3 +31,9 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./out
+      - name: List build output
+        run: |
+          echo "Contents of out directory:"
+          ls -R ./out
+          echo "Contents of out/index.html:"
+          cat ./out/index.html
