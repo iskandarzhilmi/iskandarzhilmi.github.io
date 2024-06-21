@@ -5,6 +5,10 @@ import Head from "next/head";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
 import Slider from "react-slick";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -41,6 +45,29 @@ interface AnimatedElementProps {
   style?: React.CSSProperties;
   animationClass: string;
 }
+interface ContactButtonProps {
+  href: string;
+  icon: IconDefinition;
+  text: string;
+  external?: boolean;
+}
+
+const ContactButton: React.FC<ContactButtonProps> = ({
+  href,
+  icon,
+  text,
+  external = false,
+}) => (
+  <a
+    href={href}
+    className='btn btn-primary'
+    target={external ? "_blank" : undefined}
+    rel={external ? "noopener noreferrer" : undefined}
+  >
+    <FontAwesomeIcon icon={icon} className='mr-2' />
+    {text}
+  </a>
+);
 
 function AnimatedElement({
   children,
@@ -207,7 +234,7 @@ export default function Home() {
                 animationClass='animate-fade-in-right'
                 style={{ animationDelay: "200ms" }}
               >
-                <p className='mb-5'>
+                <p className='mb-5 max-w-xl'>
                   Software Engineer specializing in Flutter, React, and React
                   Native with 2+ years of experience.
                 </p>
@@ -255,7 +282,7 @@ export default function Home() {
               animationClass='animate-fade-in-up'
               style={{ animationDelay: "200ms" }}
             >
-              <p className='text-lg max-w-3xl mx-auto'>
+              <p className='max-w-3xl mx-auto'>
                 Versatile software engineer with over 2 years of experience in
                 hybrid mobile development with Flutter and React Native, as well
                 as front-end development using React, TypeScript, and Next.js.
@@ -466,39 +493,36 @@ export default function Home() {
         <section id='contact' className='py-20 bg-base-100'>
           <div className='container mx-auto px-4'>
             <AnimatedElement animationClass='animate-fade-in-up'>
-              <h2 className='text-3xl font-bold mb-8 text-center'>
-                Get In Touch
-              </h2>
+              <h2 className='font-bold mb-8 text-center'>Get In Touch</h2>
             </AnimatedElement>
             <AnimatedElement
               animationClass='animate-fade-in-up'
               style={{ animationDelay: "200ms" }}
             >
               <div className='text-center'>
-                <p className='mb-4'>Email: iskandarzhilmi@gmail.com</p>
+                <p className='mb-6 '>
+                  I&apos;m always open to new opportunities and collaborations.
+                  Feel free to reach out!
+                </p>
+                <p className='mb-8 font-semibold'>iskandarzhilmi@gmail.com</p>
                 <div className='flex flex-col sm:flex-row justify-center gap-4'>
-                  <a
+                  <ContactButton
                     href='mailto:iskandarzhilmi@gmail.com'
-                    className='btn btn-primary'
-                  >
-                    Email Me
-                  </a>
-                  <a
+                    icon={faEnvelope}
+                    text='Email Me'
+                  />
+                  <ContactButton
                     href='https://linkedin.com/in/iskandarhilmi'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='btn btn-secondary'
-                  >
-                    LinkedIn
-                  </a>
-                  <a
+                    icon={faLinkedin}
+                    text='LinkedIn'
+                    external
+                  />
+                  <ContactButton
                     href='https://github.com/iskandarhilmi'
-                    target='_blank'
-                    rel='noopener noreferrer'
-                    className='btn btn-accent'
-                  >
-                    GitHub
-                  </a>
+                    icon={faGithub}
+                    text='GitHub'
+                    external
+                  />
                 </div>
               </div>
             </AnimatedElement>
