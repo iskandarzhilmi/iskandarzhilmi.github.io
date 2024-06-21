@@ -1,45 +1,36 @@
 {
-  "name": "iskandarzhilmi.github.io",
+  "name": "iskandarzhilmi",
   "version": "0.1.0",
   "private": true,
-  "dependencies": {
-    "@chakra-ui/react": "^2.2.1",
-    "@emotion/react": "^11.9.3",
-    "@emotion/styled": "^11.9.3",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.3.0",
-    "@testing-library/user-event": "^14.2.1",
-    "@types/jest": "^25.2.3",
-    "@types/node": "^12.20.55",
-    "@types/react": "^18.0.14",
-    "@types/react-dom": "^18.0.5",
-    "framer-motion": "^6.3.13",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-icons": "^3.11.0",
-    "react-scripts": "5.0.1",
-    "typescript": "^4.7.4",
-    "web-vitals": "^0.2.4"
-  },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "export": "next export",
+    "deploy": "npm run build && npm run export && gh-pages -d out"
   },
-  "eslintConfig": {
-    "extends": "react-app"
+  "dependencies": {
+    "framer-motion": "^11.2.11",
+    "next": "14.2.4",
+    "react": "^18",
+    "react-dom": "^18",
+    "react-intersection-observer": "^9.10.3",
+    "react-slick": "^0.30.2",
+    "react-type-animation": "^3.2.0",
+    "slick-carousel": "^1.8.1"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "devDependencies": {
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "@types/react-slick": "^0.23.13",
+    "daisyui": "^4.12.2",
+    "eslint": "^8",
+    "eslint-config-next": "14.2.4",
+    "gh-pages": "^6.1.1",
+    "postcss": "^8",
+    "tailwindcss": "^3.4.1",
+    "typescript": "^5"
   }
 }
