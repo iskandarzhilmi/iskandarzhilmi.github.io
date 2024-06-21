@@ -1,3 +1,3 @@
-Hello, this is my portfolio's website. Created with NextJS
+Hello, this is my portfolio's website. Created with NextJS.
 
 https://iskandarzhilmi.github.io
