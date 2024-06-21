@@ -31,3 +31,24 @@ body {
     text-wrap: balance;
   }
 }
+
+.hero-image {
+  object-fit: cover;
+  object-position: left top;
+  width: 100%;
+  height: 100%;
+}
+
+@media (min-aspect-ratio: 16/9) {
+  .hero-image {
+    width: 100%;
+    height: auto;
+  }
+}
+
+@media (max-aspect-ratio: 16/9) {
+  .hero-image {
+    width: auto;
+    height: 100%;
+  }
+}

@@ -166,19 +166,24 @@ export default function Home() {
         </div>
 
         {/* Hero Section */}
-        <div className='hero min-h-screen bg-base-200'>
-          <div className='hero-content flex-col lg:flex-row-reverse'>
-            <AnimatedElement animationClass='animate-fade-in-left'>
-              <Image
-                alt='Profile Picture'
-                src={"/images/profile-picture.png"}
-                width={400}
-                height={225}
-              />
-            </AnimatedElement>
-            <div>
+        <div className='hero min-h-screen bg-base-200 relative overflow-hidden'>
+          {/* Background Image */}
+          <div className='absolute inset-0 z-0'>
+            <Image
+              alt='Profile Picture'
+              src='/images/profile-picture.png'
+              layout='fill'
+              objectFit='cover'
+              objectPosition='center'
+              className='hero-image'
+            />
+            <div className='absolute inset-0 bg-black opacity-50'></div>
+          </div>
+
+          <div className='hero-content text-left text-neutral-content relative z-10 w-full'>
+            <div className='container mx-auto px-4 md:px-8 lg:px-16'>
               <AnimatedElement animationClass='animate-fade-in-right'>
-                <h1 className='text-5xl font-bold'>
+                <h1 className='mb-5 text-5xl font-bold'>
                   <TypeAnimation
                     sequence={[
                       "Welcome,",
@@ -202,7 +207,7 @@ export default function Home() {
                 animationClass='animate-fade-in-right'
                 style={{ animationDelay: "200ms" }}
               >
-                <p className='py-6'>
+                <p className='mb-5'>
                   Software Engineer specializing in Flutter, React, and React
                   Native with 2+ years of experience.
                 </p>
@@ -213,13 +218,28 @@ export default function Home() {
               >
                 <button className='btn btn-primary'>Get In Touch</button>
               </AnimatedElement>
+
+              {/* Flutter and React logos */}
               <AnimatedElement
                 animationClass='animate-fade-in-up'
-                style={{ animationDelay: "600ms" }}
+                style={{ animationDelay: "800ms" }}
               >
-                <p className='mt-4 text-sm opacity-75'>
-                  Website created with Next.js & React, with ❤️
-                </p>
+                <div className='flex items-center mt-4 space-x-4'>
+                  <Image
+                    src='/images/flutter-kawaii-logo.png'
+                    alt='Flutter Logo'
+                    height={50}
+                    width={0}
+                    style={{ width: "auto", height: "50px" }}
+                  />
+                  <Image
+                    src='/images/react-kawaii-logo.png'
+                    alt='React Logo'
+                    height={40}
+                    width={0}
+                    style={{ width: "auto", height: "40px" }}
+                  />
+                </div>
               </AnimatedElement>
             </div>
           </div>
@@ -455,15 +475,31 @@ export default function Home() {
               style={{ animationDelay: "200ms" }}
             >
               <div className='text-center'>
-                <p>Email: iskandarzhilmi@gmail.com</p>
-                <a
-                  href='https://linkedin.com/in/iskandarhilmi'
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  className='btn btn-primary mt-4'
-                >
-                  Connect on LinkedIn
-                </a>
+                <p className='mb-4'>Email: iskandarzhilmi@gmail.com</p>
+                <div className='flex flex-col sm:flex-row justify-center gap-4'>
+                  <a
+                    href='mailto:iskandarzhilmi@gmail.com'
+                    className='btn btn-primary'
+                  >
+                    Email Me
+                  </a>
+                  <a
+                    href='https://linkedin.com/in/iskandarhilmi'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='btn btn-secondary'
+                  >
+                    LinkedIn
+                  </a>
+                  <a
+                    href='https://github.com/iskandarhilmi'
+                    target='_blank'
+                    rel='noopener noreferrer'
+                    className='btn btn-accent'
+                  >
+                    GitHub
+                  </a>
+                </div>
               </div>
             </AnimatedElement>
           </div>
