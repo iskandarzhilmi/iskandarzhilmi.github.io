@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
+import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
@@ -97,9 +98,17 @@ function AnimatedElement({
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [showScrollTop, setShowScrollTop] = useState(false);
 
   useEffect(() => {
     setIsLoaded(true);
+
+    const handleScroll = () => {
+      setShowScrollTop(window.scrollY > 300);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const sliderSettings = {
@@ -127,6 +136,21 @@ export default function Home() {
   };
 
   const navItems = ["About", "Skills", "Experience", "Projects", "Contact"];
+
+  const handleSmoothScroll = (
+    e: React.MouseEvent<HTMLAnchorElement>,
+    targetId: string
+  ) => {
+    e.preventDefault();
+    const targetElement = document.getElementById(targetId);
+    if (targetElement) {
+      targetElement.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
 
   return (
     <>
@@ -167,9 +191,14 @@ export default function Home() {
                 tabIndex={0}
                 className='menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52'
               >
-                {navItems.map((item, index) => (
+                {navItems.map((item) => (
                   <li key={item}>
-                    <a href={`#${item.toLowerCase()}`}>{item}</a>
+                    <a
+                      href={`#${item.toLowerCase()}`}
+                      onClick={(e) => handleSmoothScroll(e, item.toLowerCase())}
+                    >
+                      {item}
+                    </a>
                   </li>
                 ))}
               </ul>
@@ -180,13 +209,22 @@ export default function Home() {
             <ul className='menu menu-horizontal px-1'>
               {navItems.map((item) => (
                 <li key={item}>
-                  <a href={`#${item.toLowerCase()}`}>{item}</a>
+                  <a
+                    href={`#${item.toLowerCase()}`}
+                    onClick={(e) => handleSmoothScroll(e, item.toLowerCase())}
+                  >
+                    {item}
+                  </a>
                 </li>
               ))}
             </ul>
           </div>
           <div className='navbar-end'>
-            <a href='#contact' className='btn btn-primary'>
+            <a
+              href='#contact'
+              className='btn btn-primary'
+              onClick={(e) => handleSmoothScroll(e, "contact")}
+            >
               Get In Touch
             </a>
           </div>
@@ -320,7 +358,7 @@ export default function Home() {
                   animationClass='animate-bounce-in'
                   style={{ animationDelay: `${index * 100}ms` }}
                 >
-                  <div className='badge badge-lg'>{skill}</div>
+                  <div className='badge badge-lg px-6 py-4'>{skill}</div>
                 </AnimatedElement>
               ))}
             </div>
@@ -540,6 +578,17 @@ export default function Home() {
           </footer>
         </AnimatedElement>
       </div>
+
+      {/* Scroll to Top FAB */}
+      <button
+        className={`fixed bottom-8 right-8 btn btn-circle btn-neutral shadow-lg transition-opacity duration-300 ${
+          showScrollTop ? "opacity-100" : "opacity-0 pointer-events-none"
+        }`}
+        onClick={scrollToTop}
+        aria-label='Scroll to top'
+      >
+        <FontAwesomeIcon icon={faArrowUp} className='text-base-content' />
+      </button>
 
       <style jsx>{`
         @keyframes fadeInLeft {
