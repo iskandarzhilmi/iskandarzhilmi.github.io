@@ -219,6 +219,8 @@ export default function Home() {
                       1000,
                       "ようこそ,",
                       1000,
+                      "Willkommen,",
+                      1000,
                     ]}
                     wrapper='span'
                     speed={20}
