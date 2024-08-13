@@ -518,7 +518,7 @@ export default function Home() {
                     external
                   />
                   <ContactButton
-                    href='https://github.com/iskandarhilmi'
+                    href='https://github.com/iskandarzhilmi'
                     icon={faGithub}
                     text='GitHub'
                     external
