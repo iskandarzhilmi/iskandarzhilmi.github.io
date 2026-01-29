@@ -1,94 +1,73 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import Head from "next/head";
+import { useState, useEffect, useRef, ReactNode } from "react";
 import Image from "next/image";
 import { TypeAnimation } from "react-type-animation";
-import Slider from "react-slick";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEnvelope } from "@fortawesome/free-solid-svg-icons";
+import { faEnvelope, faArrowUp, faArrowRight, faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { faLinkedin, faGithub } from "@fortawesome/free-brands-svg-icons";
 import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
-import { faArrowUp } from "@fortawesome/free-solid-svg-icons";
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
+// ─── Intersection Observer Hook ──────────────────────────────────────────────
 
-function useIntersectionObserver(options = {}) {
+interface IntersectionObserverOptions extends IntersectionObserverInit {
+  triggerOnce?: boolean;
+}
+
+function useIntersectionObserver(
+  options: IntersectionObserverOptions = {}
+): [React.RefObject<HTMLDivElement>, boolean] {
   const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
+  const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
+    const currentRef = ref.current;
     const observer = new IntersectionObserver(
       ([entry]) => {
-        setIsVisible(entry.isIntersecting);
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+          if (options.triggerOnce && currentRef) {
+            observer.unobserve(currentRef);
+          }
+        }
       },
       { threshold: 0.1, ...options }
     );
 
-    if (ref.current) {
-      observer.observe(ref.current);
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
+      if (currentRef) {
+        observer.unobserve(currentRef);
       }
     };
-  }, [options]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [options.triggerOnce]);
 
   return [ref, isVisible];
 }
 
-interface AnimatedElementProps {
-  children: React.ReactNode;
+// ─── Reusable Components ─────────────────────────────────────────────────────
+
+interface AnimatedSectionProps {
+  children: ReactNode;
   className?: string;
-  style?: React.CSSProperties;
-  animationClass: string;
-}
-interface ContactButtonProps {
-  href: string;
-  icon: IconDefinition;
-  text: string;
-  external?: boolean;
+  delay?: number;
 }
 
-const ContactButton: React.FC<ContactButtonProps> = ({
-  href,
-  icon,
-  text,
-  external = false,
-}) => (
-  <a
-    href={href}
-    className='btn btn-primary'
-    target={external ? "_blank" : undefined}
-    rel={external ? "noopener noreferrer" : undefined}
-  >
-    <FontAwesomeIcon icon={icon} className='mr-2' />
-    {text}
-  </a>
-);
-
-function AnimatedElement({
-  children,
-  className,
-  style,
-  animationClass,
-}: AnimatedElementProps) {
-  const ref = useRef<HTMLDivElement>(null);
-  const [isVisible] = useIntersectionObserver({
-    threshold: 0.1,
-    triggerOnce: false,
-  });
+function AnimatedSection({ children, className = "", delay = 0 }: AnimatedSectionProps) {
+  const [ref, isVisible] = useIntersectionObserver({ triggerOnce: true });
 
   return (
     <div
       ref={ref}
-      className={`${className} ${isVisible ? animationClass : "opacity-0"}`}
+      className={className}
       style={{
-        ...style,
-        transition: "opacity 0.5s, transform 0.5s",
+        opacity: isVisible ? 1 : 0,
+        transform: isVisible ? "translateY(0)" : "translateY(24px)",
+        transition: `opacity 0.7s ease-out ${delay}ms, transform 0.7s ease-out ${delay}ms`,
       }}
     >
       {children}
@@ -96,573 +75,672 @@ function AnimatedElement({
   );
 }
 
+interface ContactButtonProps {
+  href: string;
+  icon: IconDefinition;
+  label: string;
+  external?: boolean;
+}
+
+function ContactButton({ href, icon, label, external = false }: ContactButtonProps) {
+  return (
+    <a
+      href={href}
+      target={external ? "_blank" : undefined}
+      rel={external ? "noopener noreferrer" : undefined}
+      className="flex items-center gap-3 px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-indigo-400/40 hover:bg-indigo-500/10 transition-all duration-300 text-sm text-gray-300 hover:text-white"
+    >
+      <FontAwesomeIcon icon={icon} className="text-indigo-400 w-4 h-4" />
+      {label}
+    </a>
+  );
+}
+
+interface SkillGroupProps {
+  title: string;
+  skills: string[];
+  delay: number;
+}
+
+function SkillGroup({ title, skills, delay }: SkillGroupProps) {
+  return (
+    <AnimatedSection delay={delay}>
+      <div className="skill-group-card rounded-2xl p-6">
+        <h3 className="text-sm font-semibold text-indigo-400 uppercase tracking-wider mb-4">
+          {title}
+        </h3>
+        <div className="flex flex-wrap gap-2">
+          {skills.map((skill) => (
+            <span
+              key={skill}
+              className="px-3 py-1.5 text-sm rounded-lg bg-white/5 text-gray-300 border border-white/5"
+            >
+              {skill}
+            </span>
+          ))}
+        </div>
+      </div>
+    </AnimatedSection>
+  );
+}
+
+interface ExperienceCardProps {
+  company: string;
+  role: string;
+  period: string;
+  summary: string;
+  projects: { name: string; description: string; link?: string }[];
+  delay: number;
+}
+
+function ExperienceCard({ company, role, period, summary, projects, delay }: ExperienceCardProps) {
+  return (
+    <AnimatedSection delay={delay}>
+      <div className="relative pl-8 pb-12 last:pb-0">
+        {/* Timeline */}
+        <div className="absolute left-0 top-1.5 timeline-dot" />
+        <div className="absolute left-[5px] top-4 bottom-0 timeline-line" />
+
+        <div className="mb-1">
+          <h3 className="text-xl font-bold text-white">{company}</h3>
+          <p className="text-indigo-400 text-sm font-medium">{role}</p>
+          <p className="text-gray-500 text-sm">{period}</p>
+        </div>
+        <p className="text-gray-400 mt-2 text-sm leading-relaxed">{summary}</p>
+
+        {projects.length > 0 && (
+          <div className="mt-4 grid gap-3 sm:grid-cols-2">
+            {projects.map((project) => (
+              <div
+                key={project.name}
+                className="card-glow rounded-xl bg-white/[0.03] border border-white/[0.06] p-4"
+              >
+                <div className="flex items-center justify-between mb-1">
+                  <h4 className="text-sm font-semibold text-white">{project.name}</h4>
+                  {project.link && (
+                    <a
+                      href={project.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-indigo-400 hover:text-indigo-300 transition-colors"
+                    >
+                      <FontAwesomeIcon icon={faExternalLinkAlt} className="w-3 h-3" />
+                    </a>
+                  )}
+                </div>
+                <p className="text-gray-500 text-xs leading-relaxed">{project.description}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    </AnimatedSection>
+  );
+}
+
+interface ProjectCardProps {
+  title: string;
+  description: string;
+  metrics?: string;
+  techStack: string[];
+  link?: string;
+  linkText?: string;
+  featured?: boolean;
+  delay: number;
+}
+
+function ProjectCard({
+  title,
+  description,
+  metrics,
+  techStack,
+  link,
+  linkText,
+  featured = false,
+  delay,
+}: ProjectCardProps) {
+  return (
+    <AnimatedSection delay={delay}>
+      <div
+        className={`rounded-2xl p-6 h-full flex flex-col ${
+          featured
+            ? "featured-card"
+            : "bg-white/[0.03] border border-white/[0.06]"
+        } card-glow`}
+      >
+        {featured && (
+          <span className="text-xs font-semibold text-indigo-400 uppercase tracking-wider mb-2">
+            Featured Project
+          </span>
+        )}
+        <h3 className="text-lg font-bold text-white mb-2">{title}</h3>
+        {metrics && (
+          <p className="text-sm metric-highlight mb-2">{metrics}</p>
+        )}
+        <p className="text-gray-400 text-sm leading-relaxed flex-1">{description}</p>
+        <div className="mt-4 flex flex-wrap gap-1.5">
+          {techStack.map((tech) => (
+            <span
+              key={tech}
+              className="px-2 py-0.5 text-xs rounded-md bg-indigo-500/10 text-indigo-300 border border-indigo-500/20"
+            >
+              {tech}
+            </span>
+          ))}
+        </div>
+        {link && (
+          <a
+            href={link}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-4 inline-flex items-center gap-2 text-sm text-indigo-400 hover:text-indigo-300 transition-colors"
+          >
+            {linkText || "View Project"}
+            <FontAwesomeIcon icon={faArrowRight} className="w-3 h-3" />
+          </a>
+        )}
+      </div>
+    </AnimatedSection>
+  );
+}
+
+// ─── Data ────────────────────────────────────────────────────────────────────
+
+const SKILL_GROUPS = [
+  {
+    title: "Core Stack",
+    skills: ["Flutter", "React", "React Native", "TypeScript", "Next.js", "Responsive Design"],
+  },
+  {
+    title: "Backend & Cloud",
+    skills: ["Node.js", "Supabase", "Firebase", "DigitalOcean", "GraphQL"],
+  },
+  {
+    title: "Architecture & State",
+    skills: ["BLoC", "React Query", "Zustand", "Riverpod", "OOP"],
+  },
+  {
+    title: "AI & Tools",
+    skills: ["Claude API", "Google Vision API", "Cursor", "Claude Code", "Git"],
+  },
+];
+
+const EXPERIENCES: Omit<ExperienceCardProps, "delay">[] = [
+  {
+    company: "Auronex Sdn Bhd",
+    role: "Software Engineer (Flutter, React, React Native) — Remote",
+    period: "Aug 2022 - Present",
+    summary:
+      "Delivering full-stack web and mobile solutions for enterprise clients and high-growth startups.",
+    projects: [
+      {
+        name: "Blieve AI",
+        description:
+          "B2C AI image and video generation platform for 123RF. 20,000+ users, $7,000+ MRR. Next.js, TypeScript, Shadcn, Konva, Zustand.",
+        link: "https://blieve.ai",
+      },
+      {
+        name: "YTL Cement Hub",
+        description:
+          "B2B React Native CLI app with TypeScript for Malaysia's largest construction material provider. GraphQL API.",
+        link: "http://bit.ly/3U0n5nA",
+      },
+      {
+        name: "Trackco",
+        description:
+          "B2B stock management Flutter app for complex logistic processes. 1,000+ downloads.",
+        link: "https://smartkood.com/trackco",
+      },
+      {
+        name: "Cellmax",
+        description:
+          "Developed and maintained two Flutter apps for a skincare clinic.",
+      },
+      {
+        name: "Hokkien Dictionary",
+        description:
+          "B2C responsive React web app with TypeScript and Ant Design to preserve an endangered language.",
+      },
+    ],
+  },
+  {
+    company: "RF Infinite Sdn Bhd",
+    role: "Software Engineer Intern (Flutter) — On-site",
+    period: "Mar 2022 - Aug 2022",
+    summary:
+      "Contributed to the Pcari.my Flutter in-house super app at Cyberjaya, Selangor.",
+    projects: [
+      {
+        name: "Pcari.my",
+        description:
+          "Flutter super app with e-commerce and user-to-user marketplace. 10,000+ downloads.",
+      },
+    ],
+  },
+];
+
+const NAV_ITEMS = ["About", "Skills", "Experience", "Projects", "Contact"];
+
+// ─── Main Page ───────────────────────────────────────────────────────────────
+
 export default function Home() {
-  const [isLoaded, setIsLoaded] = useState(false);
   const [showScrollTop, setShowScrollTop] = useState(false);
+  const [activeNav, setActiveNav] = useState("");
 
   useEffect(() => {
-    setIsLoaded(true);
-
     const handleScroll = () => {
-      setShowScrollTop(window.scrollY > 300);
+      setShowScrollTop(window.scrollY > 400);
+
+      // Update active nav based on scroll position
+      const sections = NAV_ITEMS.map((item) => item.toLowerCase());
+      for (let i = sections.length - 1; i >= 0; i--) {
+        const element = document.getElementById(sections[i]);
+        if (element) {
+          const rect = element.getBoundingClientRect();
+          if (rect.top <= 100) {
+            setActiveNav(sections[i]);
+            break;
+          }
+        }
+      }
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  const sliderSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 2,
-    slidesToScroll: 1,
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-          slidesToScroll: 1,
-        },
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-          slidesToScroll: 1,
-        },
-      },
-    ],
-  };
-
-  const navItems = ["About", "Skills", "Experience", "Projects", "Contact"];
-
-  const handleSmoothScroll = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    targetId: string
-  ) => {
+  const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     e.preventDefault();
-    const targetElement = document.getElementById(targetId);
-    if (targetElement) {
-      targetElement.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
+    document.getElementById(targetId)?.scrollIntoView({ behavior: "smooth" });
   };
 
   return (
-    <>
-      <Head>
-        <title>Iskandar Hilmi - Software Engineer</title>
-      </Head>
+    <div className="min-h-screen">
+      {/* ── Navbar ── */}
+      <nav className="navbar-glass fixed top-0 left-0 right-0 z-50 px-6 py-4">
+        <div className="max-w-6xl mx-auto flex items-center justify-between">
+          <a href="#" className="text-lg font-bold text-white">
+            IH<span className="text-indigo-400">.</span>
+          </a>
 
-      <div
-        className={`min-h-screen bg-base-200 transition-opacity duration-1000 ${
-          isLoaded ? "opacity-100" : "opacity-0"
-        }`}
-      >
-        {/* Navbar */}
-        <div className='navbar bg-base-100 shadow-lg'>
-          <div className='navbar-start'>
-            <div className='dropdown'>
-              <div
-                tabIndex={0}
-                role='button'
-                className='btn btn-ghost lg:hidden'
+          {/* Desktop Nav */}
+          <div className="hidden md:flex items-center gap-8">
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                onClick={(e) => scrollToSection(e, item.toLowerCase())}
+                className={`text-sm transition-colors duration-200 ${
+                  activeNav === item.toLowerCase()
+                    ? "text-indigo-400"
+                    : "text-gray-400 hover:text-white"
+                }`}
               >
-                <svg
-                  xmlns='http://www.w3.org/2000/svg'
-                  className='h-5 w-5'
-                  fill='none'
-                  viewBox='0 0 24 24'
-                  stroke='currentColor'
-                >
-                  <path
-                    strokeLinecap='round'
-                    strokeLinejoin='round'
-                    strokeWidth='2'
-                    d='M4 6h16M4 12h8m-8 6h16'
-                  />
-                </svg>
+                {item}
+              </a>
+            ))}
+          </div>
+
+          <a
+            href="#contact"
+            onClick={(e) => scrollToSection(e, "contact")}
+            className="hidden md:inline-flex px-4 py-2 text-sm rounded-lg bg-indigo-500/10 border border-indigo-500/30 text-indigo-400 hover:bg-indigo-500/20 transition-all duration-200"
+          >
+            Get In Touch
+          </a>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden text-gray-400"
+            onClick={() => {
+              const menu = document.getElementById("mobile-menu");
+              menu?.classList.toggle("hidden");
+            }}
+          >
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h8m-8 6h16" />
+            </svg>
+          </button>
+        </div>
+
+        {/* Mobile Menu */}
+        <div id="mobile-menu" className="hidden md:hidden mt-4 pb-4 border-t border-white/5 pt-4">
+          <div className="flex flex-col gap-3">
+            {NAV_ITEMS.map((item) => (
+              <a
+                key={item}
+                href={`#${item.toLowerCase()}`}
+                onClick={(e) => {
+                  scrollToSection(e, item.toLowerCase());
+                  document.getElementById("mobile-menu")?.classList.add("hidden");
+                }}
+                className="text-sm text-gray-400 hover:text-white transition-colors"
+              >
+                {item}
+              </a>
+            ))}
+          </div>
+        </div>
+      </nav>
+
+      {/* ── Hero ── */}
+      <section className="hero-gradient min-h-screen flex items-center pt-20">
+        <div className="max-w-6xl mx-auto px-6 w-full">
+          <div className="flex flex-col md:flex-row items-center gap-12 md:gap-16">
+            {/* Text Content */}
+            <div className="flex-1 max-w-2xl">
+              <div className="mb-6 opacity-0 animate-fade-in-up">
+                <TypeAnimation
+                  sequence={[
+                    "Hello,",
+                    1500,
+                    "Selamat datang,",
+                    1500,
+                    "こんにちは,",
+                    1500,
+                  ]}
+                  wrapper="span"
+                  speed={30}
+                  className="text-lg text-indigo-400 font-medium"
+                  repeat={Infinity}
+                />
               </div>
-              <ul
-                tabIndex={0}
-                className='menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52'
-              >
-                {navItems.map((item) => (
-                  <li key={item}>
-                    <a
-                      href={`#${item.toLowerCase()}`}
-                      onClick={(e) => handleSmoothScroll(e, item.toLowerCase())}
-                    >
-                      {item}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <a className='btn btn-ghost text-xl'>Iskandar Hilmi</a>
-          </div>
-          <div className='navbar-center hidden lg:flex'>
-            <ul className='menu menu-horizontal px-1'>
-              {navItems.map((item) => (
-                <li key={item}>
-                  <a
-                    href={`#${item.toLowerCase()}`}
-                    onClick={(e) => handleSmoothScroll(e, item.toLowerCase())}
-                  >
-                    {item}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className='navbar-end'>
-            <a
-              href='#contact'
-              className='btn btn-primary'
-              onClick={(e) => handleSmoothScroll(e, "contact")}
-            >
-              Get In Touch
-            </a>
-          </div>
-        </div>
 
-        {/* Hero Section */}
-        <div className='hero min-h-screen bg-base-200 relative overflow-hidden'>
-          {/* Background Image */}
-          <div className='absolute inset-0 z-0'>
-            <Image
-              alt='Profile Picture'
-              src='/images/profile-picture.png'
-              layout='fill'
-              objectFit='cover'
-              objectPosition='center'
-              className='hero-image'
-            />
-            <div className='absolute inset-0 bg-black opacity-50'></div>
-          </div>
+              <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold leading-tight mb-6 opacity-0 animate-fade-in-up delay-100">
+                Building Scalable Apps
+                <br />
+                <span className="gradient-text">That Solve Real Problems.</span>
+              </h1>
 
-          <div className='hero-content text-left text-neutral-content relative z-10 w-full'>
-            <div className='container mx-auto px-4 md:px-8 lg:px-16'>
-              <AnimatedElement animationClass='animate-fade-in-right'>
-                <h1 className='mb-5 text-5xl font-bold'>
-                  <TypeAnimation
-                    sequence={[
-                      "Welcome,",
-                      1000,
-                      "Selamat datang,",
-                      1000,
-                      "ようこそ,",
-                      1000,
-                      "Willkommen,",
-                      1000,
-                    ]}
-                    wrapper='span'
-                    speed={20}
-                    style={{ fontSize: "1em", display: "inline-block" }}
-                    repeat={Infinity}
-                  />
-                  <br />
-                  I&apos;m{" "}
-                  <span className='text-secondary'>Iskandar Hilmi</span>
-                </h1>
-              </AnimatedElement>
-              <AnimatedElement
-                animationClass='animate-fade-in-right'
-                style={{ animationDelay: "200ms" }}
-              >
-                <p className='mb-5 max-w-xl'>
-                  Software Engineer specializing in Flutter, React, and React
-                  Native with 2+ years of experience.
-                </p>
-              </AnimatedElement>
-              <AnimatedElement
-                animationClass='animate-bounce-in'
-                style={{ animationDelay: "400ms" }}
-              >
-                <button className='btn btn-primary'>Get In Touch</button>
-              </AnimatedElement>
-
-              {/* Flutter and React logos */}
-              <AnimatedElement
-                animationClass='animate-fade-in-up'
-                style={{ animationDelay: "800ms" }}
-              >
-                <div className='flex items-center mt-4 space-x-4'>
-                  <Image
-                    src='/images/flutter-kawaii-logo.png'
-                    alt='Flutter Logo'
-                    height={50}
-                    width={0}
-                    style={{ width: "auto", height: "50px" }}
-                  />
-                  <Image
-                    src='/images/react-kawaii-logo.png'
-                    alt='React Logo'
-                    height={40}
-                    width={0}
-                    style={{ width: "auto", height: "40px" }}
-                  />
-                </div>
-              </AnimatedElement>
-            </div>
-          </div>
-        </div>
-
-        {/* About Section */}
-        <section id='about' className='py-20 bg-base-100'>
-          <div className='container mx-auto px-4'>
-            <AnimatedElement animationClass='animate-fade-in-up'>
-              <h2 className='text-3xl font-bold mb-8 text-center'>About Me</h2>
-            </AnimatedElement>
-            <AnimatedElement
-              animationClass='animate-fade-in-up'
-              style={{ animationDelay: "200ms" }}
-            >
-              <p className='max-w-3xl mx-auto'>
-                Versatile software engineer with over 2 years of experience in
-                hybrid mobile development with Flutter and React Native, as well
-                as front-end development using React, TypeScript, and Next.js.
-                Proficient in back-end development using Node.js and Next.js.
-                Quick learner, adept problem-solver, and committed to delivering
-                high-quality solutions.
+              <p className="text-lg text-gray-400 max-w-xl leading-relaxed mb-8 opacity-0 animate-fade-in-up delay-200">
+                Software Engineer and Indie Maker specializing in Flutter, React,
+                and AI-driven solutions. I turn complex technical requirements into
+                polished, profitable products.
               </p>
-            </AnimatedElement>
-          </div>
-        </section>
 
-        {/* Skills Section */}
-        <section id='skills' className='py-20 bg-base-200'>
-          <div className='container mx-auto px-4'>
-            <AnimatedElement animationClass='animate-fade-in-up'>
-              <h2 className='text-3xl font-bold mb-8 text-center'>Skills</h2>
-            </AnimatedElement>
-            <div className='flex flex-wrap justify-center gap-4'>
-              {[
-                "Flutter",
-                "React Native",
-                "React",
-                "TypeScript",
-                "Next.js",
-                "Node.js",
-                "Git",
-                "Supabase",
-                "OOP",
-                "BLoC",
-              ].map((skill, index) => (
-                <AnimatedElement
-                  key={skill}
-                  animationClass='animate-bounce-in'
-                  style={{ animationDelay: `${index * 100}ms` }}
+              <div className="flex flex-wrap gap-4 opacity-0 animate-fade-in-up delay-300">
+                <a
+                  href="#projects"
+                  onClick={(e) => scrollToSection(e, "projects")}
+                  className="px-6 py-3 rounded-xl bg-indigo-500 hover:bg-indigo-600 text-white font-medium text-sm transition-all duration-200"
                 >
-                  <div className='badge badge-lg px-6 py-4'>{skill}</div>
-                </AnimatedElement>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Experience Section */}
-        <section id='experience' className='py-20 bg-base-100'>
-          <div className='container mx-auto px-4'>
-            <AnimatedElement animationClass='animate-fade-in-up'>
-              <h2 className='text-3xl font-bold mb-8 text-center'>
-                Professional Experience
-              </h2>
-            </AnimatedElement>
-            <div className='grid grid-cols-1 gap-8'>
-              {[
-                {
-                  title: "Software Engineer (Flutter, React, React Native)",
-                  company: "Auronex Sdn Bhd, Kuala Lumpur, Malaysia",
-                  period: "Aug 2022 – Present",
-                  description:
-                    "Worked on various projects including inventory management, skincare clinic apps, construction material customer app, and web applications using Flutter, React Native, and React.",
-                },
-                {
-                  title: "Part-Time Software Engineer (Flutter)",
-                  company: "Danapuri Sdn Bhd, Kuala Lumpur, Malaysia",
-                  period: "Jan 2023 – Present",
-                  description:
-                    "Collaborated on in-house Sarawak state government Flutter app projects and enhanced off-the-shelf app codebases.",
-                },
-                {
-                  title: "Software Engineer Intern (Flutter)",
-                  company: "RF Infinite Sdn Bhd, Cyberjaya, Selangor, Malaysia",
-                  period: "Mar 2022 – Aug 2022",
-                  description:
-                    "Contributed to the Pcari.my's Flutter in-house super app, which more than 10,000 users downloaded. Focused on feature implementation and bug fixing for the e-commerce functionality and user-to-user marketplace.",
-                },
-              ].map((job, index) => (
-                <AnimatedElement
-                  key={job.title}
-                  animationClass='animate-fade-in-up'
-                  style={{ animationDelay: `${index * 200}ms` }}
+                  View My Work
+                </a>
+                <a
+                  href="#contact"
+                  onClick={(e) => scrollToSection(e, "contact")}
+                  className="px-6 py-3 rounded-xl bg-white/5 border border-white/10 hover:border-white/20 text-gray-300 hover:text-white font-medium text-sm transition-all duration-200"
                 >
-                  <div className='card bg-base-200 shadow-xl'>
-                    <div className='card-body'>
-                      <h2 className='card-title'>{job.title}</h2>
-                      <h3 className='text-sm opacity-70'>{job.company}</h3>
-                      <p className='text-sm opacity-70'>{job.period}</p>
-                      <p>{job.description}</p>
-                    </div>
-                  </div>
-                </AnimatedElement>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* Projects Section */}
-        <section id='projects' className='py-20 bg-base-200'>
-          <div className='container mx-auto px-4'>
-            <h2 className='text-3xl font-bold mb-8 text-center animate-fade-in-up'>
-              Projects
-            </h2>
-
-            <h3 className='text-2xl font-bold mb-4 animate-fade-in-up delay-200'>
-              Professional Projects
-            </h3>
-            <Slider {...sliderSettings}>
-              {[
-                {
-                  title: "Inventory Management App",
-                  company: "Auronex Sdn Bhd",
-                  description:
-                    "Developed a stock management app using Flutter, including QR scanning and complex logistic processes. Gained over 500 downloads.",
-                },
-                {
-                  title: "Skincare Clinic Apps",
-                  company: "Auronex Sdn Bhd",
-                  description:
-                    "Developed and maintained two Flutter apps for a skincare clinic. Integrated payment gateway and implemented push notifications.",
-                },
-                {
-                  title: "Construction Material Customer App",
-                  company: "Auronex Sdn Bhd",
-                  description:
-                    "Developed a React Native CLI app with TypeScript for a major construction material provider in Malaysia.",
-                },
-                {
-                  title: "Language Preservation Webapp",
-                  company: "Auronex Sdn Bhd",
-                  description:
-                    "Created a responsive React web app with TypeScript, Ant Design, authentication, and CRUD dashboard for language preservation.",
-                },
-                {
-                  title: "Oil & Gas Consultancy Platform",
-                  company: "Auronex Sdn Bhd",
-                  description:
-                    "Contributed features to a React-based web platform with TypeScript and Ant Design for an oil & gas consultancy.",
-                },
-                {
-                  title: "Government E-commerce App",
-                  company: "Danapuri Sdn Bhd",
-                  description:
-                    "Collaborated on a Sarawak state government Flutter app project, focused on e-commerce. Achieved 100+ downloads.",
-                },
-                {
-                  title: "E-commerce Super App",
-                  company: "RF Infinite Sdn Bhd (Internship)",
-                  description:
-                    "Contributed to a Flutter-based super app with over 10,000 downloads. Focused on e-commerce and marketplace features.",
-                },
-              ].map((project, index) => (
-                <div key={index} className='px-2'>
-                  <div className='card bg-base-100 shadow-xl h-full'>
-                    <div className='card-body'>
-                      <h2 className='card-title'>{project.title}</h2>
-                      <p className='text-sm opacity-70'>{project.company}</p>
-                      <p>{project.description}</p>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </Slider>
-
-            <h3 className='text-2xl font-bold mb-4 mt-12 animate-fade-in-up delay-200'>
-              Personal Projects
-            </h3>
-            <Slider {...sliderSettings}>
-              {[
-                {
-                  title: "CourseCreatorAI",
-                  period: "April 2024 - Present",
-                  description:
-                    "Web application to generate course content using OpenAI's GPT. Built with React.js, Node.js, Next.js, TypeScript, Firebase, Vercel, and DaisyUI.",
-                  link: "https://coursecreatorai.co",
-                  linkText: "Visit Site",
-                },
-                {
-                  title: "Timerval - Workout Interval Timer",
-                  period: "Jun 2020 - Nov 2020",
-                  description:
-                    "Fitness Flutter app with SQFLite local database and ad integration. Achieved 50+ downloads on Google Play Store.",
-                  link: "https://bit.ly/timerval",
-                  linkText: "View on Play Store",
-                },
-              ].map((project, index) => (
-                <div key={index} className='px-2'>
-                  <div className='card bg-base-100 shadow-xl h-full'>
-                    <div className='card-body'>
-                      <h2 className='card-title'>{project.title}</h2>
-                      <p className='text-sm opacity-70'>{project.period}</p>
-                      <p>{project.description}</p>
-                      <div className='card-actions justify-end mt-auto'>
-                        <a
-                          href={project.link}
-                          target='_blank'
-                          rel='noopener noreferrer'
-                          className='btn btn-primary btn-sm'
-                        >
-                          {project.linkText}
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </Slider>
-          </div>
-        </section>
-
-        {/* Contact Section */}
-        <section id='contact' className='py-20 bg-base-100'>
-          <div className='container mx-auto px-4'>
-            <AnimatedElement animationClass='animate-fade-in-up'>
-              <h2 className='font-bold mb-8 text-center'>Get In Touch</h2>
-            </AnimatedElement>
-            <AnimatedElement
-              animationClass='animate-fade-in-up'
-              style={{ animationDelay: "200ms" }}
-            >
-              <div className='text-center'>
-                <p className='mb-6 '>
-                  I&apos;m always open to new opportunities and collaborations.
-                  Feel free to reach out!
-                </p>
-                <p className='mb-8 font-semibold'>iskandarzhilmi@gmail.com</p>
-                <div className='flex flex-col sm:flex-row justify-center gap-4'>
-                  <ContactButton
-                    href='mailto:iskandarzhilmi@gmail.com'
-                    icon={faEnvelope}
-                    text='Email Me'
-                  />
-                  <ContactButton
-                    href='https://linkedin.com/in/iskandarhilmi'
-                    icon={faLinkedin}
-                    text='LinkedIn'
-                    external
-                  />
-                  <ContactButton
-                    href='https://github.com/iskandarzhilmi'
-                    icon={faGithub}
-                    text='GitHub'
-                    external
-                  />
-                </div>
+                  Get In Touch
+                </a>
               </div>
-            </AnimatedElement>
-          </div>
-        </section>
-
-        {/* Footer */}
-        <AnimatedElement animationClass='animate-fade-in-up'>
-          <footer className='footer footer-center p-10 bg-base-100 text-base-content rounded'>
-            <div>
-              <p>Copyright © 2024 - All rights reserved by Iskandar Hilmi</p>
             </div>
-          </footer>
-        </AnimatedElement>
-      </div>
 
-      {/* Scroll to Top FAB */}
+            {/* Profile Photo */}
+            <div className="flex-shrink-0 opacity-0 animate-fade-in delay-400">
+              <div className="rounded-2xl overflow-hidden border border-white/10 shadow-2xl shadow-indigo-500/10">
+                <Image
+                  src="/images/profile.jpg"
+                  alt="Iskandar Hilmi"
+                  width={450}
+                  height={800}
+                  className="w-64 md:w-80 h-auto"
+                  priority
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── About ── */}
+      <section id="about" className="py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="section-divider mb-16" />
+          <AnimatedSection>
+            <p className="text-sm text-indigo-400 uppercase tracking-wider font-semibold mb-4">
+              About
+            </p>
+          </AnimatedSection>
+          <AnimatedSection delay={100}>
+            <p className="text-xl md:text-2xl text-gray-300 leading-relaxed max-w-3xl">
+              I&apos;m a Malaysia-based developer who treats code as a tool to build
+              business value, not just a set of instructions. With three years of
+              experience shipping products for major clients like{" "}
+              <span className="text-white font-medium">123RF</span> and scaling my
+              own indie apps to thousands of users, I bridge the gap between robust
+              engineering and intuitive user experience.
+            </p>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ── Skills ── */}
+      <section id="skills" className="py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <AnimatedSection>
+            <p className="text-sm text-indigo-400 uppercase tracking-wider font-semibold mb-4">
+              Skills
+            </p>
+            <h2 className="text-3xl font-bold text-white mb-12">
+              Tools I Work With
+            </h2>
+          </AnimatedSection>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            {SKILL_GROUPS.map((group, index) => (
+              <SkillGroup
+                key={group.title}
+                title={group.title}
+                skills={group.skills}
+                delay={index * 100}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Experience ── */}
+      <section id="experience" className="py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <AnimatedSection>
+            <p className="text-sm text-indigo-400 uppercase tracking-wider font-semibold mb-4">
+              Experience
+            </p>
+            <h2 className="text-3xl font-bold text-white mb-12">
+              Where I&apos;ve Worked
+            </h2>
+          </AnimatedSection>
+          <div className="max-w-3xl">
+            {EXPERIENCES.map((experience, index) => (
+              <ExperienceCard
+                key={experience.company}
+                {...experience}
+                delay={index * 150}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Projects ── */}
+      <section id="projects" className="py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <AnimatedSection>
+            <p className="text-sm text-indigo-400 uppercase tracking-wider font-semibold mb-4">
+              Projects
+            </p>
+            <h2 className="text-3xl font-bold text-white mb-12">
+              What I&apos;ve Built
+            </h2>
+          </AnimatedSection>
+
+          {/* Featured: HalalChecker AI */}
+          <div className="mb-8">
+            <ProjectCard
+              title="HalalChecker AI"
+              description="A solo-developed mobile app helping Muslims identify halal food instantly using AI image recognition. I handled everything from full-stack development to marketing campaigns on Meta and TikTok."
+              metrics="20,000+ installs | $470+ MRR | Solo Built"
+              techStack={[
+                "Flutter",
+                "Node.js",
+                "Claude API",
+                "Google Vision API",
+                "RevenueCat",
+                "Supabase",
+                "Firebase",
+                "Riverpod",
+              ]}
+              link="https://apps.apple.com/us/app/halalchecker-ai-halal-scanner/id6698880367"
+              linkText="View on App Store"
+              featured
+              delay={0}
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <ProjectCard
+              title="Blieve AI"
+              description="GenAI platform for 123RF enabling AI image generation, editing, and video creation. Built with Next.js and TypeScript."
+              metrics="20,000+ users | $7,000+ MRR"
+              techStack={["Next.js", "TypeScript", "Shadcn", "Konva", "Zustand"]}
+              link="https://blieve.ai"
+              delay={100}
+            />
+            <ProjectCard
+              title="YTL Cement Hub"
+              description="B2B mobile app for Malaysia's largest construction material provider, serving diverse end users across the construction business."
+              techStack={["React Native", "TypeScript", "GraphQL"]}
+              link="http://bit.ly/3U0n5nA"
+              delay={200}
+            />
+            <ProjectCard
+              title="Trackco"
+              description="B2B stock management app handling complex logistic processes with QR scanning capabilities."
+              metrics="1,000+ downloads"
+              techStack={["Flutter"]}
+              link="https://smartkood.com/trackco"
+              delay={300}
+            />
+            <ProjectCard
+              title="Cellmax"
+              description="Developed and maintained two Flutter apps for a skincare clinic with payment gateway and push notifications."
+              techStack={["Flutter"]}
+              delay={400}
+            />
+            <ProjectCard
+              title="Hokkien Dictionary"
+              description="Responsive web app preserving an endangered language through a searchable dictionary with auth and CRUD dashboard."
+              techStack={["React", "TypeScript", "Ant Design"]}
+              delay={500}
+            />
+            <ProjectCard
+              title="Pcari.my"
+              description="Flutter super app with e-commerce and user-to-user marketplace built during internship at RF Infinite."
+              metrics="10,000+ downloads"
+              techStack={["Flutter"]}
+              delay={600}
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* ── Education ── */}
+      <section className="py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <AnimatedSection>
+            <p className="text-sm text-indigo-400 uppercase tracking-wider font-semibold mb-4">
+              Education
+            </p>
+            <h2 className="text-3xl font-bold text-white mb-12">Background</h2>
+          </AnimatedSection>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-3xl">
+            <AnimatedSection delay={0}>
+              <div className="skill-group-card rounded-2xl p-6">
+                <h3 className="text-white font-semibold">
+                  Bachelor of Computer Science (Honours)
+                </h3>
+                <p className="text-gray-400 text-sm mt-1">
+                  Universiti Teknologi MARA
+                </p>
+                <p className="text-gray-500 text-xs mt-1">Feb 2020 - Aug 2022 | Tapah, Perak</p>
+              </div>
+            </AnimatedSection>
+            <AnimatedSection delay={100}>
+              <div className="skill-group-card rounded-2xl p-6">
+                <h3 className="text-white font-semibold">
+                  Diploma in Computer Science
+                </h3>
+                <p className="text-gray-400 text-sm mt-1">
+                  Universiti Teknologi MARA
+                </p>
+                <p className="text-gray-500 text-xs mt-1">
+                  May 2017 - Jan 2020 | Segamat, Johor | CGPA: 3.57/4.00
+                </p>
+              </div>
+            </AnimatedSection>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Contact ── */}
+      <section id="contact" className="py-24">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="section-divider mb-16" />
+          <AnimatedSection>
+            <p className="text-sm text-indigo-400 uppercase tracking-wider font-semibold mb-4">
+              Contact
+            </p>
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Let&apos;s Build Something Great.
+            </h2>
+            <p className="text-gray-400 mb-10 max-w-lg">
+              Whether you need a high-performance mobile app or a scalable web
+              platform, I&apos;m ready to help. Drop me a line.
+            </p>
+          </AnimatedSection>
+          <AnimatedSection delay={100}>
+            <div className="flex flex-wrap gap-3">
+              <ContactButton
+                href="mailto:iskandarzhilmi@gmail.com"
+                icon={faEnvelope}
+                label="iskandarzhilmi@gmail.com"
+              />
+              <ContactButton
+                href="https://linkedin.com/in/iskandarhilmi"
+                icon={faLinkedin}
+                label="LinkedIn"
+                external
+              />
+              <ContactButton
+                href="https://github.com/iskandarzhilmi"
+                icon={faGithub}
+                label="GitHub"
+                external
+              />
+            </div>
+          </AnimatedSection>
+        </div>
+      </section>
+
+      {/* ── Footer ── */}
+      <footer className="py-8 border-t border-white/5">
+        <div className="max-w-6xl mx-auto px-6 text-center">
+          <p className="text-gray-600 text-sm">
+            &copy; {new Date().getFullYear()} Iskandar Hilmi. Built with purpose.
+          </p>
+        </div>
+      </footer>
+
+      {/* ── Scroll to Top ── */}
       <button
-        className={`fixed bottom-8 right-8 btn btn-circle btn-neutral shadow-lg transition-opacity duration-300 ${
-          showScrollTop ? "opacity-100" : "opacity-0 pointer-events-none"
+        className={`fixed bottom-8 right-8 w-10 h-10 rounded-full bg-indigo-500/20 border border-indigo-500/30 text-indigo-400 flex items-center justify-center transition-all duration-300 hover:bg-indigo-500/30 ${
+          showScrollTop ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4 pointer-events-none"
         }`}
-        onClick={scrollToTop}
-        aria-label='Scroll to top'
+        onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+        aria-label="Scroll to top"
       >
-        <FontAwesomeIcon icon={faArrowUp} className='text-base-content' />
+        <FontAwesomeIcon icon={faArrowUp} className="w-4 h-4" />
       </button>
-
-      <style jsx>{`
-        @keyframes fadeInLeft {
-          from {
-            opacity: 0;
-            transform: translateX(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        @keyframes fadeInRight {
-          from {
-            opacity: 0;
-            transform: translateX(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateX(0);
-          }
-        }
-        @keyframes fadeInDown {
-          from {
-            opacity: 0;
-            transform: translateY(-20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes fadeInUp {
-          from {
-            opacity: 0;
-            transform: translateY(20px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-        @keyframes bounceIn {
-          0% {
-            transform: scale(0.3);
-            opacity: 0;
-          }
-          50% {
-            transform: scale(1.05);
-            opacity: 1;
-          }
-          70% {
-            transform: scale(0.9);
-          }
-          100% {
-            transform: scale(1);
-          }
-        }
-        .animate-fade-in-left {
-          animation: fadeInLeft 1s ease-out;
-        }
-        .animate-fade-in-right {
-          animation: fadeInRight 1s ease-out;
-        }
-        .animate-fade-in-down {
-          animation: fadeInDown 1s ease-out;
-        }
-        .animate-fade-in-up {
-          animation: fadeInUp 1s ease-out;
-        }
-        .animate-bounce-in {
-          animation: bounceIn 0.5s ease-out;
-        }
-      `}</style>
-    </>
+    </div>
   );
 }
