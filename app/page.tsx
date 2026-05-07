@@ -23,12 +23,8 @@ interface Project {
   stack: string[];
   link?: string;
   linkText?: string;
-}
-
-interface LedgerProject {
-  name: string;
-  description: string;
-  link?: string;
+  cover?: string;
+  coverPosition?: string;
 }
 
 interface LedgerEntry {
@@ -36,7 +32,8 @@ interface LedgerEntry {
   role: string;
   period: string;
   summary: string;
-  projects: LedgerProject[];
+  highlights?: string[];
+  catalogueRef?: string;
 }
 
 // ─── Data ────────────────────────────────────────────────────────────────────
@@ -51,31 +48,37 @@ const SECTIONS = [
 
 const STATS = [
   { value: 3, suffix: "+", label: "Years in the trade" },
-  { value: 20, suffix: "K", label: "Hands holding things I built" },
-  { value: 8, suffix: "+", label: "Products shipped & maintained" },
+  { value: 25, suffix: "K", label: "Installs of HalalChecker AI" },
+  { value: 10, suffix: "+", label: "Products shipped & maintained" },
 ];
 
 const INDEX: IndexEntry[] = [
   { name: "Flutter", cat: "core" },
   { name: "React", cat: "core" },
   { name: "React Native", cat: "core" },
+  { name: "Expo", cat: "core" },
   { name: "TypeScript", cat: "core" },
   { name: "Next.js", cat: "core" },
   { name: "Responsive Design", cat: "core" },
   { name: "Node.js", cat: "cloud" },
   { name: "Supabase", cat: "cloud" },
+  { name: "PostgreSQL", cat: "cloud" },
   { name: "Firebase", cat: "cloud" },
   { name: "DigitalOcean", cat: "cloud" },
   { name: "GraphQL", cat: "cloud" },
+  { name: "tRPC", cat: "arch" },
+  { name: "Drizzle ORM", cat: "arch" },
   { name: "BLoC", cat: "arch" },
-  { name: "React Query", cat: "arch" },
-  { name: "Zustand", cat: "arch" },
+  { name: "TanStack Query", cat: "arch" },
   { name: "Riverpod", cat: "arch" },
+  { name: "Zustand", cat: "arch" },
   { name: "Object-oriented Programming", cat: "arch" },
-  { name: "Claude API", cat: "ai" },
+  { name: "Google Gemini API", cat: "ai" },
   { name: "Google Vision API", cat: "ai" },
-  { name: "Cursor", cat: "ai" },
+  { name: "Groq Whisper", cat: "ai" },
+  { name: "Claude API", cat: "ai" },
   { name: "Claude Code", cat: "ai" },
+  { name: "Cursor", cat: "ai" },
   { name: "Git", cat: "ai" },
 ];
 
@@ -90,52 +93,25 @@ const LEDGER: LedgerEntry[] = [
   {
     company: "Auronex Sdn Bhd",
     role: "Software Engineer · Flutter, React, React Native · Remote",
-    period: "Aug 2022 — Present",
+    period: "Aug 2022 – Present",
     summary:
-      "Delivering full-stack web and mobile work for enterprise clients and high-growth startups across Malaysia and the region.",
-    projects: [
-      {
-        name: "Blieve AI",
-        description:
-          "B2C AI image and video generation platform for 123RF. 20,000+ users, $7,000+ MRR. Next.js, TypeScript, Shadcn, Konva, Zustand.",
-        link: "https://blieve.ai",
-      },
-      {
-        name: "YTL Cement Hub",
-        description:
-          "B2B React Native CLI app with TypeScript for Malaysia's largest construction material provider. GraphQL-driven.",
-        link: "http://bit.ly/3U0n5nA",
-      },
-      {
-        name: "Trackco",
-        description:
-          "B2B stock management Flutter app for complex logistic processes. 1,000+ downloads.",
-        link: "https://smartkood.com/trackco",
-      },
-      {
-        name: "Cellmax",
-        description:
-          "Developed and maintained two Flutter apps for a skincare clinic.",
-      },
-      {
-        name: "Hokkien Dictionary",
-        description:
-          "B2C responsive React web app with TypeScript and Ant Design to help preserve an endangered language.",
-      },
+      "Delivering full-stack web and mobile work for enterprise clients and high-growth startups. Currently building Sphere AI, a greenfield AI social media content suite for 123RF. Prior client work spans Blieve AI for 123RF, YTL Cement Hub, Trackco, Cellmax, and the Hokkien Dictionary.",
+    highlights: [
+      "Greenfield frontend for an AI marketing platform serving 20K+ creators",
+      "Two B2B mobile builds for one of Malaysia's largest industrial clients",
+      "Solo design-to-ship work on smaller B2C products in production",
     ],
+    catalogueRef: "See § IV for live builds.",
   },
   {
     company: "RF Infinite Sdn Bhd",
     role: "Software Engineer Intern · Flutter · On-site",
-    period: "Mar 2022 — Aug 2022",
+    period: "Mar 2022 – Aug 2022",
     summary:
-      "Contributed to the Pcari.my Flutter in-house super app at Cyberjaya, Selangor.",
-    projects: [
-      {
-        name: "Pcari.my",
-        description:
-          "Flutter super app with e-commerce and a user-to-user marketplace. 10,000+ downloads.",
-      },
+      "Contributed to Pcari.my, an in-house Flutter super app at Cyberjaya with e-commerce and a user-to-user marketplace. Reached 10,000+ downloads during the internship period.",
+    highlights: [
+      "Shipped Flutter modules into a production super app",
+      "Worked across e-commerce and marketplace flows",
     ],
   },
 ];
@@ -144,70 +120,95 @@ const FEATURED: Project = {
   no: "00",
   title: "HalalChecker AI",
   blurb:
-    "A solo-built mobile app helping Muslims identify halal food instantly using AI image recognition. Full-stack, plus marketing on Meta and TikTok.",
-  metric: "20,000+ installs · $470+ MRR · solo built",
+    "A solo-built mobile app helping Muslims verify halal food via AI ingredient analysis and barcode scanning. Multi-modal pipeline (Gemini 3 Flash with Grounding, plus Vision OCR), dynamic regional pricing through RevenueCat, and a 6.7% free-to-paid conversion rate. Marketed solo on Meta and TikTok.",
+  metric: "25,000+ installs · $700+ MRR · 6.7% free-to-paid · solo built",
   stack: [
     "Flutter",
     "Node.js",
-    "Claude API",
-    "Google Vision API",
-    "RevenueCat",
     "Supabase",
-    "Firebase",
+    "Gemini 3 Flash",
+    "Google Vision",
+    "RevenueCat",
     "Riverpod",
+    "FCM",
   ],
   link: "https://apps.apple.com/us/app/halalchecker-ai-halal-scanner/id6698880367",
   linkText: "View on App Store",
+  cover: "/projects/halalchecker.jpg",
+  coverPosition: "20% top",
 };
 
 const PROJECTS: Project[] = [
   {
     no: "01",
-    title: "Blieve AI",
+    title: "Voxoro",
     blurb:
-      "GenAI platform for 123RF — image generation, editing, and video creation. Built with Next.js and TypeScript.",
-    metric: "20,000+ users · $7,000+ MRR",
-    stack: ["Next.js", "TypeScript", "Shadcn", "Konva", "Zustand"],
-    link: "https://blieve.ai",
+      "A voice-first expense tracker. Speak naturally, like \"fifty bucks coffee at Starbucks\", and a two-stage AI pipeline parses the audio into a structured transaction with amount, currency, category, and date. ~$0.0005 per transaction across 50+ languages.",
+    metric: "Live on App Store · solo built",
+    stack: [
+      "Expo",
+      "React Native",
+      "Next.js 16",
+      "tRPC v11",
+      "Drizzle",
+      "PostgreSQL",
+      "Groq Whisper",
+      "Gemini 3 Flash",
+      "RevenueCat",
+    ],
+    link: "https://apps.apple.com/us/app/voxoro-voice-budget-tracker/id6761206147",
+    linkText: "View on App Store",
+    cover: "/projects/voxoro.jpg",
+    coverPosition: "20% top",
   },
   {
     no: "02",
-    title: "YTL Cement Hub",
+    title: "Sphere AI",
     blurb:
-      "B2B mobile tool for Malaysia's largest construction material provider, used across the construction supply chain.",
-    stack: ["React Native", "TypeScript", "GraphQL"],
-    link: "http://bit.ly/3U0n5nA",
+      "Greenfield AI-powered social media content platform for 123RF. Building core flows for brand onboarding, campaign creation, creative library, post scheduling, and reporting dashboards, with async UX for AI-assisted workflows.",
+    stack: ["Next.js", "React", "TypeScript", "React Query", "Zustand"],
+    link: "https://sphere.123rf.ai",
+    cover: "/projects/sphere.jpg",
+    coverPosition: "center top",
   },
   {
     no: "03",
-    title: "Trackco",
+    title: "Blieve AI",
     blurb:
-      "B2B stock management app handling complex logistic processes, with QR scanning and structured workflows.",
-    metric: "1,000+ downloads",
-    stack: ["Flutter"],
-    link: "https://smartkood.com/trackco",
+      "GenAI platform for 123RF: AI image generation and editing, AI headshots, AI companions, image-to-video animation. Frontend with Next.js, TypeScript, Shadcn, Konva, Zustand. Pixel-perfect Figma implementation, full SEO.",
+    metric: "20,000+ users · $7,000+ MRR",
+    stack: ["Next.js", "TypeScript", "Shadcn", "Konva", "Zustand"],
+    link: "https://blieve.ai",
+    cover: "/projects/blieve.jpg",
+    coverPosition: "center top",
   },
   {
     no: "04",
-    title: "Cellmax",
+    title: "YTL Cement Hub",
     blurb:
-      "Two Flutter apps developed and maintained for a skincare clinic — payment gateway and push notifications.",
-    stack: ["Flutter"],
+      "B2B mobile tool for Malaysia's largest construction material provider, used across the construction supply chain. GraphQL-driven, React Native + TypeScript.",
+    stack: ["React Native", "TypeScript", "GraphQL"],
+    link: "http://bit.ly/3U0n5nA",
+    cover: "/projects/ytl.jpg",
+    coverPosition: "center top",
   },
   {
     no: "05",
-    title: "Hokkien Dictionary",
+    title: "Trackco",
     blurb:
-      "Responsive web app preserving an endangered language. Searchable dictionary with auth and a CRUD dashboard.",
-    stack: ["React", "TypeScript", "Ant Design"],
+      "B2B inventory and dealer-management app handling stock flow, distributor networks, QR scanning, and a rewards system for distributors across Southeast Asia.",
+    metric: "1,000+ downloads",
+    stack: ["Flutter"],
+    link: "https://smartkood.com/trackco",
+    cover: "/projects/trackco.jpg",
+    coverPosition: "center top",
   },
   {
     no: "06",
-    title: "Pcari.my",
+    title: "Hokkien Dictionary",
     blurb:
-      "Flutter super app with e-commerce and a user-to-user marketplace, built during my internship at RF Infinite.",
-    metric: "10,000+ downloads",
-    stack: ["Flutter"],
+      "Responsive web app preserving an endangered language. Searchable dictionary with auth and a CRUD dashboard, built in React with TypeScript and Ant Design.",
+    stack: ["React", "TypeScript", "Ant Design"],
   },
 ];
 
@@ -215,12 +216,12 @@ const SCHOOLS = [
   {
     title: "Bachelor of Computer Science (Honours)",
     place: "Universiti Teknologi MARA",
-    when: "Feb 2020 — Aug 2022 · Tapah, Perak",
+    when: "Feb 2020 – Aug 2022 · Tapah, Perak",
   },
   {
     title: "Diploma in Computer Science",
     place: "Universiti Teknologi MARA",
-    when: "May 2017 — Jan 2020 · Segamat, Johor · CGPA 3.57 / 4.00",
+    when: "May 2017 – Jan 2020 · Segamat, Johor · CGPA 3.57 / 4.00",
   },
 ];
 
@@ -440,6 +441,41 @@ export default function Home() {
         <div className="rule" />
       </header>
 
+      {/* ─── Now Shipping strip (HalalChecker highlight) ────────────── */}
+      <a
+        href="https://apps.apple.com/us/app/halalchecker-ai-halal-scanner/id6698880367"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="now-shipping block group relative z-10"
+        aria-label="HalalChecker AI on the App Store"
+      >
+        <div className="max-w-[1320px] mx-auto px-6 md:px-10 py-4 flex items-center gap-4 md:gap-6 flex-wrap relative z-10">
+          <span className="flex items-center gap-3 shrink-0">
+            <span className="pulse-dot" />
+            <span className="font-mono text-[10px] tracking-[0.32em] uppercase text-ink-soft">
+              Now shipping ↘
+            </span>
+          </span>
+          <span className="font-display-italic text-xl md:text-2xl tracking-tighter text-ink leading-none">
+            HalalChecker AI
+          </span>
+          <span className="hidden md:flex items-center gap-3 font-mono text-[10.5px] tracking-[0.18em] uppercase text-ink-soft">
+            <span>25,000+ installs</span>
+            <span className="text-ink-faint">·</span>
+            <span>$700+ MRR</span>
+            <span className="text-ink-faint">·</span>
+            <span>6.7% free-to-paid</span>
+          </span>
+          <span className="md:hidden font-mono text-[10.5px] tracking-[0.18em] uppercase text-ink-soft">
+            25K+ · $700+ MRR
+          </span>
+          <span className="ml-auto font-mono text-[10px] tracking-[0.22em] uppercase text-vermilion group-hover:underline">
+            View on App Store ↗
+          </span>
+        </div>
+      </a>
+      <div className="rule" />
+
       {/* ─── § 0 — Hero / Lede ────────────────────────────────────────── */}
       <section
         id="dossier"
@@ -449,7 +485,7 @@ export default function Home() {
           {/* Left lede */}
           <div className="col-span-12 lg:col-span-7 order-2 lg:order-1">
             <div className="eyebrow mb-6">
-              The lede ——— a working introduction
+              The lede ↘ a working introduction
             </div>
             <h1 className="font-display tracking-tightest text-ink leading-[0.9] text-[3rem] sm:text-[4.5rem] md:text-[5.8rem]">
               Engineer{" "}
@@ -468,8 +504,8 @@ export default function Home() {
               build business value, not just a set of instructions. Three years
               of shipping for clients like{" "}
               <span className="ink-link">123RF</span>, plus my own indie apps
-              scaled to thousands of users. I bridge robust engineering and
-              intuitive product.
+              scaled past twenty-five thousand installs. I bridge robust
+              engineering with intuitive product.
             </p>
 
             <div className="mt-12 grid grid-cols-1 sm:grid-cols-3 gap-8">
@@ -517,7 +553,7 @@ export default function Home() {
               </div>
               {/* Caption */}
               <div className="mt-4 flex items-baseline justify-between gap-4">
-                <span className="eyebrow">Plate I — author at desk</span>
+                <span className="eyebrow">Plate I · author at desk</span>
                 <span className="eyebrow">Photographic record</span>
               </div>
             </div>
@@ -535,13 +571,17 @@ export default function Home() {
                 Three years into the trade. I trained as a computer scientist
                 in Malaysia, started shipping Flutter apps for clients in
                 Cyberjaya, and have spent the years since moving across the
-                stack — Flutter, React, React Native, Next.js, Node, Supabase
-                — putting things into the hands of real users. Some projects
-                have been quietly large: a B2B app for the country&apos;s
-                biggest cement supplier, a generative-AI platform for 123RF
-                serving twenty thousand creators. Others are mine alone:
-                HalalChecker, an AI scanner I built solo, marketed on TikTok,
-                and grew to twenty thousand installs.
+                stack: Flutter, React, React Native, Next.js, Node, Supabase,
+                tRPC. Some projects have been quietly large. A B2B app for
+                the country&apos;s biggest cement supplier. A generative-AI
+                platform for 123RF serving twenty thousand creators, and a
+                new AI social media suite I&apos;m currently building for
+                them. Others are mine alone. HalalChecker, an AI halal
+                scanner I built solo, marketed on TikTok, and grew past
+                twenty-five thousand installs and seven hundred dollars MRR.
+                And lately Voxoro, a voice-first expense tracker that turns
+                &quot;fifty bucks coffee at Starbucks&quot; into a clean
+                transaction.
               </p>
               <p className="font-body text-[1.05rem] md:text-[1.18rem] leading-[1.65] text-ink-soft mt-6">
                 The throughline is the same. Make things people pick up, use,
@@ -652,41 +692,36 @@ export default function Home() {
                   <p className="font-display-italic text-vermilion text-lg md:text-xl mt-1">
                     {entry.role}
                   </p>
-                  <p className="font-body text-[1.05rem] leading-[1.6] text-ink-soft mt-4 max-w-[60ch]">
+                  <p className="font-body text-[1.05rem] leading-[1.6] text-ink-soft mt-4 max-w-[62ch]">
                     {entry.summary}
                   </p>
 
-                  <div className="mt-6 grid grid-cols-1 sm:grid-cols-2 gap-3">
-                    {entry.projects.map((p, i) => (
-                      <div
-                        key={p.name}
-                        className="paper-card p-5"
+                  {entry.highlights && (
+                    <ul className="mt-6 space-y-2 max-w-[62ch]">
+                      {entry.highlights.map((h, i) => (
+                        <li
+                          key={h}
+                          className="flex gap-3 font-body text-[15px] leading-[1.55] text-ink-soft"
+                        >
+                          <span className="font-mono text-[10px] tracking-widest text-vermilion pt-[6px] tabular-nums">
+                            {String(i + 1).padStart(2, "0")}
+                          </span>
+                          <span>{h}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+
+                  {entry.catalogueRef && (
+                    <p className="font-mono text-[11px] tracking-wider uppercase text-ink-mute mt-6">
+                      <a
+                        href="#ships"
+                        className="ink-link text-ink hover:text-vermilion"
                       >
-                        <div className="flex items-baseline justify-between gap-3">
-                          <h4 className="font-display text-lg md:text-xl text-ink tracking-tighter">
-                            <span className="font-mono text-[10px] tracking-widest text-vermilion mr-2 align-middle">
-                              {String(i + 1).padStart(2, "0")}
-                            </span>
-                            {p.name}
-                          </h4>
-                          {p.link && (
-                            <a
-                              href={p.link}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              className="font-mono text-[10px] tracking-widest text-ink-soft hover:text-vermilion transition-colors"
-                              aria-label={`Visit ${p.name}`}
-                            >
-                              ↗
-                            </a>
-                          )}
-                        </div>
-                        <p className="font-body text-[14px] leading-[1.55] text-ink-soft mt-2">
-                          {p.description}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
+                        {entry.catalogueRef}
+                      </a>
+                    </p>
+                  )}
                 </div>
               </article>
             </Reveal>
@@ -708,9 +743,34 @@ export default function Home() {
         {/* Featured */}
         <Reveal>
           <article className="grid grid-cols-12 gap-6 md:gap-10 pt-2">
+            <div className="col-span-12 md:col-span-7">
+              {FEATURED.cover && (
+                <a
+                  href={FEATURED.link}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="block plate plate-featured"
+                  aria-label={FEATURED.title}
+                >
+                  <Image
+                    src={FEATURED.cover}
+                    alt={`${FEATURED.title} preview`}
+                    width={1440}
+                    height={1080}
+                    style={{
+                      objectPosition: FEATURED.coverPosition || "center top",
+                    }}
+                  />
+                </a>
+              )}
+              <div className="plate-caption">
+                <span>Plate № 00 · {FEATURED.title}</span>
+                <span>App Store · iOS</span>
+              </div>
+            </div>
             <div className="col-span-12 md:col-span-5">
               <div className="flex items-start gap-4">
-                <span className="numeral text-[8rem] md:text-[12rem]">
+                <span className="numeral text-[6rem] md:text-[9rem]">
                   {FEATURED.no}
                 </span>
                 <div className="pt-3 flex flex-col gap-2">
@@ -720,9 +780,7 @@ export default function Home() {
                   <span className="stamp">Solo built</span>
                 </div>
               </div>
-            </div>
-            <div className="col-span-12 md:col-span-7">
-              <h3 className="font-display text-4xl md:text-5xl tracking-tightest text-ink leading-[0.95]">
+              <h3 className="font-display text-4xl md:text-5xl tracking-tightest text-ink leading-[0.95] mt-4">
                 <span className="font-display-italic">{FEATURED.title}</span>
               </h3>
               {FEATURED.metric && (
@@ -730,7 +788,7 @@ export default function Home() {
                   {FEATURED.metric}
                 </p>
               )}
-              <p className="font-body text-[1.1rem] leading-[1.65] text-ink-soft mt-4 max-w-[60ch]">
+              <p className="font-body text-[1.05rem] leading-[1.65] text-ink-soft mt-4 max-w-[60ch]">
                 {FEATURED.blurb}
               </p>
               <div className="mt-5 flex flex-wrap gap-2">
@@ -755,26 +813,68 @@ export default function Home() {
         <div className="rule my-16" />
 
         {/* Catalogue grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-14">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-10 gap-y-16">
           {PROJECTS.map((p) => (
             <Reveal key={p.title}>
               <article className="flex flex-col h-full">
-                <div className="flex items-baseline justify-between">
-                  <span className="numeral text-[5rem] md:text-[6rem]">
-                    {p.no}
-                  </span>
+                {p.cover ? (
+                  p.link ? (
+                    <a
+                      href={p.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block plate"
+                      aria-label={p.title}
+                    >
+                      <Image
+                        src={p.cover}
+                        alt={`${p.title} preview`}
+                        width={960}
+                        height={600}
+                        style={{
+                          objectPosition: p.coverPosition || "center top",
+                        }}
+                      />
+                    </a>
+                  ) : (
+                    <div className="plate">
+                      <Image
+                        src={p.cover}
+                        alt={`${p.title} preview`}
+                        width={960}
+                        height={600}
+                        style={{
+                          objectPosition: p.coverPosition || "center top",
+                        }}
+                      />
+                    </div>
+                  )
+                ) : (
+                  <div className="plate plate-empty">
+                    <span className="font-display-italic text-vermilion text-2xl md:text-3xl tracking-tighter px-4 text-center">
+                      {p.title}
+                    </span>
+                  </div>
+                )}
+                <div className="plate-caption">
+                  <span>Plate № {p.no}</span>
                   {p.link && (
                     <a
                       href={p.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="font-mono text-[10px] tracking-widest text-ink-soft hover:text-vermilion transition-colors"
+                      className="hover:text-vermilion transition-colors"
                     >
                       VISIT ↗
                     </a>
                   )}
                 </div>
-                <div className="rule-vermilion my-3" />
+                <div className="flex items-baseline justify-between mt-3">
+                  <span className="numeral text-[4.2rem] md:text-[5rem]">
+                    {p.no}
+                  </span>
+                </div>
+                <div className="rule-vermilion my-2" />
                 <h3 className="font-display text-2xl md:text-3xl tracking-tightest text-ink">
                   {p.title}
                 </h3>
@@ -902,7 +1002,7 @@ export default function Home() {
                 KUALA LUMPUR · GMT+8
               </div>
               <div className="margin-note mt-4">
-                REPLY WITHIN · 1—2 DAYS
+                REPLY WITHIN · 1–2 DAYS
                 <br />
                 LANGUAGES · EN · MS · 日本語
               </div>

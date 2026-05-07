@@ -244,6 +244,66 @@ body::after {
   mix-blend-mode: multiply;
 }
 
+/* Plate — printed image of a project. Clean (no filter) so screenshots stay legible. */
+.plate {
+  position: relative;
+  background: var(--paper-deep);
+  border: 1px solid var(--ink);
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1),
+    box-shadow 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.plate::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  pointer-events: none;
+  z-index: 2;
+}
+.plate img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.plate:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 4px 4px 0 0 var(--ink);
+}
+
+.plate-featured {
+  aspect-ratio: 4 / 3;
+}
+
+.plate-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--paper-deep);
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0,
+    transparent 14px,
+    rgba(23, 20, 19, 0.06) 14px,
+    rgba(23, 20, 19, 0.06) 15px
+  );
+}
+
+/* Caption strip under a plate */
+.plate-caption {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-top: 0.55rem;
+  font-family: var(--font-mono), monospace;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+}
+
 /* Fol. counter (vertical pagination) */
 .fol-counter {
   position: fixed;
@@ -268,6 +328,55 @@ body::after {
 .fol-counter span.is-active {
   color: var(--vermilion);
   letter-spacing: 0.42em;
+}
+
+/* Now-shipping highlight strip */
+.now-shipping {
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--ink);
+  background: var(--paper-deep);
+  position: relative;
+  overflow: hidden;
+}
+.now-shipping::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: repeating-linear-gradient(
+    -45deg,
+    transparent 0,
+    transparent 10px,
+    rgba(214, 74, 31, 0.05) 10px,
+    rgba(214, 74, 31, 0.05) 11px
+  );
+  pointer-events: none;
+}
+.pulse-dot {
+  position: relative;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--vermilion);
+  flex-shrink: 0;
+}
+.pulse-dot::before {
+  content: "";
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: var(--vermilion);
+  opacity: 0.35;
+  animation: pulseRing 1.6s ease-out infinite;
+}
+@keyframes pulseRing {
+  0% {
+    transform: scale(0.5);
+    opacity: 0.55;
+  }
+  100% {
+    transform: scale(2.4);
+    opacity: 0;
+  }
 }
 
 /* Caret blink */
