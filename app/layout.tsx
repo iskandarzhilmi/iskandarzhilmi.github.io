@@ -1,36 +1,27 @@
 import type { Metadata } from "next";
-import { Fraunces, Newsreader, JetBrains_Mono } from "next/font/google";
+import { Inter, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 
-const fraunces = Fraunces({
+const sans = Inter({
   subsets: ["latin"],
-  variable: "--font-display",
-  axes: ["opsz", "SOFT", "WONK"],
+  variable: "--font-sans",
   display: "swap",
 });
 
-const newsreader = Newsreader({
-  subsets: ["latin"],
-  variable: "--font-body",
-  axes: ["opsz"],
-  style: ["normal", "italic"],
-  display: "swap",
-});
-
-const jetbrains = JetBrains_Mono({
+const mono = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-mono",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Iskandar Hilmi — Dossier",
+  title: "Iskandar Hilmi",
   description:
-    "A working dossier of an engineer & indie maker shipping mobile, web, and AI products from Kuala Lumpur.",
+    "Software engineer and indie maker shipping mobile, web, and AI products from Kuala Lumpur.",
   openGraph: {
-    title: "Iskandar Hilmi — Dossier",
+    title: "Iskandar Hilmi",
     description:
-      "A working dossier of an engineer & indie maker shipping mobile, web, and AI products from Kuala Lumpur.",
+      "Software engineer and indie maker shipping mobile, web, and AI products from Kuala Lumpur.",
     type: "website",
     url: "https://iskandarzhilmi.github.io",
   },
@@ -38,15 +29,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html
-      lang="en"
-      className={`${fraunces.variable} ${newsreader.variable} ${jetbrains.variable}`}
-    >
-      <body className="font-body antialiased">{children}</body>
+    <html lang="en" className={`${sans.variable} ${mono.variable}`}>
+      <body className="font-sans antialiased">{children}</body>
     </html>
   );
 }
