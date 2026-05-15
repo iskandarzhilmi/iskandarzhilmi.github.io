@@ -422,11 +422,6 @@ export default function Home() {
         <section className="pt-16 md:pt-28 pb-20 md:pb-32">
           <div className="grid lg:grid-cols-[1fr_20rem] gap-10 lg:gap-16 items-start">
             <div>
-              <div className="flex items-center gap-2 text-xs uppercase tracking-wider text-muted mb-8">
-                <span className="dot" />
-                Open for select work
-              </div>
-
               <h1 className="text-4xl md:text-6xl lg:text-7xl tracking-tight leading-[1.05]">
                 Software engineer building mobile, web, and AI products
                 <span className="text-muted"> people actually use.</span>
