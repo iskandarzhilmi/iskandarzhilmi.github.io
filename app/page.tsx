@@ -452,8 +452,8 @@ export default function Home() {
                 <Image
                   src="/images/profile-cutout.png"
                   alt="Iskandar Hilmi"
-                  width={410}
-                  height={584}
+                  width={713}
+                  height={1035}
                   priority
                   className="pop-img"
                 />
