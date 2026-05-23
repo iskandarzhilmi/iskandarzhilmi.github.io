@@ -45,37 +45,27 @@ const CAT_LABEL: Record<Cat, string> = {
 };
 
 const SKILLS: Skill[] = [
-  { name: "Flutter",          cat: "core" },
-  { name: "React",            cat: "core" },
-  { name: "React Native",     cat: "core" },
-  { name: "Expo",             cat: "core" },
-  { name: "TypeScript",       cat: "core" },
-  { name: "Next.js",          cat: "core" },
-  { name: "Node.js",          cat: "cloud" },
-  { name: "Supabase",         cat: "cloud" },
-  { name: "PostgreSQL",       cat: "cloud" },
-  { name: "Firebase",         cat: "cloud" },
-  { name: "DigitalOcean",     cat: "cloud" },
-  { name: "GraphQL",          cat: "cloud" },
-  { name: "tRPC",             cat: "arch" },
-  { name: "Drizzle ORM",      cat: "arch" },
-  { name: "BLoC",             cat: "arch" },
-  { name: "TanStack Query",   cat: "arch" },
-  { name: "Riverpod",         cat: "arch" },
-  { name: "Zustand",          cat: "arch" },
-  { name: "Gemini API",       cat: "ai" },
-  { name: "Google Vision",    cat: "ai" },
-  { name: "Groq Whisper",     cat: "ai" },
-  { name: "Claude API",       cat: "ai" },
-  { name: "Claude Code",      cat: "ai" },
-  { name: "Cursor",           cat: "ai" },
+  { name: "Flutter",        cat: "core" },
+  { name: "React Native",   cat: "core" },
+  { name: "React",          cat: "core" },
+  { name: "TypeScript",     cat: "core" },
+  { name: "Next.js",        cat: "core" },
+  { name: "Node.js",        cat: "cloud" },
+  { name: "Supabase",       cat: "cloud" },
+  { name: "PostgreSQL",     cat: "cloud" },
+  { name: "Riverpod",       cat: "arch" },
+  { name: "tRPC",           cat: "arch" },
+  { name: "TanStack Query", cat: "arch" },
+  { name: "Gemini API",     cat: "ai" },
+  { name: "Claude API",     cat: "ai" },
+  { name: "Claude Code",    cat: "ai" },
 ];
 
 const JOBS: Job[] = [
   {
     company: "Auronex",
     role: "Software Engineer · Remote",
-    period: "2022 — Now",
+    period: "2022 – Now",
     summary:
       "Full-stack web and mobile work for enterprise clients and high-growth startups. Currently building Sphere AI, a greenfield AI social content suite for 123RF. Prior work: Blieve AI for 123RF, YTL Cement Hub, Trackco, Cellmax, Hokkien Dictionary.",
     highlights: [
@@ -114,7 +104,7 @@ const PROJECTS: Project[] = [
     no: "01",
     title: "Voxoro",
     blurb:
-      "Voice-first expense tracker. Speak naturally — \"fifty bucks coffee at Starbucks\" — and a two-stage AI pipeline parses the audio into a structured transaction. ~$0.0005 per transaction across 50+ languages.",
+      "Voice-first expense tracker. Speak naturally, like \"fifty bucks coffee at Starbucks,\" and a two-stage AI pipeline parses the audio into a structured transaction. ~$0.0005 per transaction across 50+ languages.",
     metric: "Live on App Store · solo built",
     stack: ["Expo", "Next.js 16", "tRPC", "Drizzle", "Postgres", "Groq Whisper", "Gemini 3 Flash"],
     link: "https://apps.apple.com/us/app/voxoro-voice-budget-tracker/id6761206147",
@@ -125,7 +115,7 @@ const PROJECTS: Project[] = [
     no: "02",
     title: "Sphere AI",
     blurb:
-      "Greenfield AI-powered social media content platform for 123RF. Brand onboarding, campaign creation, creative library, post scheduling, reporting — with async UX for AI-assisted workflows.",
+      "Greenfield AI-powered social media content platform for 123RF. Brand onboarding, campaign creation, creative library, post scheduling, and reporting, with async UX for AI-assisted workflows.",
     stack: ["Next.js", "React", "TypeScript", "React Query", "Zustand"],
     link: "https://sphere.123rf.ai",
     cover: "/projects/sphere.jpg",
@@ -176,12 +166,12 @@ const SCHOOLS = [
   {
     title: "Bachelor of Computer Science (Honours)",
     place: "Universiti Teknologi MARA",
-    when:  "2020 — 2022 · Tapah, Perak",
+    when:  "2020 – 2022 · Tapah, Perak",
   },
   {
     title: "Diploma in Computer Science",
     place: "Universiti Teknologi MARA",
-    when:  "2017 — 2020 · Segamat, Johor · CGPA 3.57 / 4.00",
+    when:  "2017 – 2020 · Segamat, Johor · CGPA 3.57 / 4.00",
   },
 ];
 
@@ -625,7 +615,7 @@ export default function Home() {
               </p>
 
               <p className="mt-8 text-base md:text-lg leading-relaxed text-muted max-w-xl">
-                Mobile, web, or AI — drop me a line. I read everything that comes
+                Mobile, web, or AI. Drop me a line. I read everything that comes
                 through and reply within a day or two.
               </p>
 
