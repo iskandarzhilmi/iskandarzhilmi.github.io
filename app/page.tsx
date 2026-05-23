@@ -410,11 +410,33 @@ const Featured = ({ p }: { p: Project }) => (
 );
 
 export default function Home() {
-  const [copied, setCopied] = useState(false);
+  const labelRef = useRef<HTMLSpanElement | null>(null);
+  const timers = useRef<number[]>([]);
+
+  useEffect(() => () => timers.current.forEach(clearTimeout), []);
+
+  const swapText = (next: string) => {
+    const el = labelRef.current;
+    if (!el) return;
+    const dur = parseFloat(
+      getComputedStyle(document.documentElement).getPropertyValue("--text-swap-dur"),
+    ) || 200;
+    el.classList.add("is-exit");
+    timers.current.push(
+      window.setTimeout(() => {
+        el.textContent = next;
+        el.classList.remove("is-exit");
+        el.classList.add("is-enter-start");
+        void el.offsetHeight; // force reflow so the next change transitions
+        el.classList.remove("is-enter-start");
+      }, dur),
+    );
+  };
+
   const copyEmail = () => {
     navigator.clipboard.writeText("iskandarzhilmi@gmail.com");
-    setCopied(true);
-    setTimeout(() => setCopied(false), 1500);
+    swapText("Copied");
+    timers.current.push(window.setTimeout(() => swapText("Copy"), 1500));
   };
 
   return (
@@ -435,8 +457,8 @@ export default function Home() {
                 className="animate-rise mt-8 max-w-xl text-base md:text-lg leading-relaxed text-muted"
                 style={{ animationDelay: "80ms" }}
               >
-                Malaysia-based developer with three years shipping for clients like{" "}
-                <span className="text-fg">123RF</span> and indie apps past 25,000 installs.
+                Malaysia-based developer with three years shipping for enterprise clients and
+                indie apps past <span className="text-fg">25,000 installs</span>.
                 I treat code as a tool to build product, not just instructions.
               </p>
 
@@ -620,7 +642,7 @@ export default function Home() {
                   className="inline-flex items-center justify-center min-h-[40px] min-w-[4.5rem] font-mono text-xs px-3 border border-line rounded-full text-muted hover:text-fg hover:border-fg active:scale-[0.96] transition-[color,border-color,transform] duration-200"
                   aria-label="Copy email address"
                 >
-                  {copied ? "Copied" : "Copy"}
+                  <span ref={labelRef} className="t-text-swap">Copy</span>
                 </button>
               </div>
 
