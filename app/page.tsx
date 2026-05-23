@@ -221,9 +221,13 @@ const useCountUp = (target: number, active: boolean, duration = 1400) => {
   return n;
 };
 
-const Reveal = ({ children, className = "" }: { children: ReactNode; className?: string }) => {
+const Reveal = ({ children, className = "", delay = 0 }: { children: ReactNode; className?: string; delay?: number }) => {
   const ref = useReveal<HTMLDivElement>();
-  return <div ref={ref} className={`reveal ${className}`}>{children}</div>;
+  return (
+    <div ref={ref} className={`reveal ${className}`} style={delay ? { transitionDelay: `${delay}ms` } : undefined}>
+      {children}
+    </div>
+  );
 };
 
 const Stat = ({ value, suffix, label }: { value: number; suffix: string; label: string }) => {
@@ -354,7 +358,7 @@ const ProjectCard = ({ p }: { p: Project }) => {
     >
       {body}
       <span className="font-mono text-xs text-muted group-hover:text-fg transition-colors">
-        Visit →
+        Visit <span className="inline-block transition-transform group-hover:translate-x-0.5">→</span>
       </span>
     </a>
   ) : (
@@ -422,31 +426,40 @@ export default function Home() {
         <section className="pt-16 md:pt-28 pb-20 md:pb-32">
           <div className="grid lg:grid-cols-[1fr_20rem] gap-10 lg:gap-16 items-start">
             <div>
-              <h1 className="text-4xl md:text-6xl lg:text-7xl tracking-tight leading-[1.05]">
+              <h1 className="animate-rise text-4xl md:text-6xl lg:text-7xl tracking-tight leading-[1.05]">
                 Software engineer building mobile, web, and AI products
                 <span className="text-muted"> people actually use.</span>
               </h1>
 
-              <p className="mt-8 max-w-xl text-base md:text-lg leading-relaxed text-muted">
+              <p
+                className="animate-rise mt-8 max-w-xl text-base md:text-lg leading-relaxed text-muted"
+                style={{ animationDelay: "80ms" }}
+              >
                 Malaysia-based developer with three years shipping for clients like{" "}
                 <span className="text-fg">123RF</span> and indie apps past 25,000 installs.
                 I treat code as a tool to build product, not just instructions.
               </p>
 
-              <div className="mt-10 flex flex-wrap items-center gap-x-10 gap-y-6">
+              <div
+                className="animate-rise mt-10 flex flex-wrap items-center gap-x-10 gap-y-6"
+                style={{ animationDelay: "160ms" }}
+              >
                 {STATS.map(s => (
                   <Stat key={s.label} value={s.value} suffix={s.suffix} label={s.label} />
                 ))}
               </div>
 
-              <div className="mt-10 flex flex-wrap items-center gap-4 text-sm">
+              <div
+                className="animate-rise mt-10 flex flex-wrap items-center gap-4 text-sm"
+                style={{ animationDelay: "240ms" }}
+              >
                 <a href="#projects" className="text-fg link">See projects →</a>
                 <span className="text-subtle">/</span>
                 <a href="#contact" className="text-muted link">Get in touch</a>
               </div>
             </div>
 
-            <figure className="hidden lg:block pop-figure">
+            <figure className="animate-rise hidden lg:block pop-figure" style={{ animationDelay: "120ms" }}>
               <div aria-hidden className="pop-glow" />
               <div className="pop-frame">
                 <Image
@@ -476,8 +489,8 @@ export default function Home() {
           </Reveal>
 
           <ul className="space-y-12">
-            {JOBS.map(j => (
-              <Reveal key={j.company}>
+            {JOBS.map((j, i) => (
+              <Reveal key={j.company} delay={i * 100}>
                 <li>
                   <article className="grid md:grid-cols-[10rem_1fr] gap-4 md:gap-10">
                     <time className="font-mono text-sm text-muted">{j.period}</time>
@@ -519,8 +532,8 @@ export default function Home() {
           <Featured p={FEATURED} />
 
           <div className="mt-20 grid md:grid-cols-2 gap-x-10 gap-y-2">
-            {PROJECTS.map(p => (
-              <Reveal key={p.title}>
+            {PROJECTS.map((p, i) => (
+              <Reveal key={p.title} delay={(i % 2) * 80}>
                 <ProjectCard p={p} />
               </Reveal>
             ))}
@@ -537,10 +550,10 @@ export default function Home() {
           </Reveal>
 
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-x-10 gap-y-12">
-            {(Object.keys(CAT_LABEL) as Cat[]).map(cat => {
+            {(Object.keys(CAT_LABEL) as Cat[]).map((cat, i) => {
               const items = SKILLS.filter(s => s.cat === cat);
               return (
-                <Reveal key={cat}>
+                <Reveal key={cat} delay={i * 80}>
                   <div>
                     <header className="flex items-baseline justify-between mb-4 pb-2 border-b border-line">
                       <span className="text-sm font-medium">{CAT_LABEL[cat]}</span>
@@ -604,7 +617,7 @@ export default function Home() {
                 <button
                   type="button"
                   onClick={copyEmail}
-                  className="font-mono text-xs px-3 py-1.5 border border-line rounded-full text-muted hover:text-fg hover:border-fg transition-colors"
+                  className="inline-flex items-center justify-center min-h-[40px] min-w-[4.5rem] font-mono text-xs px-3 border border-line rounded-full text-muted hover:text-fg hover:border-fg active:scale-[0.96] transition-[color,border-color,transform] duration-200"
                   aria-label="Copy email address"
                 >
                   {copied ? "Copied" : "Copy"}
