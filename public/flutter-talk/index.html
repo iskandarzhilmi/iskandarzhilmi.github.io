@@ -455,10 +455,19 @@
       <aside class="notes">Subs + points, no login</aside>
     </section>
 
+    <!-- 13c. RC terms intro: example app -->
+    <section class="slide">
+      <div class="pad center">
+        <p class="kicker r r1">4 terms to know</p>
+        <h2 class="r r2" style="margin-top:22px;">Example: a <span class="hl">workout app</span> <svg class="ic" style="color:var(--teal);"><use href="#i-dumbbell"/></svg></h2>
+        <p class="lead r r3" style="margin-top:26px;">Product · Package · Offering · Entitlement</p>
+      </div>
+      <aside class="notes">Use one fake app to explain the four RevenueCat terms</aside>
+    </section>
+
     <!-- 14. RC term: Product -->
     <section class="slide">
       <div class="pad center">
-        <p class="kicker r r1">e.g. a workout app <svg class="ic"><use href="#i-dumbbell"/></svg></p>
         <h2 class="r r2" style="margin-top:18px;"><span class="hl">Product</span></h2>
         <p class="small r r2" style="margin-top:14px;">Each item you sell in the store.</p>
         <div class="rc-list">
@@ -474,7 +483,6 @@
     <!-- 15. RC term: Package -->
     <section class="slide">
       <div class="pad center">
-        <p class="kicker r r1">e.g. a workout app <svg class="ic"><use href="#i-dumbbell"/></svg></p>
         <h2 class="r r2" style="margin-top:18px;"><span class="hl">Package</span></h2>
         <p class="small r r2" style="margin-top:14px;">One product, grouped across both stores.</p>
         <div class="rc-cols">
@@ -489,7 +497,6 @@
     <!-- 16. RC term: Offering -->
     <section class="slide">
       <div class="pad center">
-        <p class="kicker r r1">e.g. a workout app <svg class="ic"><use href="#i-dumbbell"/></svg></p>
         <h2 class="r r2" style="margin-top:18px;"><span class="hl">Offering</span></h2>
         <p class="small r r2" style="margin-top:14px;">A paywall lineup. Have several, swap remotely.</p>
         <div class="paywalls-row">
@@ -517,7 +524,6 @@
     <!-- 17. RC term: Entitlement -->
     <section class="slide">
       <div class="pad center">
-        <p class="kicker r r1">e.g. a workout app <svg class="ic"><use href="#i-dumbbell"/></svg></p>
         <h2 class="r r2" style="margin-top:18px;"><span class="hl">Entitlement</span></h2>
         <p class="small r r2" style="margin-top:14px;">Many products unlock the same access.</p>
         <div class="flow r r3">
@@ -864,7 +870,9 @@ class Deck {
     this.stage = document.getElementById('stage');
     this.progress = document.getElementById('progress');
     this.pageNum = document.getElementById('pageNum');
-    this.preview = new URLSearchParams(location.search).has('preview');
+    const params = new URLSearchParams(location.search);
+    this.preview = params.has('preview');
+    this.previewOff = parseInt(params.get('off') ?? '1', 10); // 0 = current slide, 1 = next
     if (this.preview) document.body.classList.add('preview');
     this.i = this.readHash();
     this.channel = ('BroadcastChannel' in window) ? new BroadcastChannel('flutter-talk') : null;
@@ -892,17 +900,20 @@ class Deck {
     if (!this.preview) history.replaceState(null,'', '#'+(this.i+1));
     this.broadcast();
   }
-  next(){ this.show(this.i+1); }
-  prev(){ this.show(this.i-1); }
+  // debounce nav so one keypress / one echo can only move a single slide
+  navGuard(){ const t = (performance.now ? performance.now() : Date.now()); if (t - (this._lastNav||0) < 110) return true; this._lastNav = t; return false; }
+  next(){ if(this.navGuard()) return; this.show(this.i+1); }
+  prev(){ if(this.navGuard()) return; this.show(this.i-1); }
   broadcast(){ if(this.preview || !this.channel) return;
     this.channel.postMessage({type:'state', i:this.i, total:this.slides.length, note:this.notes[this.i], nextNote:this.notes[this.i+1]||'', nextTitle:this.titles[this.i+1]||'(end)'}); }
   bindChannel(){ if(!this.channel) return; this.channel.onmessage = (e)=>{ const d=e.data||{};
-    if(this.preview){ if(d.type==='state') this.show(d.i+1); return; } // preview iframe shows the NEXT slide
+    if(this.preview){ if(d.type==='state') this.show(d.i + this.previewOff); return; } // preview iframe shows current (off=0) or next (off=1)
     if(d.type==='nav'){ d.dir>0?this.next():this.prev(); }
     if(d.type==='goto') this.show(d.i);
     if(d.type==='hello') this.broadcast();
   }; }
-  bindKeys(){ addEventListener('keydown', (e)=>{
+  bindKeys(){ if(window.__deckKeysBound) return; window.__deckKeysBound = true; // never double-attach
+    addEventListener('keydown', (e)=>{
     if(e.target.getAttribute && e.target.getAttribute('contenteditable')==='true') return;
     if(['ArrowRight','PageDown',' '].includes(e.key)){ e.preventDefault(); this.next(); }
     else if(['ArrowLeft','PageUp'].includes(e.key)){ e.preventDefault(); this.prev(); }
@@ -922,7 +933,7 @@ class Deck {
          embedded ?preview=1 iframe can render a live next-slide thumbnail. ---- */
   openSpeaker(){
     const base = location.href.split('#')[0].split('?')[0];
-    const w = window.open(base + '?role=speaker', 'fttalk_speaker', 'width=1200,height=740');
+    const w = window.open(base + '?role=speaker', 'fttalk_speaker', 'width=1320,height=820');
     if(!w) return;
     setTimeout(()=>this.broadcast(), 600);
   }
@@ -978,36 +989,44 @@ function renderSpeaker(){
   css.textContent = `
     html,body{height:100%;}
     body{margin:0;background:#0c1116;color:#e6edf3;font-family:var(--font);overflow:hidden;}
-    .sv{height:100vh;padding:26px;display:flex;flex-direction:column;gap:18px;}
-    .sv .top{display:flex;justify-content:space-between;align-items:baseline;}
-    .sv .clock{font-family:var(--mono);font-size:52px;font-weight:700;color:var(--teal);}
-    .sv .page{font-family:var(--mono);font-size:20px;color:#7d8b99;}
-    .sv .main{flex:1;min-height:0;display:flex;gap:24px;}
-    .sv .col-next{width:560px;display:flex;flex-direction:column;gap:12px;}
-    .sv .col-now{flex:1;min-width:0;display:flex;flex-direction:column;gap:12px;}
-    .sv .label{font-family:var(--mono);font-size:13px;letter-spacing:.2em;text-transform:uppercase;color:#7d8b99;}
-    .sv .frame{width:560px;height:315px;border:1px solid #1e2a36;border-radius:16px;background:#0c1116;}
-    .sv .nt{font-size:24px;font-weight:800;color:#fff;}
-    .sv .nn{font-size:19px;color:#9fb0bf;line-height:1.45;overflow:auto;}
-    .sv .notes{flex:1;background:#121b24;border:1px solid #1e2a36;border-radius:18px;padding:32px;font-size:33px;line-height:1.5;font-weight:600;overflow:auto;}
+    .sv{height:100vh;padding:22px 26px;display:flex;flex-direction:column;gap:16px;}
+    .sv .top{display:flex;justify-content:space-between;align-items:center;}
+    .sv .clock{font-family:var(--mono);font-size:46px;font-weight:700;color:var(--teal);}
+    .sv .page{font-family:var(--mono);font-size:20px;color:#9fb0bf;background:#121b24;border:1px solid #1e2a36;border-radius:999px;padding:8px 18px;}
+    .sv .main{flex:1;min-height:0;display:flex;gap:22px;}
+    /* left: current slide, large */
+    .sv .now{flex:1.45;min-width:0;display:flex;flex-direction:column;gap:10px;}
+    .sv .now .frame{width:100%;aspect-ratio:16/9;}
+    /* right: next slide (small) + notes */
+    .sv .side{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px;}
+    .sv .side .frame{width:100%;aspect-ratio:16/9;}
+    .sv .notesblock{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px;}
+    .sv .label{font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#7d8b99;}
+    .sv .label b{color:var(--teal);font-weight:700;}
+    .sv .frame{border:1px solid #1e2a36;border-radius:14px;background:#0c1116;}
+    .sv .notes{flex:1;background:#121b24;border:1px solid #1e2a36;border-radius:16px;padding:24px;font-size:27px;line-height:1.5;font-weight:600;color:#e6edf3;overflow:auto;}
     .sv .ctl{display:flex;gap:12px;}
-    .sv button{flex:1;background:var(--teal);color:#04201d;border:none;border-radius:14px;padding:16px;font-size:20px;font-weight:800;cursor:pointer;}
+    .sv button{flex:1;background:var(--teal);color:#04201d;border:none;border-radius:14px;padding:15px;font-size:20px;font-weight:800;cursor:pointer;}
     .sv button.sec{background:#1e2a36;color:#e6edf3;}
   `;
   document.head.appendChild(css);
   document.body.innerHTML = `
     <div class="sv">
-      <div class="top"><div class="clock" id="clock">00:00</div><div class="page" id="pg">– / –</div></div>
+      <div class="top"><div class="clock" id="clock">00:00</div><div class="page" id="pg">- / -</div></div>
       <div class="main">
-        <div class="col-next">
-          <div class="label">Next slide</div>
-          <iframe class="frame" id="prevFrame" title="Next slide preview" src="${base}?preview=1"></iframe>
-          <div class="nt" id="nt">–</div>
-          <div class="nn" id="nn"></div>
+        <div class="now">
+          <div class="label"><b>● On screen now</b></div>
+          <iframe class="frame" id="curFrame" title="Current slide" src="${base}?preview=1&off=0"></iframe>
         </div>
-        <div class="col-now">
-          <div class="label">Speaker notes</div>
-          <div class="notes" id="note">Connecting… (use ← / → to advance)</div>
+        <div class="side">
+          <div>
+            <div class="label">Up next</div>
+            <iframe class="frame" id="nextFrame" title="Next slide" src="${base}?preview=1&off=1" style="margin-top:8px;"></iframe>
+          </div>
+          <div class="notesblock">
+            <div class="label">Notes</div>
+            <div class="notes" id="note">Connecting… (use the buttons or ← / → to advance)</div>
+          </div>
         </div>
       </div>
       <div class="ctl"><button class="sec" id="prevBtn">‹ Prev</button><button id="nextBtn">Next ›</button></div>
@@ -1015,10 +1034,8 @@ function renderSpeaker(){
   const ch = new BroadcastChannel('flutter-talk');
   const $ = id => document.getElementById(id);
   ch.onmessage = e => { const d = e.data||{}; if(d.type!=='state') return;
-    $('note').textContent = d.note || '(no notes)';
+    $('note').textContent = d.note || '(no notes for this slide)';
     $('pg').textContent = (d.i+1) + ' / ' + d.total;
-    $('nt').textContent = d.nextTitle || '(end)';
-    $('nn').textContent = d.nextNote || '';
   };
   $('nextBtn').onclick = ()=> ch.postMessage({type:'nav', dir:1});
   $('prevBtn').onclick = ()=> ch.postMessage({type:'nav', dir:-1});
