@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700;800;900&family=Geist+Mono:wght@400;500;700&display=swap" />
+<link rel="stylesheet" href="vendor/reveal.css" />
 <style>
   /* ===========================================
      THEME - "Mint Panel": ink on white, teal accent,
@@ -31,12 +32,16 @@
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
-  /* === FIXED 16:9 STAGE (from viewport-base.css) === */
-  html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; background: var(--stage-bg); }
-  .deck-viewport { position: fixed; inset: 0; overflow: hidden; background: var(--stage-bg); }
-  .deck-stage { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; overflow: hidden; transform-origin: 0 0; background: var(--slide-bg); font-family: var(--font); }
-  .slide { position: absolute; inset: 0; width: 1920px; height: 1080px; overflow: hidden; display: block; visibility: hidden; opacity: 0; pointer-events: none; background: var(--slide-bg); }
-  .slide.active, .slide.visible { visibility: visible; opacity: 1; pointer-events: auto; z-index: 1; }
+  /* === reveal.js fixed 1920x1080 stage (reveal handles scaling + presenter view) === */
+  html, body { width: 100%; height: 100%; margin: 0; background: var(--stage-bg); }
+  .reveal { font-family: var(--font); }
+  .reveal .slides { text-align: left; }
+  .reveal .slides > section.slide {
+    width: 1920px; height: 1080px; padding: 0; overflow: hidden;
+    background: var(--slide-bg); top: 0 !important; box-sizing: border-box;
+  }
+  .reveal .slides > section.slide.statement,
+  .reveal .slides > section.slide.fullbleed { background: transparent; }
   img, video, canvas, svg { max-width: 100%; max-height: 100%; }
 
   /* === SHARED PRIMITIVES === */
@@ -219,42 +224,28 @@
   .contact .qr { width: 240px; height: 240px; image-rendering: pixelated; border-radius: 18px; border: 1px solid var(--line); }
   .contact .email { margin-top: 50px; font-family: var(--mono); font-size: 36px; color: var(--teal-deep); font-weight: 600; }
 
-  /* === ENTRANCE ANIMATION === */
+  /* === ENTRANCE ANIMATION (triggered by reveal's .present on the active slide) === */
   .r { opacity: 0; transform: translateY(34px); }
-  .slide.visible .r { animation: rise 0.85s var(--ease) forwards; }
-  .slide.visible .r1 { animation-delay: 0.1s; }
-  .slide.visible .r2 { animation-delay: 0.24s; }
-  .slide.visible .r3 { animation-delay: 0.38s; }
-  .slide.visible .r4 { animation-delay: 0.52s; }
-  .slide.visible .r5 { animation-delay: 0.66s; }
-  .slide.visible .r6 { animation-delay: 0.8s; }
+  .reveal section.present .r { animation: rise 0.85s var(--ease) forwards; }
+  .reveal section.present .r1 { animation-delay: 0.1s; }
+  .reveal section.present .r2 { animation-delay: 0.24s; }
+  .reveal section.present .r3 { animation-delay: 0.38s; }
+  .reveal section.present .r4 { animation-delay: 0.52s; }
+  .reveal section.present .r5 { animation-delay: 0.66s; }
+  .reveal section.present .r6 { animation-delay: 0.8s; }
   @keyframes rise { to { opacity: 1; transform: translateY(0); } }
 
   .rr { opacity: 0; transform: translateX(44px); }
-  .slide.visible .rr { animation: slidein 0.85s var(--ease) forwards; }
-  .slide.visible .rr1 { animation-delay: 0.5s; }
-  .slide.visible .rr2 { animation-delay: 0.64s; }
-  .slide.visible .rr3 { animation-delay: 0.78s; }
+  .reveal section.present .rr { animation: slidein 0.85s var(--ease) forwards; }
+  .reveal section.present .rr1 { animation-delay: 0.5s; }
+  .reveal section.present .rr2 { animation-delay: 0.64s; }
+  .reveal section.present .rr3 { animation-delay: 0.78s; }
   @keyframes slidein { to { opacity: 1; transform: translateX(0); } }
 
   @media (prefers-reduced-motion: reduce) {
     .r, .rr { animation: none !important; opacity: 1 !important; transform: none !important; }
   }
 
-  /* === DECK CHROME (outside stage) === */
-  .deck-progress { position: fixed; left: 0; bottom: 0; height: 5px; background: var(--teal); width: 0; z-index: 1000; transition: width 0.4s var(--ease); }
-  .deck-page { position: fixed; right: 22px; bottom: 18px; font-family: var(--mono); font-size: 15px; color: #38635c; z-index: 1000; letter-spacing: 0.1em; }
-  .edit-hotzone { position: fixed; top: 0; left: 0; width: 80px; height: 80px; z-index: 10000; }
-  .edit-toggle { position: fixed; top: 18px; left: 18px; width: 52px; height: 52px; border-radius: 14px; border: none; background: var(--ink); color: #fff; font-size: 22px; cursor: pointer; opacity: 0; pointer-events: none; transition: opacity 0.3s ease; z-index: 10001; }
-  .edit-toggle.show, .edit-toggle.active { opacity: 1; pointer-events: auto; }
-  .edit-toggle.active { background: var(--teal); }
-  .editing [contenteditable="true"] { outline: 2px dashed var(--teal); outline-offset: 6px; border-radius: 4px; }
-  .hint { position: fixed; left: 50%; bottom: 60px; transform: translateX(-50%); background: rgba(15,23,41,0.86); color: #fff; font-family: var(--mono); font-size: 14px; padding: 10px 18px; border-radius: 999px; z-index: 1000; opacity: 0; transition: opacity 0.4s; pointer-events: none; }
-  .hint.show { opacity: 1; }
-
-  /* preview mode (used inside the speaker window's next-slide iframe) */
-  body.preview .deck-progress, body.preview .deck-page, body.preview .edit-hotzone, body.preview .edit-toggle, body.preview .hint { display: none !important; }
-  body.preview .r, body.preview .rr { opacity: 1 !important; transform: none !important; animation: none !important; }
 </style>
 </head>
 <body>
@@ -281,8 +272,8 @@
   </defs>
 </svg>
 
-<div class="deck-viewport">
-  <main class="deck-stage" id="stage">
+<div class="reveal">
+  <div class="slides">
 
     <!-- 1. TITLE -->
     <section class="slide">
@@ -351,7 +342,7 @@
       <div class="pad imgslide">
         <h2 class="r r1">Scan <span class="hl">ingredients</span></h2>
         <p class="sub r r1">the original feature</p>
-        <div class="r r2"><video class="demo-video" src="demo-ingredients.mp4" muted loop playsinline></video></div>
+        <div class="r r2"><video class="demo-video" src="demo-ingredients.mp4" muted loop playsinline data-autoplay></video></div>
       </div>
       <aside class="notes">The first feature. OCR then Gemini analysis</aside>
     </section>
@@ -361,7 +352,7 @@
       <div class="pad imgslide">
         <h2 class="r r1">Scan <span class="hl">barcode</span></h2>
         <p class="sub r r1">(new feature)</p>
-        <div class="r r2"><video class="demo-video" src="demo-barcode.mp4" muted loop playsinline></video></div>
+        <div class="r r2"><video class="demo-video" src="demo-barcode.mp4" muted loop playsinline data-autoplay></video></div>
       </div>
       <aside class="notes">Newer. Instant when cached</aside>
     </section>
@@ -371,7 +362,7 @@
       <div class="pad imgslide">
         <h2 class="r r1">Check <span class="hl">product</span></h2>
         <p class="sub r r1">(new feature)</p>
-        <div class="r r2"><video class="demo-video" src="demo-product.mp4" muted loop playsinline></video></div>
+        <div class="r r2"><video class="demo-video" src="demo-product.mp4" muted loop playsinline data-autoplay></video></div>
       </div>
       <aside class="notes">Photo, grounded web search</aside>
     </section>
@@ -849,212 +840,24 @@
       <aside class="notes">QR code, invite questions. Then thank Moaaz + Flutter KL team for hosting, thank everyone for coming</aside>
     </section>
 
-  </main>
+</div>
 </div>
 
-<!-- deck chrome (outside the stage) -->
-<div class="deck-progress" id="progress"></div>
-<div class="deck-page" id="pageNum"></div>
-<div class="edit-hotzone"></div>
-<button class="edit-toggle" id="editToggle" title="Edit mode (E)"><svg class="ic"><use href="#i-pencil"/></svg></button>
-<div class="hint" id="hint"></div>
-
+<script src="vendor/reveal.js"></script>
+<script src="vendor/plugin/notes/notes.js"></script>
 <script>
-/* ===========================================
-   SLIDE CONTROLLER - fixed-stage scaling, nav,
-   speaker window (S), inline edit (E).
-   =========================================== */
-class Deck {
-  constructor() {
-    this.slides = [...document.querySelectorAll('.slide')];
-    this.stage = document.getElementById('stage');
-    this.progress = document.getElementById('progress');
-    this.pageNum = document.getElementById('pageNum');
-    const params = new URLSearchParams(location.search);
-    this.preview = params.has('preview');
-    this.previewOff = parseInt(params.get('off') ?? '1', 10); // 0 = current slide, 1 = next
-    if (this.preview) document.body.classList.add('preview');
-    this.i = this.readHash();
-    this.channel = ('BroadcastChannel' in window) ? new BroadcastChannel('flutter-talk') : null;
-    this.notes = this.slides.map(s => { const n = s.querySelector('.notes'); return n ? n.textContent.trim() : ''; });
-    this.titles = this.slides.map(s => { const h = s.querySelector('h1, h2'); return h ? h.textContent.trim() : ''; });
-    this.fit(); addEventListener('resize', () => this.fit());
-    this.bindChannel();
-    if (!this.preview) { this.bindKeys(); this.bindTouch(); this.bindEdit(); }
-    this.show(this.i, true);
-    if (this.preview && this.channel) this.channel.postMessage({type:'hello'}); // ask main deck for current position
-  }
-  readHash(){ const n = parseInt((location.hash||'').replace('#','')); return (!isNaN(n) && n>0) ? n-1 : 0; }
-  fit(){ const f = Math.min(innerWidth/1920, innerHeight/1080);
-    this.stage.style.transform = `translate(${(innerWidth-1920*f)/2}px, ${(innerHeight-1080*f)/2}px) scale(${f})`; }
-  show(i, force){
-    this.i = Math.max(0, Math.min(i, this.slides.length-1));
-    this.slides.forEach((s,k)=>{ s.classList.toggle('active', k===this.i); s.classList.toggle('visible', k===this.i); });
-    // play the active slide's video(s), reset & pause the rest
-    this.slides.forEach((s,k)=>{ s.querySelectorAll('video').forEach(v=>{
-      if(k===this.i){ try{ v.currentTime=0; v.play().catch(()=>{}); }catch(e){} }
-      else { v.pause(); }
-    }); });
-    this.progress.style.width = ((this.i+1)/this.slides.length*100) + '%';
-    this.pageNum.textContent = (this.i+1) + ' / ' + this.slides.length;
-    if (!this.preview) history.replaceState(null,'', '#'+(this.i+1));
-    this.broadcast();
-  }
-  // debounce nav so one keypress / one echo can only move a single slide
-  navGuard(){ const t = (performance.now ? performance.now() : Date.now()); if (t - (this._lastNav||0) < 110) return true; this._lastNav = t; return false; }
-  next(){ if(this.navGuard()) return; this.show(this.i+1); }
-  prev(){ if(this.navGuard()) return; this.show(this.i-1); }
-  broadcast(){ if(this.preview || !this.channel) return;
-    this.channel.postMessage({type:'state', i:this.i, total:this.slides.length, note:this.notes[this.i], nextNote:this.notes[this.i+1]||'', nextTitle:this.titles[this.i+1]||'(end)'}); }
-  bindChannel(){ if(!this.channel) return; this.channel.onmessage = (e)=>{ const d=e.data||{};
-    if(this.preview){ if(d.type==='state') this.show(d.i + this.previewOff); return; } // preview iframe shows current (off=0) or next (off=1)
-    if(d.type==='nav'){ d.dir>0?this.next():this.prev(); }
-    if(d.type==='goto') this.show(d.i);
-    if(d.type==='hello') this.broadcast();
-  }; }
-  bindKeys(){ if(window.__deckKeysBound) return; window.__deckKeysBound = true; // never double-attach
-    addEventListener('keydown', (e)=>{
-    if(e.target.getAttribute && e.target.getAttribute('contenteditable')==='true') return;
-    if(['ArrowRight','PageDown',' '].includes(e.key)){ e.preventDefault(); this.next(); }
-    else if(['ArrowLeft','PageUp'].includes(e.key)){ e.preventDefault(); this.prev(); }
-    else if(e.key==='Home'){ this.show(0); }
-    else if(e.key==='End'){ this.show(this.slides.length-1); }
-    else if(e.key==='f'||e.key==='F'){ this.toggleFull(); }
-    else if(e.key==='s'||e.key==='S'){ this.openSpeaker(); }
-    else if(e.key==='e'||e.key==='E'){ this.editor.toggle(); }
-  }); }
-  bindTouch(){ let x0=null;
-    this.stage.addEventListener('touchstart', e=> x0=e.touches[0].clientX, {passive:true});
-    this.stage.addEventListener('touchend', e=>{ if(x0===null) return; const dx=e.changedTouches[0].clientX-x0; if(Math.abs(dx)>50){ dx<0?this.next():this.prev(); } x0=null; }, {passive:true});
-  }
-  toggleFull(){ if(!document.fullscreenElement) document.documentElement.requestFullscreen?.(); else document.exitFullscreen?.(); }
-
-  /* ---- Speaker view: same file with ?role=speaker (same-origin), so its
-         embedded ?preview=1 iframe can render a live next-slide thumbnail. ---- */
-  openSpeaker(){
-    const base = location.href.split('#')[0].split('?')[0];
-    const w = window.open(base + '?role=speaker', 'fttalk_speaker', 'width=1320,height=820');
-    if(!w) return;
-    setTimeout(()=>this.broadcast(), 600);
-  }
-  bindEdit(){ this.editor = new Editor(this); }
-}
-
-/* ===========================================
-   INLINE EDITOR - E toggles, Ctrl+S downloads.
-   =========================================== */
-class Editor {
-  constructor(deck){
-    this.deck = deck; this.isActive = false;
-    this.toggleBtn = document.getElementById('editToggle');
-    this.hint = document.getElementById('hint');
-    this.targets = [...document.querySelectorAll('.deck-stage h1, .deck-stage h2, .deck-stage li, .deck-stage .lead, .deck-stage .note, .deck-stage .small, .deck-stage .tname, .deck-stage .id, .deck-stage .price, .deck-stage .pmetric, .deck-stage .metric-card, .deck-stage .email, .deck-stage .codecap')];
-    const hz = document.querySelector('.edit-hotzone'); let t=null;
-    const showBtn=()=>{ clearTimeout(t); this.toggleBtn.classList.add('show'); };
-    const hideBtn=()=>{ t=setTimeout(()=>{ if(!this.isActive) this.toggleBtn.classList.remove('show'); },400); };
-    hz.addEventListener('mouseenter', showBtn); hz.addEventListener('mouseleave', hideBtn);
-    this.toggleBtn.addEventListener('mouseenter', ()=>clearTimeout(t)); this.toggleBtn.addEventListener('mouseleave', hideBtn);
-    hz.addEventListener('click', ()=>this.toggle()); this.toggleBtn.addEventListener('click', ()=>this.toggle());
-    addEventListener('keydown', (e)=>{ if((e.key==='s'||e.key==='S') && (e.metaKey||e.ctrlKey)){ e.preventDefault(); this.save(); } });
-  }
-  toggle(){
-    this.isActive = !this.isActive;
-    document.body.classList.toggle('editing', this.isActive);
-    this.toggleBtn.classList.toggle('active', this.isActive);
-    this.toggleBtn.classList.toggle('show', this.isActive);
-    this.targets.forEach(el=> el.setAttribute('contenteditable', this.isActive));
-    this.flash(this.isActive ? 'Edit mode ON · click text · ⌘S to save' : 'Edit mode off');
-  }
-  save(){
-    this.targets.forEach(el=> el.removeAttribute('contenteditable'));
-    document.body.classList.remove('editing');
-    const html = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
-    const blob = new Blob([html], {type:'text/html'});
-    const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'talk.html'; a.click();
-    if(this.isActive) this.targets.forEach(el=> el.setAttribute('contenteditable','true')), document.body.classList.add('editing');
-    this.flash('Saved talk.html to downloads');
-  }
-  flash(msg){ this.hint.textContent = msg; this.hint.classList.add('show'); clearTimeout(this._h); this._h=setTimeout(()=>this.hint.classList.remove('show'),2200); }
-}
-
-/* ===========================================
-   SPEAKER VIEW - rendered in-place when ?role=speaker.
-   Same origin as the deck, so the next-slide preview
-   iframe (?preview=1) renders a live thumbnail.
-   =========================================== */
-function renderSpeaker(){
-  const base = location.href.split('#')[0].split('?')[0];
-  document.title = 'Speaker View';
-  const css = document.createElement('style');
-  css.textContent = `
-    html,body{height:100%;}
-    body{margin:0;background:#0c1116;color:#e6edf3;font-family:var(--font);overflow:hidden;}
-    .sv{height:100vh;padding:22px 26px;display:flex;flex-direction:column;gap:16px;}
-    .sv .top{display:flex;justify-content:space-between;align-items:center;}
-    .sv .clock{font-family:var(--mono);font-size:46px;font-weight:700;color:var(--teal);}
-    .sv .page{font-family:var(--mono);font-size:20px;color:#9fb0bf;background:#121b24;border:1px solid #1e2a36;border-radius:999px;padding:8px 18px;}
-    .sv .main{flex:1;min-height:0;display:flex;gap:22px;}
-    /* left: current slide, large */
-    .sv .now{flex:1.45;min-width:0;display:flex;flex-direction:column;gap:10px;}
-    .sv .now .frame{width:100%;aspect-ratio:16/9;}
-    /* right: next slide (small) + notes */
-    .sv .side{flex:1;min-width:0;display:flex;flex-direction:column;gap:14px;}
-    .sv .side .frame{width:100%;aspect-ratio:16/9;}
-    .sv .notesblock{flex:1;min-height:0;display:flex;flex-direction:column;gap:8px;}
-    .sv .label{font-family:var(--mono);font-size:13px;letter-spacing:.18em;text-transform:uppercase;color:#7d8b99;}
-    .sv .label b{color:var(--teal);font-weight:700;}
-    .sv .frame{border:1px solid #1e2a36;border-radius:14px;background:#0c1116;}
-    .sv .notes{flex:1;background:#121b24;border:1px solid #1e2a36;border-radius:16px;padding:24px;font-size:27px;line-height:1.5;font-weight:600;color:#e6edf3;overflow:auto;}
-    .sv .ctl{display:flex;gap:12px;}
-    .sv button{flex:1;background:var(--teal);color:#04201d;border:none;border-radius:14px;padding:15px;font-size:20px;font-weight:800;cursor:pointer;}
-    .sv button.sec{background:#1e2a36;color:#e6edf3;}
-  `;
-  document.head.appendChild(css);
-  document.body.innerHTML = `
-    <div class="sv">
-      <div class="top"><div class="clock" id="clock">00:00</div><div class="page" id="pg">- / -</div></div>
-      <div class="main">
-        <div class="now">
-          <div class="label"><b>● On screen now</b></div>
-          <iframe class="frame" id="curFrame" title="Current slide" src="${base}?preview=1&off=0"></iframe>
-        </div>
-        <div class="side">
-          <div>
-            <div class="label">Up next</div>
-            <iframe class="frame" id="nextFrame" title="Next slide" src="${base}?preview=1&off=1" style="margin-top:8px;"></iframe>
-          </div>
-          <div class="notesblock">
-            <div class="label">Notes</div>
-            <div class="notes" id="note">Connecting… (use the buttons or ← / → to advance)</div>
-          </div>
-        </div>
-      </div>
-      <div class="ctl"><button class="sec" id="prevBtn">‹ Prev</button><button id="nextBtn">Next ›</button></div>
-    </div>`;
-  const ch = new BroadcastChannel('flutter-talk');
-  const $ = id => document.getElementById(id);
-  ch.onmessage = e => { const d = e.data||{}; if(d.type!=='state') return;
-    $('note').textContent = d.note || '(no notes for this slide)';
-    $('pg').textContent = (d.i+1) + ' / ' + d.total;
-  };
-  $('nextBtn').onclick = ()=> ch.postMessage({type:'nav', dir:1});
-  $('prevBtn').onclick = ()=> ch.postMessage({type:'nav', dir:-1});
-  addEventListener('keydown', e=>{
-    if(['ArrowRight','PageDown',' '].includes(e.key)){ e.preventDefault(); ch.postMessage({type:'nav',dir:1}); }
-    else if(['ArrowLeft','PageUp'].includes(e.key)){ e.preventDefault(); ch.postMessage({type:'nav',dir:-1}); }
+  // reveal.js drives nav, scaling, and the default speaker view (press S)
+  Reveal.initialize({
+    width: 1920,
+    height: 1080,
+    margin: 0,
+    minScale: 0.1,
+    maxScale: 2.0,
+    center: false,
+    hash: true,
+    transition: 'slide',
+    plugins: [ RevealNotes ]
   });
-  ch.postMessage({type:'hello'});
-  const t0 = Date.now();
-  setInterval(()=>{ const s=Math.floor((Date.now()-t0)/1000);
-    $('clock').textContent = String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0'); }, 1000);
-}
-
-/* ===========================================
-   BOOT - speaker role renders the speaker UI;
-   everything else (deck + preview) runs the Deck.
-   =========================================== */
-if (new URLSearchParams(location.search).get('role') === 'speaker') renderSpeaker();
-else new Deck();
 </script>
 </body>
 </html>
