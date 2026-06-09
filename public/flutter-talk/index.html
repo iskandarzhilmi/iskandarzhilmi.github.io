@@ -298,7 +298,7 @@
           <img src="IMG_8101.jpg" alt="Iskandar in Japan" class="shot" style="max-height:740px;" />
         </div>
       </div>
-      <aside class="notes">Japan trip, July 2024</aside>
+      <aside class="notes">Japan trip, July 2024. Scanning Japanese food labels sparked the idea</aside>
     </section>
 
     <!-- 3. THE STRUGGLE -->
@@ -557,7 +557,7 @@
           </div>
         </div>
       </div>
-      <aside class="notes">Two options: RC's no-code editor, or custom in Flutter code. I went custom: localization issues with RC, and I prefer writing code. RC Paywalls = their editor, custom = your Flutter code</aside>
+      <aside class="notes">RC's no-code editor vs custom Flutter code. I went custom: better localization control, and I prefer writing code</aside>
     </section>
 
     <!-- 20. RC dashboard -->
@@ -593,6 +593,21 @@
         <div class="pricing r r6"><svg class="ic"><use href="#i-dollar"/></svg> <b>Pricing:</b> Free tier 5K errors/month. Paid from $26/month.</div>
       </div>
       <aside class="notes">Logs straight from users' phones, crashes after updates ship, every Android camera has quirks. Used even by million-user apps. Andrea's example: missing url_launcher intent broke every Android link, Sentry caught it day one. Free tier gotcha: layout errors fire every frame, 5K burns fast</aside>
+    </section>
+
+    <!-- 22b. Sentry: beyond crashes -->
+    <section class="slide">
+      <div class="pad content">
+        <p class="kicker r r1">Sentry</p>
+        <h2 class="r r2">More than crash logs</h2>
+        <ul class="bullets">
+          <li class="r r3"><strong>Session Replay:</strong> a video of what the user did before it broke</li>
+          <li class="r r4"><strong>Release Health:</strong> crash-free users &amp; sessions per version</li>
+          <li class="r r5"><strong>Tracing:</strong> find slow screens, HTTP calls, cold starts</li>
+        </ul>
+        <p class="note r r6">One SDK (<span class="hl">sentry_flutter</span>) catches Dart <em>and</em> native errors.</p>
+      </div>
+      <aside class="notes">SDK 9.0: mobile session replay is GA, release health = crash-free %, performance tracing for slow spans/HTTP. Each issue carries breadcrumbs, device, screenshot, view hierarchy. Catches both Dart and native crashes</aside>
     </section>
 
     <!-- 23. Sentry dashboard -->
@@ -646,7 +661,22 @@
         </ul>
         <div class="pricing r r6"><svg class="ic"><use href="#i-dollar"/></svg> <b>Pricing:</b> Generous free tier (1M events/month).</div>
       </div>
-      <aside class="notes">Events, funnels, replay. Gut feeling vs data</aside>
+      <aside class="notes">Events, funnels, session replay. See exactly where users drop off</aside>
+    </section>
+
+    <!-- 27b. PostHog: not just analytics -->
+    <section class="slide">
+      <div class="pad content">
+        <p class="kicker r r1">PostHog</p>
+        <h2 class="r r2">Not just analytics</h2>
+        <ul class="bullets">
+          <li class="r r3"><strong>Feature flags:</strong> roll out or kill a feature remotely, no release</li>
+          <li class="r r4"><strong>Experiments:</strong> A/B test a change, measure the impact</li>
+          <li class="r r5"><strong>Surveys:</strong> ask users in-app, no code</li>
+        </ul>
+        <p class="note r r6">All in <span class="hl">one SDK</span> — autocapture, screen tracking, replay.</p>
+      </div>
+      <aside class="notes">One platform: feature flags (remote toggle without app update, like Shorebird's config), experiments with stats, in-app surveys, session replay. posthog_flutter does autocapture + PosthogObserver screen tracking</aside>
     </section>
 
     <!-- 28. PostHog MCP -->
@@ -666,7 +696,7 @@
         <h1 class="r r3"><span class="hl">Shorebird</span></h1>
         <p class="lead r r4" style="margin-top:20px;">Push Flutter code updates over the air</p>
       </div>
-      <aside class="notes">OTA patches, skip review</aside>
+      <aside class="notes">Fourth: OTA patches, skip the app review queue</aside>
     </section>
 
     <!-- 30. Shorebird why -->
@@ -820,7 +850,7 @@
         </div>
         <p class="note r r6" style="text-align:center; margin-top:32px;">Goal: <span class="hl">pour more in at the top</span> &amp; minimise the leak at every step.</p>
       </div>
-      <aside class="notes">Measure leaks, fix biggest</aside>
+      <aside class="notes">Two levers: pour more in at the top, leak less at each step. Fix the biggest leak first</aside>
     </section>
 
     <!-- 41. Closing / contact -->
