@@ -299,31 +299,43 @@
           </div>
         </div>
       </div>
-      <aside class="notes">Welcome, quick self intro</aside>
+      <aside class="notes">Welcome · intro: Iskandar, SWE, built HalalChecker AI solo · promise: exact tools, idea → profit</aside>
     </section>
 
     <!-- 2. JAPAN -->
     <section class="slide">
       <div class="pad imgslide">
-        <p class="kicker r r1">July 2024 · Kyoto</p>
-        <div class="imgwrap r r2" style="margin-top:20px;">
-          <img src="IMG_8101.jpg" alt="Iskandar in Japan" class="shot" style="max-height:740px;" />
+        <p class="kicker r r1">July 2024 · Solo trip to Japan</p>
+        <h2 class="r r1" style="margin-top:18px;">Fushimi Inari, <span class="hl">Kyoto</span></h2>
+        <div class="imgwrap r r2" style="margin-top:14px;">
+          <img src="IMG_8101.jpg" alt="Iskandar at the torii gates of Fushimi Inari, Kyoto" class="shot" style="max-height:620px;" />
         </div>
       </div>
-      <aside class="notes">Japan trip, July 2024. Scanning Japanese food labels sparked the idea</aside>
+      <aside class="notes">Solo trip July 2024 · Japan beautiful · Fushimi Inari: thousands of torii, amazing · travelling on tight budget</aside>
+    </section>
+
+    <!-- 2b. BUDGET = ONIGIRI -->
+    <section class="slide">
+      <div class="pad statement">
+        <div class="grid"></div>
+        <h2 class="r r1">Tight budget =<br>konbini onigiri, every day</h2>
+        <p class="cite r r2">but wait… is the filling halal?</p>
+      </div>
+      <aside class="notes">Budget tight → konbini onigiri daily · cheap, everywhere, delicious · but: filling halal? · label 100% Japanese</aside>
     </section>
 
     <!-- 3. THE STRUGGLE -->
     <section class="slide">
       <div class="pad imgslide">
         <h2 class="r r1">Two apps, <span class="hl">every</span> time</h2>
+        <p class="sub r r1">halal scanner apps didn't know most Japanese products</p>
         <div class="imgwrap r r2">
           <img src="lens.png" alt="Scanning an ingredient label with Google Lens" class="shot" style="max-height:660px;" />
           <span class="arrow-big">→</span>
           <img src="chatgpt.png" alt="Asking ChatGPT whether the ingredients are halal" class="shot" style="max-height:660px;" />
         </div>
       </div>
-      <aside class="notes">Lens translate, paste ChatGPT, slow</aside>
+      <aside class="notes">Tried halal scanner apps → Japanese products missing from DBs · workaround: Lens translate → paste ChatGPT · 2 apps, 2-3 min, every product</aside>
     </section>
 
     <!-- 4. THE IDEA -->
@@ -332,7 +344,7 @@
         <div class="grid"></div>
         <h2 class="r r1">“Wait a minute…”</h2>
       </div>
-      <aside class="notes">The lightbulb moment</aside>
+      <aside class="notes">Pause · me daily = every Muslim traveller too · camera + OCR + AI in ONE app · validated on myself first</aside>
     </section>
 
     <!-- 5. BUILDING IT -->
@@ -343,7 +355,7 @@
           <img src="appstore.png" alt="HalalChecker AI on the App Store" class="shot" style="max-height:760px;" />
         </div>
       </div>
-      <aside class="notes">HalalChecker AI, one scan</aside>
+      <aside class="notes">Building since Sept 2024 · point camera, one scan, verdict in seconds · App Store + Play Store</aside>
     </section>
 
     <!-- 6. DEMO: ingredients (the original feature) -->
@@ -353,7 +365,7 @@
         <p class="sub r r1">the original feature</p>
         <div class="r r2"><video class="demo-video" src="demo-ingredients.mp4" muted loop playsinline data-autoplay></video></div>
       </div>
-      <aside class="notes">The first feature. OCR then Gemini analysis</aside>
+      <aside class="notes">Original feature · Vision OCR → Gemini · per ingredient: halal / haram / doubtful + reasoning</aside>
     </section>
 
     <!-- 7. DEMO: barcode -->
@@ -363,7 +375,7 @@
         <p class="sub r r1">(new feature)</p>
         <div class="r r2"><video class="demo-video" src="demo-barcode.mp4" muted loop playsinline data-autoplay></video></div>
       </div>
-      <aside class="notes">Newer. Instant when cached</aside>
+      <aside class="notes">Barcode → Open Food Facts → Gemini · first scan ~30s · cached in Supabase by barcode → next user instant, $0</aside>
     </section>
 
     <!-- 8. DEMO: product -->
@@ -373,7 +385,7 @@
         <p class="sub r r1">(new feature)</p>
         <div class="r r2"><video class="demo-video" src="demo-product.mp4" muted loop playsinline data-autoplay></video></div>
       </div>
-      <aside class="notes">Photo, grounded web search</aside>
+      <aside class="notes">Newest · snap product photo · Gemini + Search grounding → identify + cert status · works with no ingredient label</aside>
     </section>
 
     <!-- 9. RESULTS -->
@@ -387,7 +399,7 @@
           <div class="metric-card r r5"><div class="n">3-fig</div><div class="l">USD MRR</div></div>
         </div>
       </div>
-      <aside class="notes">Metrics since Sept 2024 launch</aside>
+      <aside class="notes">30K+ DL, 4.8★, 3-fig USD MRR · not quit-job money, but profitable · infra tiny · rest of talk = the 6 tools</aside>
     </section>
 
     <!-- 10. ARCHITECTURE -->
@@ -411,7 +423,7 @@
           </div>
         </div>
       </div>
-      <aside class="notes">Flutter, Node, Gemini grounding. Barcode: ~30s, ~$0.03 first, cached after</aside>
+      <aside class="notes">1 Flutter codebase · Node on DO = API keys off device · Gemini 3 Flash grounding · barcode ~30s, ~$0.03 first, cached after</aside>
     </section>
 
     <!-- 11. TOOL GRID -->
@@ -427,7 +439,7 @@
           <div class="tool-card r r4"><span class="tmono">in_app_review</span><span class="tby">by Britannio Jarrett</span></div>
         </div>
       </div>
-      <aside class="notes">Roadmap, deep dive each. Not just indie: applies to serious apps with millions of users</aside>
+      <aside class="notes">Roadmap, deep dive each · 4 services (free tiers) + 2 pub.dev packages · not just indie, scales to millions</aside>
     </section>
 
     <!-- 12. REVENUECAT TITLE -->
@@ -437,7 +449,7 @@
         <img src="revenuecat.png" alt="RevenueCat" class="tool-logo r r2" />
         <h1 class="r r3"><span class="hl">RevenueCat</span></h1>
       </div>
-      <aside class="notes">First: getting paid</aside>
+      <aside class="notes">Tool 1, most important: getting paid · raw StoreKit/Play Billing = receipts, renewals, refunds, sync, all on you · RC wraps it</aside>
     </section>
 
     <!-- 13. RC: in-app purchases -->
@@ -452,7 +464,7 @@
         </ul>
         <p class="note r r6">Why? Keep it frictionless. <span class="hl">Less friction → higher conversion.</span></p>
       </div>
-      <aside class="notes">Subs + points, no login</aside>
+      <aside class="notes">Subs + consumable points · no backend needed · zero auth: anonymous IDs, tied to store account · signup screen = drop-off</aside>
     </section>
 
     <!-- 13c. RC terms intro: example app -->
@@ -462,7 +474,7 @@
         <h2 class="r r2" style="margin-top:22px;">Example: a <span class="hl">workout app</span> <svg class="ic" style="color:var(--teal);"><use href="#i-dumbbell"/></svg></h2>
         <p class="lead r r3" style="margin-top:26px;">Product · Package · Offering · Entitlement</p>
       </div>
-      <aside class="notes">Use one fake app to explain the four RevenueCat terms</aside>
+      <aside class="notes">1 fake workout app → explain 4 RC terms</aside>
     </section>
 
     <!-- 14. RC term: Product -->
@@ -477,7 +489,7 @@
           <div class="rc-item r r4"><span class="id">gym_lifetime_9999</span><span class="price">$99.99 once</span></div>
         </div>
       </div>
-      <aside class="notes">SKUs you create in App Store / Play Console</aside>
+      <aside class="notes">Products = real SKUs in ASC / Play Console · convention: price in ID · price change = new product</aside>
     </section>
 
     <!-- 15. RC term: Package -->
@@ -491,7 +503,7 @@
           <div class="rc-card2 r r5"><span class="pkg">$rc_annual</span><span class="sku"><svg class="ic fill"><use href="#i-apple"/></svg> gym_yearly_3999</span><span class="sku"><svg class="ic fill"><use href="#i-android"/></svg> gym_yearly</span></div>
         </div>
       </div>
-      <aside class="notes">Cross-store wrapper, one code path</aside>
+      <aside class="notes">Same product, both stores · code asks $rc_monthly · no platform branching, 1 code path</aside>
     </section>
 
     <!-- 16. RC term: Offering -->
@@ -518,7 +530,7 @@
           </div>
         </div>
       </div>
-      <aside class="notes">Swap the lineup remotely, no app update. Run sales, win-backs, A/B tests by switching offerings</aside>
+      <aside class="notes">Swap lineup remotely, no app update · sales, win-backs, A/B tests</aside>
     </section>
 
     <!-- 17. RC term: Entitlement -->
@@ -534,7 +546,7 @@
           <div class="got"><svg class="ic"><use href="#i-dumbbell"/></svg>Unlimited workouts<div class="role">what they get</div></div>
         </div>
       </div>
-      <aside class="notes">Check one flag, ignore which product they bought</aside>
+      <aside class="notes">Check 1 boolean: has "premium" · which product = irrelevant · add products later, no app change</aside>
     </section>
 
     <!-- 18. RC: paywalls + analytics -->
@@ -549,7 +561,7 @@
         </ul>
         <div class="pricing r r6"><svg class="ic"><use href="#i-dollar"/></svg> <b>Pricing:</b> Free until $2.5K/month revenue, then ~1%. Worth it as a lean solo founder.</div>
       </div>
-      <aside class="notes">Custom paywall, localization, pricing</aside>
+      <aside class="notes">RC paywall designer vs custom Flutter · mine: custom, localization control · pricing: free < $2.5K MTR, then 1% · I pay $0</aside>
     </section>
 
     <!-- 19. Paywall comparison -->
@@ -569,7 +581,7 @@
           </div>
         </div>
       </div>
-      <aside class="notes">RC's no-code editor vs custom Flutter code. I went custom: better localization control, and I prefer writing code</aside>
+      <aside class="notes">No-code editor: drag-drop, remote updates · custom: full layout + localization control · I went custom, prefer code</aside>
     </section>
 
     <!-- 20. RC dashboard -->
@@ -578,7 +590,7 @@
         <h2 class="r r1">RevenueCat <span class="hl">dashboard</span></h2>
         <div class="imgwrap r r2"><img src="rc-dashboard.png" alt="RevenueCat overview dashboard" class="shot" style="max-height:740px;" /></div>
       </div>
-      <aside class="notes">Revenue charts out-of-box</aside>
+      <aside class="notes">MRR, active subs, churn, trial conversion · zero code · my every-morning dashboard</aside>
     </section>
 
     <!-- 21. SENTRY TITLE -->
@@ -589,7 +601,7 @@
         <h1 class="r r3"><span class="hl">Sentry</span></h1>
         <p class="lead r r4" style="margin-top:20px;">Error tracking for real-world apps</p>
       </div>
-      <aside class="notes">Second: error tracking. Pain: angry users, losing revenue, no idea how or why, can't debug</aside>
+      <aside class="notes">Tool 2: error tracking · pain: angry users, lost revenue, no idea why, can't debug</aside>
     </section>
 
     <!-- 22. Sentry what -->
@@ -604,7 +616,7 @@
         </ul>
         <div class="pricing r r6"><svg class="ic"><use href="#i-dollar"/></svg> <b>Pricing:</b> Free tier 5K errors/month. Paid from $26/month.</div>
       </div>
-      <aside class="notes">Logs straight from users' phones, crashes after updates ship, every Android camera has quirks. Used even by million-user apps. Andrea's example: missing url_launcher intent broke every Android link, Sentry caught it day one. Free tier gotcha: layout errors fire every frame, 5K burns fast</aside>
+      <aside class="notes">Logs from real phones · crashes after ship · Android camera quirks · Andrea: url_launcher intent broke links, caught day 1 · gotcha: layout errors fire every frame → 5K burns fast</aside>
     </section>
 
     <!-- 22b. Sentry: beyond crashes -->
@@ -619,7 +631,7 @@
         </ul>
         <p class="note r r6">One SDK (<span class="hl">sentry_flutter</span>) catches Dart <em>and</em> native errors.</p>
       </div>
-      <aside class="notes">SDK 9.0: mobile session replay is GA, release health = crash-free %, performance tracing for slow spans/HTTP. Each issue carries breadcrumbs, device, screenshot, view hierarchy. Catches both Dart and native crashes</aside>
+      <aside class="notes">Mobile session replay GA · release health = crash-free % · tracing: slow screens, HTTP, cold starts · issues carry breadcrumbs, screenshot, view hierarchy · Dart + native</aside>
     </section>
 
     <!-- 23. Sentry dashboard -->
@@ -628,7 +640,7 @@
         <h2 class="r r1">Inside a <span class="hl">crash</span></h2>
         <div class="imgwrap r r2"><img src="sentry-error.png" alt="Sentry error detail with device info and stack trace" class="shot" style="max-height:760px;" /></div>
       </div>
-      <aside class="notes">Device, OS, app version, stack trace</aside>
+      <aside class="notes">Device model, OS, app version, stack trace, breadcrumbs · debugging phones you'll never own</aside>
     </section>
 
     <!-- 24. Sentry feedback -->
@@ -637,7 +649,7 @@
         <h2 class="r r1">Sentry <span class="hl">Feedback</span></h2>
         <div class="imgwrap r r2"><img src="sentry-feedback.png" alt="Sentry's Report a Bug form in the app" class="shot" style="max-height:720px;" /></div>
       </div>
-      <aside class="notes">In-app bug report form. Pairs with the feedback package: screenshot + annotate, lands in Sentry</aside>
+      <aside class="notes">In-app bug report form · feedback pkg: screenshot + annotate → lands in Sentry</aside>
     </section>
 
     <!-- 25. POSTHOG TITLE -->
@@ -648,17 +660,7 @@
         <h1 class="r r3"><span class="hl">PostHog</span></h1>
         <p class="lead r r4" style="margin-top:20px;">Product analytics &amp; more</p>
       </div>
-      <aside class="notes">Third: product analytics</aside>
-    </section>
-
-    <!-- 26. Deming quote -->
-    <section class="slide">
-      <div class="pad statement">
-        <div class="grid"></div>
-        <h2 class="r r1">“Without data, you're just another person with an opinion.”</h2>
-        <p class="cite r r2">W. Edwards Deming</p>
-      </div>
-      <aside class="notes">Gut feeling vs measuring</aside>
+      <aside class="notes">Pillar 3 · RC = money, Sentry = errors, PostHog = behaviour · before: guessing, gut feeling vs measuring</aside>
     </section>
 
     <!-- 27. PostHog what -->
@@ -673,7 +675,7 @@
         </ul>
         <div class="pricing r r6"><svg class="ic"><use href="#i-dollar"/></svg> <b>Pricing:</b> Generous free tier (1M events/month).</div>
       </div>
-      <aside class="notes">Events, funnels, session replay. See exactly where users drop off</aside>
+      <aside class="notes">Track scan_started, paywall_viewed, purchase · funnel showed which onboarding step leaked · free: 1M events + 5K replays/mo</aside>
     </section>
 
     <!-- 27b. PostHog: not just analytics -->
@@ -688,7 +690,7 @@
         </ul>
         <p class="note r r6">All in <span class="hl">one SDK</span> — autocapture, screen tracking, replay.</p>
       </div>
-      <aside class="notes">One platform: feature flags (remote toggle without app update, like Shorebird's config), experiments with stats, in-app surveys, session replay. posthog_flutter does autocapture + PosthogObserver screen tracking</aside>
+      <aside class="notes">Flags: remote toggle, no release · experiments + stats · in-app surveys · autocapture + PosthogObserver screen tracking</aside>
     </section>
 
     <!-- 28. PostHog MCP -->
@@ -697,7 +699,7 @@
         <h2 class="r r1">PostHog <span class="hl">MCP</span></h2>
         <div class="imgwrap r r2"><img src="posthog-mcp.png" alt="Claude Code analyzing an onboarding funnel through the PostHog MCP" class="shot" style="max-height:760px;" /></div>
       </div>
-      <aside class="notes">MCP + Claude Code demo</aside>
+      <aside class="notes">Claude Code + PostHog MCP · plain English: "where do users drop off?" → writes + runs query · no SQL, no dashboards</aside>
     </section>
 
     <!-- 29. SHOREBIRD TITLE -->
@@ -708,7 +710,7 @@
         <h1 class="r r3"><span class="hl">Shorebird</span></h1>
         <p class="lead r r4" style="margin-top:20px;">Push Flutter code updates over the air</p>
       </div>
-      <aside class="notes">Fourth: OTA patches, skip the app review queue</aside>
+      <aside class="notes">Tool 4: OTA Dart patches · skip the review queue</aside>
     </section>
 
     <!-- 30. Shorebird why -->
@@ -722,7 +724,7 @@
           <li class="r r5">Great for small UX improvements, no store update</li>
         </ul>
       </div>
-      <aside class="notes">Small UX patches, no rebuild, no review queue</aside>
+      <aside class="notes">shorebird release replaces flutter build · shorebird patch = OTA Dart · copy tweaks, layout fixes live same day</aside>
     </section>
 
     <!-- 31. Shorebird limitations -->
@@ -736,7 +738,7 @@
           <li class="r r5">Not suitable for critical bug fixes</li>
         </ul>
       </div>
-      <aside class="notes">Two opens to take effect, Dart only</aside>
+      <aside class="notes">2 launches: 1st downloads, 2nd runs · broken user stays broken until restart ×2 · Dart only: no assets / native / engine · polish, not emergencies</aside>
     </section>
 
     <!-- 32. So instead -->
@@ -745,7 +747,7 @@
         <div class="grid"></div>
         <h2 class="r r1">So instead…</h2>
       </div>
-      <aside class="notes">Tease the next tool</aside>
+      <aside class="notes">OTA can't save emergencies → make the user update · segue tool 5</aside>
     </section>
 
     <!-- 33. force_update_helper title -->
@@ -756,7 +758,7 @@
         <p class="lead r r3" style="margin-top:24px;">Prompt users to update when a new version ships</p>
         <p class="small r r4" style="margin-top:14px;">by Andrea Bizzotto (the Flutter legend!)</p>
       </div>
-      <aside class="notes">Fifth: forcing updates, by Andrea</aside>
+      <aside class="notes">Andrea Bizzotto, codewithandrea.com · min-version check + blocking dialog · minutes to wire up</aside>
     </section>
 
     <!-- 34. force update why -->
@@ -771,7 +773,7 @@
           <li class="r r6">I prefer Gist: less backend-dependent, easier solo</li>
         </ul>
       </div>
-      <aside class="notes">Fatal errors, DTO mismatches. Gist: backend could be down, URL changes, wrong URL in Flutter. Solo = simpler. On a team: agree on who owns the gist, avoid future issues</aside>
+      <aside class="notes">Fatal errors, DTO mismatches · old versions break silently · Gist > backend: simpler solo · team: agree gist owner</aside>
     </section>
 
     <!-- 35. config json -->
@@ -786,7 +788,7 @@
 }</pre>
         <p class="codecap r r4"><svg class="ic fill"><use href="#i-github"/></svg>Hosted on a GitHub Gist</p>
       </div>
-      <aside class="notes">One JSON file = kill switch</aside>
+      <aside class="notes">Whole "backend" = JSON on a Gist, fetched on start · bump min_version → old versions block · free kill switch</aside>
     </section>
 
     <!-- 36. update prompt -->
@@ -799,7 +801,7 @@
           <img src="update-store.png" alt="App Store update page for HalalChecker AI" class="shot" style="max-height:720px;" />
         </div>
       </div>
-      <aside class="notes">Blocking dialog sends them to the App Store to update</aside>
+      <aside class="notes">Blocking dialog → App Store update page</aside>
     </section>
 
     <!-- 37. in_app_review title -->
@@ -810,7 +812,7 @@
         <p class="lead r r3" style="margin-top:24px;">Ask for ratings with the native prompt, in-app</p>
         <p class="small r r4" style="margin-top:14px;">by Britannio Jarrett</p>
       </div>
-      <aside class="notes">Sixth: native rating prompt</aside>
+      <aside class="notes">Wraps SKStoreReviewController (iOS) + Play In-App Review (Android) · system sheet, never leaves app</aside>
     </section>
 
     <!-- 38. ratings done right -->
@@ -824,7 +826,7 @@
           <li class="r r5">Don't abuse it (iOS limits the prompt to 3× per year)</li>
         </ul>
       </div>
-      <aside class="notes">ASO, timing, three yearly. Andrea: used analytics (likes per engaged user) to pick the moment, exponential backoff for re-prompts</aside>
+      <aside class="notes">ASO: rating count + avg → ranking · iOS: 3 per 365 days, auto-enforced, request ≠ guarantee · Andrea: likes/engaged user picked the moment, exponential backoff</aside>
     </section>
 
     <!-- 38b. in_app_review prompt -->
@@ -833,7 +835,7 @@
         <h2 class="r r1">The native <span class="hl">rating prompt</span></h2>
         <div class="imgwrap r r2"><img src="review-prompt.png" alt="Native in-app rating prompt: Enjoying HalalChecker?" class="shot" style="max-height:740px;" /></div>
       </div>
-      <aside class="notes">System prompt, never leaves the app. Fire it right after a win (first successful scan)</aside>
+      <aside class="notes">Fire right after a win: first successful scan</aside>
     </section>
 
     <!-- 39. Beyond Flutter -->
@@ -853,7 +855,7 @@
           <li class="r r5">Learn user acquisition (Meta Ads, TikTok, etc.)</li>
         </ul>
       </div>
-      <aside class="notes">Ideas, SLC, user acquisition. Andrea: shipped in 100 hours by cutting deep links, tablet, comments from v1</aside>
+      <aside class="notes">Ideas: own itch, domain expertise, out-execute validated app · SLC (Jason Cohen) vs broken MVP · Andrea: 100h v1, cut deep links/tablet/comments · building = half, distribution = other half</aside>
     </section>
 
     <!-- 40. Funnel -->
@@ -871,7 +873,7 @@
         </div>
         <p class="note r r6" style="text-align:center; margin-top:32px;">Goal: <span class="hl">pour more in at the top</span> &amp; minimise the leak at every step.</p>
       </div>
-      <aside class="notes">Two levers: pour more in at the top, leak less at each step. Fix the biggest leak first</aside>
+      <aside class="notes">2 levers: more in at top, leak less per step · fix biggest leak first</aside>
     </section>
 
     <!-- 41. Closing / contact -->
@@ -889,7 +891,7 @@
         </div>
         <p class="email r r3">iskandarzhilmi@gmail.com</p>
       </div>
-      <aside class="notes">QR code, invite questions. Then thank Moaaz + Flutter KL team for hosting, thank everyone for coming</aside>
+      <aside class="notes">QR · invite questions · thank Moaaz + Flutter KL team · thank everyone</aside>
     </section>
 
 </div>
