@@ -112,13 +112,6 @@
   .panel-steps .num { font-family: var(--mono); font-size: 30px; font-weight: 700; color: rgba(255,255,255,0.55); }
   .panel-steps .word { font-size: 60px; font-weight: 800; letter-spacing: -0.02em; }
 
-  /* compact RC term rows */
-  .terms { display: flex; flex-direction: column; gap: 30px; width: 100%; max-width: 1480px; margin: 40px auto 0; }
-  .trow { background: var(--soft); border: 1px solid var(--line); border-radius: 22px; padding: 36px 48px; display: flex; align-items: center; justify-content: space-between; gap: 48px; text-align: left; }
-  .trow .l .t { font-size: 48px; font-weight: 800; color: var(--teal); }
-  .trow .l .d { font-size: 28px; color: var(--muted); margin-top: 6px; }
-  .trow .ex { font-family: var(--mono); font-size: 30px; font-weight: 700; color: var(--ink); white-space: nowrap; text-align: right; }
-  .trow .ex .mut { color: var(--muted); font-weight: 500; }
 
   /* === STATEMENT (full teal) === */
   .statement { background: linear-gradient(150deg, var(--teal) 0%, var(--teal-deep) 60%, var(--teal-dark) 130%); color: #fff; align-items: center; justify-content: center; text-align: center; padding: 150px; }
@@ -472,41 +465,76 @@
       <aside class="notes">Use one fake app to explain the four RevenueCat terms</aside>
     </section>
 
-    <!-- 14. RC terms: Product & Package -->
+    <!-- 14. RC term: Product -->
     <section class="slide">
       <div class="pad center">
-        <h2 class="r r1"><span class="hl">Product</span> &amp; <span class="hl">Package</span></h2>
-        <div class="terms">
-          <div class="trow r r2">
-            <div class="l"><div class="t">Product</div><div class="d">Each item you sell in the store</div></div>
-            <div class="ex">gym_monthly_499 <span class="mut">→ $4.99/mo</span></div>
-          </div>
-          <div class="trow r r3">
-            <div class="l"><div class="t">Package</div><div class="d">That product, wrapped across both stores</div></div>
-            <div class="ex"><svg class="ic fill"><use href="#i-apple"/></svg> <svg class="ic fill"><use href="#i-android"/></svg> $rc_monthly</div>
-          </div>
+        <h2 class="r r2" style="margin-top:18px;"><span class="hl">Product</span></h2>
+        <p class="small r r2" style="margin-top:14px;">Each item you sell in the store.</p>
+        <div class="rc-list">
+          <div class="rc-item r r3"><span class="id">gym_weekly_199</span><span class="price">$1.99 / week</span></div>
+          <div class="rc-item r r3"><span class="id">gym_monthly_499</span><span class="price">$4.99 / month</span></div>
+          <div class="rc-item r r4"><span class="id">gym_yearly_3999</span><span class="price">$39.99 / year</span></div>
+          <div class="rc-item r r4"><span class="id">gym_lifetime_9999</span><span class="price">$99.99 once</span></div>
         </div>
       </div>
-      <aside class="notes">Product = SKU in App Store / Play Console. Package = cross-store wrapper, one code path</aside>
+      <aside class="notes">SKUs you create in App Store / Play Console</aside>
     </section>
 
-    <!-- 15. RC terms: Offering & Entitlement -->
+    <!-- 15. RC term: Package -->
     <section class="slide">
       <div class="pad center">
-        <h2 class="r r1"><span class="hl">Offering</span> &amp; <span class="hl">Entitlement</span></h2>
-        <div class="terms">
-          <div class="trow r r2">
-            <div class="l"><div class="t">Offering</div><div class="d">The set of packages a paywall shows</div></div>
-            <div class="ex">default <span class="mut">→ weekly · annual · lifetime</span></div>
+        <h2 class="r r2" style="margin-top:18px;"><span class="hl">Package</span></h2>
+        <p class="small r r2" style="margin-top:14px;">One product, grouped across both stores.</p>
+        <div class="rc-cols">
+          <div class="rc-card2 r r3"><span class="pkg">$rc_weekly</span><span class="sku"><svg class="ic fill"><use href="#i-apple"/></svg> gym_weekly_199</span><span class="sku"><svg class="ic fill"><use href="#i-android"/></svg> gym_weekly</span></div>
+          <div class="rc-card2 r r4"><span class="pkg">$rc_monthly</span><span class="sku"><svg class="ic fill"><use href="#i-apple"/></svg> gym_monthly_499</span><span class="sku"><svg class="ic fill"><use href="#i-android"/></svg> gym_monthly</span></div>
+          <div class="rc-card2 r r5"><span class="pkg">$rc_annual</span><span class="sku"><svg class="ic fill"><use href="#i-apple"/></svg> gym_yearly_3999</span><span class="sku"><svg class="ic fill"><use href="#i-android"/></svg> gym_yearly</span></div>
+        </div>
+      </div>
+      <aside class="notes">Cross-store wrapper, one code path</aside>
+    </section>
+
+    <!-- 16. RC term: Offering -->
+    <section class="slide">
+      <div class="pad center">
+        <h2 class="r r2" style="margin-top:18px;"><span class="hl">Offering</span></h2>
+        <p class="small r r2" style="margin-top:14px;">The set of packages a paywall shows.</p>
+        <div class="paywalls-row">
+          <div class="paywall mini r r3">
+            <div class="ptag">default</div>
+            <div class="prow"><span>Weekly</span><span class="pp">$1.99</span></div>
+            <div class="prow sel"><span>Annual</span><span class="pp">$39.99</span></div>
+            <div class="prow"><span>Lifetime</span><span class="pp">$99.99</span></div>
           </div>
-          <div class="trow r r3">
-            <div class="l"><div class="t">Entitlement</div><div class="d">The flag that unlocks access</div></div>
-            <div class="ex">premium <span class="mut">→ unlimited</span></div>
+          <div class="paywall mini r r4">
+            <div class="ptag">black_friday</div>
+            <div class="prow sel"><span>Annual <span class="badge">−40%</span></span><span class="pp">$23.99</span></div>
+            <div class="prow"><span>Lifetime</span><span class="pp">$59.99</span></div>
+          </div>
+          <div class="paywall mini r r5">
+            <div class="ptag">winback</div>
+            <div class="prow"><span>Monthly</span><span class="pp">$2.99</span></div>
+            <div class="prow sel"><span>Annual <span class="badge">−50%</span></span><span class="pp">$19.99</span></div>
           </div>
         </div>
-        <p class="note r r4" style="text-align:center;">Swap offerings remotely for sales &amp; A/B tests. Check one entitlement flag in code.</p>
       </div>
-      <aside class="notes">Offering = paywall lineup, swap remotely (sales, win-backs, A/B). Entitlement = check one flag, ignore which product they bought</aside>
+      <aside class="notes">Swap the lineup remotely, no app update. Run sales, win-backs, A/B tests by switching offerings</aside>
+    </section>
+
+    <!-- 17. RC term: Entitlement -->
+    <section class="slide">
+      <div class="pad center">
+        <h2 class="r r2" style="margin-top:18px;"><span class="hl">Entitlement</span></h2>
+        <p class="small r r2" style="margin-top:14px;">Many products unlock the same access.</p>
+        <div class="flow r r3">
+          <div class="col"><span class="sku">$rc_weekly</span><span class="sku">$rc_monthly</span><span class="sku">$rc_annual</span><span class="sku">$rc_lifetime</span></div>
+          <span class="arch-arrow">→</span>
+          <div class="pill"><div class="name">premium</div><div class="role">entitlement</div></div>
+          <span class="arch-arrow">→</span>
+          <div class="got"><svg class="ic"><use href="#i-dumbbell"/></svg>Unlimited workouts<div class="role">what they get</div></div>
+        </div>
+      </div>
+      <aside class="notes">Check one flag, ignore which product they bought</aside>
     </section>
 
     <!-- 18. RC: paywalls + analytics -->
