@@ -196,6 +196,13 @@
   .flow .got { background: var(--soft); border: 1px solid var(--line); border-radius: 22px; padding: 36px 52px; font-size: 44px; font-weight: 700; color: var(--ink); text-align: center; }
   .flow .got .role { font-size: 24px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); font-weight: 600; margin-top: 8px; }
 
+  /* === PRICING TABLE === */
+  table.ptable { border-collapse: collapse; margin: 50px auto 0; min-width: 1180px; background: #fff; border: 2px solid var(--line); border-radius: 24px; box-shadow: var(--shadow); overflow: hidden; border-spacing: 0; }
+  .ptable th { font-family: var(--mono); font-size: 25px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); text-align: left; padding: 30px 56px 22px; background: var(--soft); }
+  .ptable td { font-size: 38px; font-weight: 600; color: var(--ink); text-align: left; padding: 34px 56px; border-top: 1px solid var(--line); }
+  .ptable td.plan { font-weight: 800; }
+  .ptable td.price { font-family: var(--mono); font-weight: 700; color: var(--teal-deep); white-space: nowrap; }
+
   /* === CODE === */
   pre.code { display: inline-block; background: #0f1729; border-radius: 24px; box-shadow: var(--shadow); padding: 56px 70px; margin-top: 24px; text-align: left; font-family: var(--mono); font-size: 44px; line-height: 1.7; color: #e6edf3; }
   pre.code .str { color: #fbbf24; }
@@ -292,23 +299,17 @@
         </div>
         <div class="right">
           <div class="grid"></div><div class="ring a"></div><div class="ring b"></div>
-          <div class="panel-steps">
-            <div class="step rr rr1"><span class="num">01</span><span class="word">Idea</span></div>
-            <div class="step rr rr2"><span class="num">02</span><span class="word">Build</span></div>
-            <div class="step rr rr3"><span class="num">03</span><span class="word">Profit</span></div>
-          </div>
         </div>
       </div>
-      <aside class="notes">Welcome · intro: Iskandar, SWE, built HalalChecker AI solo · promise: exact tools, idea → profit</aside>
+      <aside class="notes">OPEN (memorized): "Last July I was standing in a konbini in Kyoto, hungry, holding an onigiri I couldn't read. That moment became an app, and tonight I'll show you exactly how." · intro: Iskandar, SWE · DELIVERY: slow 20%, plant feet, eyes L-C-R, downward inflection · rescue line if blank: "Let me pause here, because this part matters"</aside>
     </section>
 
     <!-- 2. JAPAN -->
     <section class="slide">
       <div class="pad imgslide">
-        <p class="kicker r r1">July 2024 · Solo trip to Japan</p>
-        <h2 class="r r1" style="margin-top:18px;">Fushimi Inari, <span class="hl">Kyoto</span></h2>
-        <div class="imgwrap r r2" style="margin-top:14px;">
-          <img src="IMG_8101.jpg" alt="Iskandar at the torii gates of Fushimi Inari, Kyoto" class="shot" style="max-height:620px;" />
+        <p class="kicker r r1">July 2024</p>
+        <div class="imgwrap r r2" style="margin-top:20px;">
+          <img src="IMG_8101.jpg" alt="Iskandar at the torii gates of Fushimi Inari, Kyoto" class="shot" style="max-height:740px;" />
         </div>
       </div>
       <aside class="notes">Solo trip July 2024 · Japan beautiful · Fushimi Inari: thousands of torii, amazing · travelling on tight budget</aside>
@@ -318,16 +319,16 @@
     <section class="slide">
       <div class="pad statement">
         <div class="grid"></div>
-        <h2 class="r r1">Tight budget =<br>konbini onigiri, every day</h2>
-        <p class="cite r r2">but wait… is the filling halal?</p>
+        <h2 class="r r1">Onigiri, every day</h2>
+        <p class="cite r r2">but… I can't read the label</p>
       </div>
-      <aside class="notes">Budget tight → konbini onigiri daily · cheap, everywhere, delicious · but: filling halal? · label 100% Japanese</aside>
+      <aside class="notes">Budget tight → konbini onigiri daily · cheap, everywhere, delicious · planted aside (deliver casually): "I ate enough onigiri that trip to rank every konbini chain. 7-Eleven wins, fight me" · frame as MY problem: I eat halal + label 100% Japanese = I can't tell what's in the filling · NOT "Japanese food is suspect", it's "I can't read it"</aside>
     </section>
 
     <!-- 3. THE STRUGGLE -->
     <section class="slide">
       <div class="pad imgslide">
-        <h2 class="r r1">Two apps, <span class="hl">every</span> time</h2>
+        <h2 class="r r1">The <span class="hl">workaround</span></h2>
         <p class="sub r r1">halal scanner apps didn't know most Japanese products</p>
         <div class="imgwrap r r2">
           <img src="lens.png" alt="Scanning an ingredient label with Google Lens" class="shot" style="max-height:660px;" />
@@ -344,7 +345,7 @@
         <div class="grid"></div>
         <h2 class="r r1">“Wait a minute…”</h2>
       </div>
-      <aside class="notes">Pause · me daily = every Muslim traveller too · camera + OCR + AI in ONE app · validated on myself first</aside>
+      <aside class="notes">[pause 2s before speaking] · me daily = every Muslim traveller too · camera + OCR + AI in ONE app · validated on myself first</aside>
     </section>
 
     <!-- 5. BUILDING IT -->
@@ -392,7 +393,7 @@
     <section class="slide">
       <div class="pad center">
         <p class="kicker r r1">Since Sept 2024</p>
-        <h2 class="r r2" style="margin-top:24px;">Where it is today</h2>
+        <h2 class="r r2" style="margin-top:24px;">Results</h2>
         <div class="metrics3">
           <div class="metric-card r r3"><div class="n">30K+</div><div class="l">Downloads</div></div>
           <div class="metric-card r r4"><div class="n">4.8★</div><div class="l">Rating</div></div>
@@ -410,16 +411,12 @@
           <div class="arch-card r r2"><span class="name"><svg class="ic"><use href="#i-smartphone"/></svg>Flutter</span><span class="role">iOS &amp; Android</span></div>
           <span class="arch-arrow r r2">↓</span>
           <div class="arch-card r r3"><span class="name"><svg class="ic"><use href="#i-server"/></svg>Node.js</span><span class="role">Backend · DigitalOcean</span></div>
-          <span class="arch-arrow r r3">↓</span>
+          <span class="arch-arrow r r3" style="display:flex; gap:200px;"><span>↙</span><span>↓</span><span>↓</span><span>↘</span></span>
           <div class="arch-row r r4">
             <div class="arch-card"><span class="name"><svg class="ic"><use href="#i-barcode"/></svg>Open Food Facts</span><span class="role">Barcode lookup</span></div>
             <div class="arch-card"><span class="name"><svg class="ic"><use href="#i-scan-text"/></svg>Google Vision</span><span class="role">OCR</span></div>
-            <div class="arch-card hero"><span class="name"><svg class="ic"><use href="#i-sparkles"/></svg>Gemini 3 Flash</span><span class="role">Grounded search</span></div>
-          </div>
-          <div class="arch-chips r r5">
-            <span>Supabase · cache by barcode</span>
-            <span>RevenueCat · payments</span>
-            <span>FCM · push</span>
+            <div class="arch-card"><span class="name"><svg class="ic"><use href="#i-sparkles"/></svg>Gemini 3 Flash</span><span class="role">Grounded search</span></div>
+            <div class="arch-card"><span class="name"><svg class="ic"><use href="#i-server"/></svg>Supabase</span><span class="role">Cache by barcode</span></div>
           </div>
         </div>
       </div>
@@ -429,7 +426,7 @@
     <!-- 11. TOOL GRID -->
     <section class="slide">
       <div class="pad center">
-        <h2 class="r r1"><span class="hl">6</span> tools every indie app needs</h2>
+        <h2 class="r r1">The <span class="hl">6</span> tools</h2>
         <div class="tool-grid">
           <div class="tool-card r r2"><img src="revenuecat.png" alt="RevenueCat" /><span class="tname">RevenueCat</span></div>
           <div class="tool-card r r2"><img src="sentry.png" alt="Sentry" /><span class="tname">Sentry</span></div>
@@ -439,7 +436,7 @@
           <div class="tool-card r r4"><span class="tmono">in_app_review</span><span class="tby">by Britannio Jarrett</span></div>
         </div>
       </div>
-      <aside class="notes">Roadmap, deep dive each · 4 services (free tiers) + 2 pub.dev packages · not just indie, scales to millions</aside>
+      <aside class="notes">Roadmap, deep dive each · TALKING POINT: 6 tools every indie app needs · 4 services (free tiers) + 2 pub.dev packages · not just indie, scales to millions</aside>
     </section>
 
     <!-- 12. REVENUECAT TITLE -->
@@ -449,22 +446,20 @@
         <img src="revenuecat.png" alt="RevenueCat" class="tool-logo r r2" />
         <h1 class="r r3"><span class="hl">RevenueCat</span></h1>
       </div>
-      <aside class="notes">Tool 1, most important: getting paid · raw StoreKit/Play Billing = receipts, renewals, refunds, sync, all on you · RC wraps it</aside>
+      <aside class="notes">TRANSITION (memorized): "An app isn't a business until it can get paid. So tool one." · vs DIY: the purchase is 1 line either way, the other 10,000 lines are the hard part · server-side receipt validation (else jailbreak = free premium) · lifecycle edge cases: renewals, billing retry, grace periods, refunds, proration, restore · StoreKit 1/2 + Play Billing forced migrations, RC absorbs them · cross-device sync with no auth · analytics + remote offerings free · that's the 1% fee</aside>
     </section>
 
     <!-- 13. RC: in-app purchases -->
     <section class="slide">
       <div class="pad content">
         <p class="kicker r r1">RevenueCat</p>
-        <h2 class="r r2">In-app purchases, made easy</h2>
+        <h2 class="r r2">In-app purchases</h2>
         <ul class="bullets">
           <li class="r r3">Subscriptions &amp; one-time purchases (points)</li>
           <li class="r r4">No backend required (it's optional)</li>
-          <li class="r r5">My app has <strong>no auth, no login</strong></li>
         </ul>
-        <p class="note r r6">Why? Keep it frictionless. <span class="hl">Less friction → higher conversion.</span></p>
       </div>
-      <aside class="notes">Subs + consumable points · no backend needed · zero auth: anonymous IDs, tied to store account · signup screen = drop-off</aside>
+      <aside class="notes">Subs + consumable points · no backend needed · TALKING POINT: my app has NO auth, no login · why: frictionless, less friction → higher conversion · anonymous IDs, tied to store account · every signup screen = drop-off</aside>
     </section>
 
     <!-- 13c. RC terms intro: example app -->
@@ -474,7 +469,7 @@
         <h2 class="r r2" style="margin-top:22px;">Example: a <span class="hl">workout app</span> <svg class="ic" style="color:var(--teal);"><use href="#i-dumbbell"/></svg></h2>
         <p class="lead r r3" style="margin-top:26px;">Product · Package · Offering · Entitlement</p>
       </div>
-      <aside class="notes">1 fake workout app → explain 4 RC terms</aside>
+      <aside class="notes">1 fake workout app → 4 RC terms · these confused me at first, every tutorial assumes them · mental model: Product = what you sell, Package = cross-store wrapper, Offering = the paywall lineup, Entitlement = what it unlocks · flow: buy Product → unlocks Entitlement → app checks it</aside>
     </section>
 
     <!-- 14. RC term: Product -->
@@ -489,7 +484,7 @@
           <div class="rc-item r r4"><span class="id">gym_lifetime_9999</span><span class="price">$99.99 once</span></div>
         </div>
       </div>
-      <aside class="notes">Products = real SKUs in ASC / Play Console · convention: price in ID · price change = new product</aside>
+      <aside class="notes">Products = real SKUs in App Store Connect / Play Console, mirrored in RC dashboard · subs, consumables, lifetime: all products · ID convention: name_period_price · price in ID because price change usually = new product · the only part the stores see</aside>
     </section>
 
     <!-- 15. RC term: Package -->
@@ -503,7 +498,7 @@
           <div class="rc-card2 r r5"><span class="pkg">$rc_annual</span><span class="sku"><svg class="ic fill"><use href="#i-apple"/></svg> gym_yearly_3999</span><span class="sku"><svg class="ic fill"><use href="#i-android"/></svg> gym_yearly</span></div>
         </div>
       </div>
-      <aside class="notes">Same product, both stores · code asks $rc_monthly · no platform branching, 1 code path</aside>
+      <aside class="notes">Same product wrapped across both stores · code asks $rc_monthly, no platform branching · $rc_weekly / $rc_monthly / $rc_annual are RC's default identifiers, best practice over custom ones · iOS + Android product IDs differ, package hides that · 1 code path</aside>
     </section>
 
     <!-- 16. RC term: Offering -->
@@ -530,7 +525,7 @@
           </div>
         </div>
       </div>
-      <aside class="notes">Swap lineup remotely, no app update · sales, win-backs, A/B tests</aside>
+      <aside class="notes">Offering = the set of packages a paywall shows · app calls getOfferings().current → whatever the dashboard says · swap lineup remotely, no app update · Black Friday: switch current offering, switch back after · win-backs, A/B price tests · best practice: never hardcode product IDs in the paywall · can mix subs + consumables in one offering</aside>
     </section>
 
     <!-- 17. RC term: Entitlement -->
@@ -546,22 +541,25 @@
           <div class="got"><svg class="ic"><use href="#i-dumbbell"/></svg>Unlimited workouts<div class="role">what they get</div></div>
         </div>
       </div>
-      <aside class="notes">Check 1 boolean: has "premium" · which product = irrelevant · add products later, no app change</aside>
+      <aside class="notes">Entitlement = the access level a purchase unlocks · best practice: check entitlement, never product ID · 1 boolean: has "premium"? · which of the 4 products = irrelevant · add/retire products later, app code unchanged · most apps need just 1 entitlement, tiered apps use several · gotcha: consumables in an entitlement unlock it forever</aside>
     </section>
 
-    <!-- 18. RC: paywalls + analytics -->
+    <!-- 17b. Entitlement in code -->
     <section class="slide">
-      <div class="pad content">
-        <p class="kicker r r1">RevenueCat</p>
-        <h2 class="r r2">Paywalls + analytics</h2>
-        <ul class="bullets">
-          <li class="r r3">Native paywall &amp; designer, <em>or</em> build your own in Flutter</li>
-          <li class="r r4">I build my own, for better control over localization</li>
-          <li class="r r5">Track purchases &amp; revenue out of the box</li>
-        </ul>
-        <div class="pricing r r6"><svg class="ic"><use href="#i-dollar"/></svg> <b>Pricing:</b> Free until $2.5K/month revenue, then ~1%. Worth it as a lean solo founder.</div>
+      <div class="pad center">
+        <p class="kicker r r1">Example</p>
+        <h2 class="r r2" style="margin-top:18px;">Locking a <span class="hl">premium</span> feature</h2>
+        <pre class="code r r3" style="font-size:38px; padding:48px 64px;"><span class="key">final</span> info = <span class="key">await</span> Purchases.getCustomerInfo();
+<span class="key">final</span> isPremium =
+    info.entitlements.active.containsKey(<span class="str">"premium"</span>);
+
+<span class="key">if</span> (isPremium) {
+  openWorkoutPlan();
+} <span class="key">else</span> {
+  showPaywall();
+}</pre>
       </div>
-      <aside class="notes">RC paywall designer vs custom Flutter · mine: custom, localization control · pricing: free < $2.5K MTR, then 1% · I pay $0</aside>
+      <aside class="notes">The whole point of entitlements in 1 snippet · premium feature → check flag → open it or show paywall · no product IDs in app code · works for all 4 products + any added later</aside>
     </section>
 
     <!-- 19. Paywall comparison -->
@@ -581,7 +579,7 @@
           </div>
         </div>
       </div>
-      <aside class="notes">No-code editor: drag-drop, remote updates · custom: full layout + localization control · I went custom, prefer code</aside>
+      <aside class="notes">TALKING POINTS: native paywall + designer, or build your own in Flutter · no-code editor: drag-drop, remote updates · custom: full layout + localization control · I went custom, prefer code · purchases + revenue tracked out of the box either way</aside>
     </section>
 
     <!-- 20. RC dashboard -->
@@ -593,6 +591,29 @@
       <aside class="notes">MRR, active subs, churn, trial conversion · zero code · my every-morning dashboard</aside>
     </section>
 
+    <!-- 20c. RC customer profile -->
+    <section class="slide">
+      <div class="pad imgslide">
+        <h2 class="r r1">Customer <span class="hl">profile</span></h2>
+        <div class="imgwrap r r2"><img src="rc-customer.png" alt="RevenueCat customer profile with entitlements, history, and attributes" class="shot" style="max-height:740px;" /></div>
+      </div>
+      <aside class="notes">Every install = a customer profile, even with NO auth: anonymous $RCAnonymousID · country, total spent, first/last seen · history timeline: first open 7:16pm → trial started 7:19pm, 3 minutes to convert · entitlement live: "Unlimited scans", trial of hc_299_1y, converts in 7 days · current offering shown per user · Grant / Transfer buttons = fix a user's purchase manually, support superpower · sandbox toggle for test purchases</aside>
+    </section>
+
+    <!-- 20b. RC pricing -->
+    <section class="slide">
+      <div class="pad center">
+        <p class="kicker r r1">RevenueCat</p>
+        <h2 class="r r2" style="margin-top:24px;">Pricing</h2>
+        <table class="ptable r r3">
+          <tr><th>Plan</th><th>Includes</th><th>Price</th></tr>
+          <tr><td class="plan">Free</td><td>everything, up to $2.5K/month tracked revenue</td><td class="price">$0</td></tr>
+          <tr><td class="plan">Pro</td><td>above $2.5K/month tracked revenue</td><td class="price">~1% of revenue</td></tr>
+        </table>
+      </div>
+      <aside class="notes">Free < $2.5K MTR, then 1% · at my MRR: $0 · worth it as a lean solo founder</aside>
+    </section>
+
     <!-- 21. SENTRY TITLE -->
     <section class="slide">
       <div class="pad tooltitle">
@@ -601,43 +622,39 @@
         <h1 class="r r3"><span class="hl">Sentry</span></h1>
         <p class="lead r r4" style="margin-top:20px;">Error tracking for real-world apps</p>
       </div>
-      <aside class="notes">Tool 2: error tracking · pain: angry users, lost revenue, no idea why, can't debug</aside>
+      <aside class="notes">TRANSITION (memorized): "Money is flowing. Now: what's silently breaking?" · pain: angry users, lost revenue, no idea why, can't debug</aside>
     </section>
 
     <!-- 22. Sentry what -->
     <section class="slide">
       <div class="pad content">
         <p class="kicker r r1">Sentry</p>
-        <h2 class="r r2">A must once you have real users</h2>
+        <h2 class="r r2">Why Sentry?</h2>
         <ul class="bullets">
           <li class="r r3">Real error logs from real devices</li>
           <li class="r r4">Catch crashes you'd never see</li>
-          <li class="r r5">Lifesaver on Android camera quirks</li>
         </ul>
-        <div class="pricing r r6"><svg class="ic"><use href="#i-dollar"/></svg> <b>Pricing:</b> Free tier 5K errors/month. Paid from $26/month.</div>
       </div>
-      <aside class="notes">Logs from real phones · crashes after ship · Android camera quirks · Andrea: url_launcher intent broke links, caught day 1 · gotcha: layout errors fire every frame → 5K burns fast</aside>
+      <aside class="notes">Logs from real phones · crashes after ship · TALKING POINT: lifesaver on Android camera quirks, every manufacturer's camera behaves differently · Andrea: url_launcher intent broke links, caught day 1</aside>
     </section>
 
-    <!-- 22b. Sentry: beyond crashes -->
+    <!-- 22a. Sentry setup example -->
     <section class="slide">
-      <div class="pad content">
-        <p class="kicker r r1">Sentry</p>
-        <h2 class="r r2">More than crash logs</h2>
-        <ul class="bullets">
-          <li class="r r3"><strong>Session Replay:</strong> a video of what the user did before it broke</li>
-          <li class="r r4"><strong>Release Health:</strong> crash-free users &amp; sessions per version</li>
-          <li class="r r5"><strong>Tracing:</strong> find slow screens, HTTP calls, cold starts</li>
-        </ul>
-        <p class="note r r6">One SDK (<span class="hl">sentry_flutter</span>) catches Dart <em>and</em> native errors.</p>
+      <div class="pad center">
+        <p class="kicker r r1">Example</p>
+        <h2 class="r r2" style="margin-top:18px;">The setup</h2>
+        <pre class="code r r3" style="font-size:36px; padding:48px 64px;"><span class="key">await</span> SentryFlutter.init(
+  (options) => options.dsn = <span class="str">'https://...@sentry.io/...'</span>,
+  appRunner: () => runApp(<span class="key">const</span> MyApp()),
+);</pre>
       </div>
-      <aside class="notes">Mobile session replay GA · release health = crash-free % · tracing: slow screens, HTTP, cold starts · issues carry breadcrumbs, screenshot, view hierarchy · Dart + native</aside>
+      <aside class="notes">This is the entire setup: wrap runApp once · every uncaught Dart + native crash auto-captured from then on · no try/catch scattered everywhere · 5 minutes from pub add to first event · (if asked: also does session replay, tracing, release health, I don't use them)</aside>
     </section>
 
     <!-- 23. Sentry dashboard -->
     <section class="slide">
       <div class="pad imgslide">
-        <h2 class="r r1">Inside a <span class="hl">crash</span></h2>
+        <h2 class="r r1">A crash <span class="hl">report</span></h2>
         <div class="imgwrap r r2"><img src="sentry-error.png" alt="Sentry error detail with device info and stack trace" class="shot" style="max-height:760px;" /></div>
       </div>
       <aside class="notes">Device model, OS, app version, stack trace, breadcrumbs · debugging phones you'll never own</aside>
@@ -647,9 +664,27 @@
     <section class="slide">
       <div class="pad imgslide">
         <h2 class="r r1">Sentry <span class="hl">Feedback</span></h2>
-        <div class="imgwrap r r2"><img src="sentry-feedback.png" alt="Sentry's Report a Bug form in the app" class="shot" style="max-height:720px;" /></div>
+        <div class="imgwrap r r2">
+          <img src="sentry-feedback.png" alt="Sentry's Report a Bug form in the app" class="shot" style="max-height:620px;" />
+          <span class="arrow-big">→</span>
+          <img src="sentry-inbox.png" alt="Sentry Feedback inbox with user reports and device tags" class="shot" style="max-height:620px;" />
+        </div>
       </div>
-      <aside class="notes">In-app bug report form · feedback pkg: screenshot + annotate → lands in Sentry</aside>
+      <aside class="notes">In-app bug report form · feedback pkg: screenshot + annotate · lands in the Feedback inbox in Sentry · every report auto-carries device, OS, Flutter version, environment · triage like errors: assign, resolve, spam · (contents blurred, real users)</aside>
+    </section>
+
+    <!-- 24b. Sentry pricing -->
+    <section class="slide">
+      <div class="pad center">
+        <p class="kicker r r1">Sentry</p>
+        <h2 class="r r2" style="margin-top:24px;">Pricing</h2>
+        <table class="ptable r r3">
+          <tr><th>Plan</th><th>Includes</th><th>Price</th></tr>
+          <tr><td class="plan">Developer</td><td>5K errors/month, 1 user</td><td class="price">$0</td></tr>
+          <tr><td class="plan">Team</td><td>50K errors/month, unlimited users</td><td class="price">from $26/mo</td></tr>
+        </table>
+      </div>
+      <aside class="notes">5K errors/mo free · Team from $26/mo (50K errors) · gotcha: layout errors fire every frame → quota burns fast</aside>
     </section>
 
     <!-- 25. POSTHOG TITLE -->
@@ -660,29 +695,41 @@
         <h1 class="r r3"><span class="hl">PostHog</span></h1>
         <p class="lead r r4" style="margin-top:20px;">Product analytics &amp; more</p>
       </div>
-      <aside class="notes">Pillar 3 · RC = money, Sentry = errors, PostHog = behaviour · before: guessing, gut feeling vs measuring</aside>
+      <aside class="notes">TRANSITION (memorized): "RevenueCat tells me about money, Sentry about errors. Neither tells me what users actually DO." · before: guessing, gut feeling vs measuring</aside>
     </section>
 
     <!-- 27. PostHog what -->
     <section class="slide">
       <div class="pad content">
         <p class="kicker r r1">PostHog</p>
-        <h2 class="r r2">Know what users actually do</h2>
+        <h2 class="r r2">Product analytics</h2>
         <ul class="bullets">
           <li class="r r3">Track events: scans, paywall views, purchases</li>
           <li class="r r4">Funnels: see exactly where users drop off</li>
           <li class="r r5">Session replay: watch real user sessions</li>
         </ul>
-        <div class="pricing r r6"><svg class="ic"><use href="#i-dollar"/></svg> <b>Pricing:</b> Generous free tier (1M events/month).</div>
       </div>
       <aside class="notes">Track scan_started, paywall_viewed, purchase · funnel showed which onboarding step leaked · free: 1M events + 5K replays/mo</aside>
+    </section>
+
+    <!-- 27a. PostHog capture example -->
+    <section class="slide">
+      <div class="pad center">
+        <p class="kicker r r1">Example</p>
+        <h2 class="r r2" style="margin-top:18px;">Tracking an event</h2>
+        <pre class="code r r3" style="font-size:36px; padding:48px 64px;"><span class="key">await</span> Posthog().capture(
+  eventName: <span class="str">'scan completed'</span>,
+  properties: {<span class="str">'method'</span>: <span class="str">'barcode'</span>, <span class="str">'result'</span>: <span class="str">'halal'</span>},
+);</pre>
+      </div>
+      <aside class="notes">1 call per business event · naming convention: object + verb ("scan completed") · screens come free via PosthogObserver autocapture, manual capture = business events only · these events are what funnels are built from</aside>
     </section>
 
     <!-- 27b. PostHog: not just analytics -->
     <section class="slide">
       <div class="pad content">
         <p class="kicker r r1">PostHog</p>
-        <h2 class="r r2">Not just analytics</h2>
+        <h2 class="r r2">Beyond analytics</h2>
         <ul class="bullets">
           <li class="r r3"><strong>Feature flags:</strong> roll out or kill a feature remotely, no release</li>
           <li class="r r4"><strong>Experiments:</strong> A/B test a change, measure the impact</li>
@@ -690,16 +737,32 @@
         </ul>
         <p class="note r r6">All in <span class="hl">one SDK</span> — autocapture, screen tracking, replay.</p>
       </div>
-      <aside class="notes">Flags: remote toggle, no release · experiments + stats · in-app surveys · autocapture + PosthogObserver screen tracking</aside>
+      <aside class="notes">Flags: remote toggle, no release · experiments + stats · in-app surveys (Flutter: surveys=true + PosthogObserver, then zero code per survey, create in dashboard) · autocapture + PosthogObserver screen tracking</aside>
     </section>
 
     <!-- 28. PostHog MCP -->
     <section class="slide">
       <div class="pad imgslide">
         <h2 class="r r1">PostHog <span class="hl">MCP</span></h2>
-        <div class="imgwrap r r2"><img src="posthog-mcp.png" alt="Claude Code analyzing an onboarding funnel through the PostHog MCP" class="shot" style="max-height:760px;" /></div>
+        <p class="sub r r1">MCP: Model Context Protocol</p>
+        <div class="imgwrap r r2"><img src="posthog-funnel.png" alt="Claude Code rendering the HalalChecker onboarding funnel as text art via the PostHog MCP" class="shot" style="max-width:1620px;" /></div>
+        <p class="codecap r r3" style="margin-top:24px;">in Claude Code</p>
       </div>
-      <aside class="notes">Claude Code + PostHog MCP · plain English: "where do users drop off?" → writes + runs query · no SQL, no dashboards</aside>
+      <aside class="notes">Claude Code = Anthropic's AI agent that lives in your terminal · MCP (Model Context Protocol) = open standard that plugs external tools into the AI, PostHog ships an MCP server · result: the AI can query my real analytics directly · how it helps: ask in plain English, it writes + runs the queries, finds the insights (biggest leak, slowest step) on its own · analytics becomes a conversation, no SQL, no dashboard clicking · this funnel = one sentence prompt</aside>
+    </section>
+
+    <!-- 28b. PostHog pricing -->
+    <section class="slide">
+      <div class="pad center">
+        <p class="kicker r r1">PostHog</p>
+        <h2 class="r r2" style="margin-top:24px;">Pricing</h2>
+        <table class="ptable r r3">
+          <tr><th>Plan</th><th>Includes</th><th>Price</th></tr>
+          <tr><td class="plan">Free</td><td>1M events + 5K session replays/month</td><td class="price">$0</td></tr>
+          <tr><td class="plan">Usage-based</td><td>beyond the free tier</td><td class="price">per event</td></tr>
+        </table>
+      </div>
+      <aside class="notes">Free every month: 1M events, 5K replays, 1M flag requests, 1.5K survey responses · beyond: usage-based, fractions of a cent per event · 90% of companies pay $0 · I pay $0</aside>
     </section>
 
     <!-- 29. SHOREBIRD TITLE -->
@@ -710,7 +773,7 @@
         <h1 class="r r3"><span class="hl">Shorebird</span></h1>
         <p class="lead r r4" style="margin-top:20px;">Push Flutter code updates over the air</p>
       </div>
-      <aside class="notes">Tool 4: OTA Dart patches · skip the review queue</aside>
+      <aside class="notes">TRANSITION (memorized): "PostHog finds the leak. How fast can you ship the fix?" · OTA Dart patches, skip the review queue</aside>
     </section>
 
     <!-- 30. Shorebird why -->
@@ -725,6 +788,21 @@
         </ul>
       </div>
       <aside class="notes">shorebird release replaces flutter build · shorebird patch = OTA Dart · copy tweaks, layout fixes live same day</aside>
+    </section>
+
+    <!-- 30b. Shorebird pricing -->
+    <section class="slide">
+      <div class="pad center">
+        <p class="kicker r r1">Shorebird</p>
+        <h2 class="r r2" style="margin-top:24px;">Pricing</h2>
+        <table class="ptable r r3">
+          <tr><th>Plan</th><th>Includes</th><th>Price</th></tr>
+          <tr><td class="plan">Free</td><td>5K patch installs/month</td><td class="price">$0</td></tr>
+          <tr><td class="plan">Pro</td><td>50K patch installs/month</td><td class="price">$20/mo</td></tr>
+          <tr><td class="plan">Business</td><td>1M patch installs/month</td><td class="price">$400/mo</td></tr>
+        </table>
+      </div>
+      <aside class="notes">Billed per successful patch install, not per release · free covers 5K installs/mo, plenty for a small app · overage $1 per 2,500 installs</aside>
     </section>
 
     <!-- 31. Shorebird limitations -->
@@ -745,9 +823,9 @@
     <section class="slide">
       <div class="pad statement">
         <div class="grid"></div>
-        <h2 class="r r1">So instead…</h2>
+        <h2 class="r r1">Critical bug?<br>Everyone <em>must</em> update.</h2>
       </div>
-      <aside class="notes">OTA can't save emergencies → make the user update · segue tool 5</aside>
+      <aside class="notes">Shorebird = small fixes · critical bug = real store release · but users don't update for weeks → old broken versions linger · answer = tool 5</aside>
     </section>
 
     <!-- 33. force_update_helper title -->
@@ -769,11 +847,12 @@
         <ul class="bullets">
           <li class="r r3">Fatal errors &amp; DTO mismatches with the backend happen</li>
           <li class="r r4">Old versions in the wild keep breaking silently</li>
+          <li class="r r4">Some users turn auto-updates off entirely</li>
           <li class="r r5">Host the minimum version on a GitHub Gist or backend</li>
           <li class="r r6">I prefer Gist: less backend-dependent, easier solo</li>
         </ul>
       </div>
-      <aside class="notes">Fatal errors, DTO mismatches · old versions break silently · Gist > backend: simpler solo · team: agree gist owner</aside>
+      <aside class="notes">Fatal errors, DTO mismatches · old versions break silently · auto-update is optional: iOS Settings → App Store toggle, Android global or per-app, those users sit on old versions forever with a worse experience · Gist > backend: simpler solo · team: agree gist owner</aside>
     </section>
 
     <!-- 35. config json -->
@@ -812,21 +891,22 @@
         <p class="lead r r3" style="margin-top:24px;">Ask for ratings with the native prompt, in-app</p>
         <p class="small r r4" style="margin-top:14px;">by Britannio Jarrett</p>
       </div>
-      <aside class="notes">Wraps SKStoreReviewController (iOS) + Play In-App Review (Android) · system sheet, never leaves app</aside>
+      <aside class="notes">TRANSITION (memorized): "Users are happy now. Last tool makes them say it in public." · wraps SKStoreReviewController (iOS) + Play In-App Review (Android) · system sheet, never leaves app</aside>
     </section>
 
     <!-- 38. ratings done right -->
     <section class="slide">
       <div class="pad content">
         <p class="kicker r r1">in_app_review</p>
-        <h2 class="r r2">Ratings done right</h2>
+        <h2 class="r r2">Asking for ratings</h2>
         <ul class="bullets">
+          <li class="r r3">Only angry users review unprompted</li>
           <li class="r r3">Important for ASO (App Store Optimization)</li>
           <li class="r r4">Ask at the right moment (e.g. after the first successful scan)</li>
           <li class="r r5">Don't abuse it (iOS limits the prompt to 3× per year)</li>
         </ul>
       </div>
-      <aside class="notes">ASO: rating count + avg → ranking · iOS: 3 per 365 days, auto-enforced, request ≠ guarantee · Andrea: likes/engaged user picked the moment, exponential backoff</aside>
+      <aside class="notes">Why do big apps + government apps sit at 3.2★? They never ask for reviews · so the only reviewers left = angry users who go out of their way to the App Store · happy users stay silent unless prompted at a happy moment · hurts the look, and for a B2C / solo app the look IS the funnel: rating count + average → ASO ranking + install conversion · iOS: 3 per 365 days, auto-enforced, request ≠ guarantee · Andrea: likes/engaged user picked the moment, exponential backoff</aside>
     </section>
 
     <!-- 38b. in_app_review prompt -->
@@ -855,7 +935,7 @@
           <li class="r r5">Learn user acquisition (Meta Ads, TikTok, etc.)</li>
         </ul>
       </div>
-      <aside class="notes">Ideas: own itch, domain expertise, out-execute validated app · SLC (Jason Cohen) vs broken MVP · Andrea: 100h v1, cut deep links/tablet/comments · building = half, distribution = other half</aside>
+      <aside class="notes">TRANSITION (memorized): "That's the six tools. Last few minutes: the stuff that mattered more than code." · Ideas: own itch, domain expertise, out-execute validated app · SLC (Jason Cohen) vs broken MVP · Andrea: 100h v1, cut deep links/tablet/comments · building = half, distribution = other half</aside>
     </section>
 
     <!-- 40. Funnel -->
@@ -871,9 +951,9 @@
           <div class="fstep r r4" style="width:32%;"><svg class="ic"><use href="#i-dollar"/></svg>Subscriber</div>
           <div class="fstep last r r5" style="width:24%;"><svg class="ic"><use href="#i-repeat"/></svg>Retention</div>
         </div>
-        <p class="note r r6" style="text-align:center; margin-top:32px;">Goal: <span class="hl">pour more in at the top</span> &amp; minimise the leak at every step.</p>
+        <p class="note r r6" style="text-align:center; margin-top:32px;">Goal: <span class="hl">pour the right users in at the top</span> &amp; minimise the leak at every step.</p>
       </div>
-      <aside class="notes">2 levers: more in at top, leak less per step · fix biggest leak first</aside>
+      <aside class="notes">[pause 2s after "every step leaks"] · 2 levers: right users in at top, leak less per step · quality > volume: cheap installs from a low-intent market = big top, same revenue (e.g. ads in a market that rarely subscribes) · the leak %s aren't fixed, they depend on who you pour in · fix biggest leak first</aside>
     </section>
 
     <!-- 41. Closing / contact -->
@@ -884,14 +964,15 @@
           <img src="profile.jpg" alt="Iskandar Hilmi" class="avatar" />
           <div class="who">
             <div class="nm">Iskandar Hilmi</div>
-            <div class="meta">Software Engineer · 3+ years</div>
+            <div class="meta">Software Engineer @ Auronex · 3+ years of experience</div>
+            <div class="meta" style="font-size:24px;">Flutter, React, React Native, Next.js, Node.js</div>
             <div class="meta">linkedin.com/in/iskandarhilmi</div>
           </div>
           <img src="linkedin-qr.png" alt="QR code to Iskandar's LinkedIn" class="qr" />
         </div>
         <p class="email r r3">iskandarzhilmi@gmail.com</p>
       </div>
-      <aside class="notes">QR · invite questions · thank Moaaz + Flutter KL team · thank everyone</aside>
+      <aside class="notes">CLOSE (memorized): "One trip, one annoyance, one app. The tools are free, the playbook is on these slides. The only step left is yours: go build." · [pause] · QR, invite questions · thank Moaaz + Flutter KL team, thank everyone</aside>
     </section>
 
 </div>
