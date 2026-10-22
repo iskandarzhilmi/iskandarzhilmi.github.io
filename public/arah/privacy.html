@@ -32,6 +32,12 @@
 <p>The points carry no name or account, and we don't store them with any ID. Our server matches them to roads, keeps only the average speed on each road, and throws the points away. To stop one person from faking traffic, the server briefly uses a scrambled version of your anonymous ID and IP address in memory. It never saves them. We never sell this data.</p>
 <p>Sharing is on by default. You can turn it off any time with "Share Anonymous Traffic Data" in the app menu.</p>
 
+<h2>Usage and crash data</h2>
+<p>Arah sends some usage and crash data to PostHog, a service that helps us see which features people use and fix crashes. PostHog keeps this data on servers in the EU.</p>
+<p>We send which features you use, for example that you started navigation or sent a report, with rough figures like "5 to 20 km" or "10 to 30 minutes". We also send the app version, your phone model, system version and language. If the app crashes, we send the technical details of the crash.</p>
+<p>We never send your location, your routes, the places you search for or go to, or anything you type. Each install gets a random ID that isn't linked to you. PostHog doesn't keep your IP address.</p>
+<p>We use this data only to improve Arah. We don't sell it or use it for ads or tracking.</p>
+
 <h2>Votes</h2>
 <p>When you answer "Still there?" we store your answer with the report so it stays up or disappears sooner. Votes are deleted along with the report.</p>
 
@@ -43,6 +49,7 @@
 <li>Supabase, in Singapore, stores reports and votes.</li>
 <li>Hetzner, in Germany, runs our routing, search and traffic server.</li>
 <li>OpenFreeMap provides map tiles.</li>
+<li>PostHog, in the EU, receives usage and crash data.</li>
 </ul>
 
 <h2>Children</h2>
