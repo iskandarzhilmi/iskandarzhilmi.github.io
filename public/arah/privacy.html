@@ -8,7 +8,7 @@
 </head>
 <body>
 <h1>Arah Privacy Policy</h1>
-<p class="updated">Last updated 21 October 2026</p>
+<p class="updated">Last updated 22 October 2026</p>
 
 <p>Arah is a navigation app for Malaysia. It shows a map, guides you turn by turn, and warns you about cameras, police and hazards that other drivers have reported. We built it to work without collecting your personal data.</p>
 
@@ -23,7 +23,14 @@
 <li><strong>When you search for a place.</strong> Your search text and approximate area go to our search server. It keeps no record of them.</li>
 <li><strong>When Arah checks for reports near you.</strong> It asks for an area about 30 km across, not your exact position.</li>
 <li><strong>When you send a report.</strong> We store the type (camera, police or hazard), where it is, which way you were heading and when. Reports are deleted automatically after a few hours.</li>
+<li><strong>While you navigate, if traffic sharing is on.</strong> Anonymous road speeds go to our traffic server, as described under "Anonymous traffic data" below. Points near the start and end of your trip are never sent.</li>
 </ul>
+
+<h2>Anonymous traffic data</h2>
+<p>When you navigate, Arah can share anonymous road speeds. We use them to give everyone better arrival times and to show traffic on the route. About once a minute, the app sends where you were and when, for the last minute of your drive. Arah sends nothing when you aren't navigating.</p>
+<p>Arah never sends points within 500 metres of where your trip starts or ends, so places like your home and work stay out of it.</p>
+<p>The points carry no name or account, and we don't store them with any ID. Our server matches them to roads, keeps only the average speed on each road, and throws the points away. To stop one person from faking traffic, the server briefly uses a scrambled version of your anonymous ID and IP address in memory. It never saves them. We never sell this data.</p>
+<p>Sharing is on by default. You can turn it off any time with "Share Anonymous Traffic Data" in the app menu.</p>
 
 <h2>Votes</h2>
 <p>When you answer "Still there?" we store your answer with the report so it stays up or disappears sooner. Votes are deleted along with the report.</p>
@@ -34,7 +41,7 @@
 <h2>Services we use</h2>
 <ul>
 <li>Supabase, in Singapore, stores reports and votes.</li>
-<li>Hetzner, in Germany, runs our routing and search server.</li>
+<li>Hetzner, in Germany, runs our routing, search and traffic server.</li>
 <li>OpenFreeMap provides map tiles.</li>
 </ul>
 
